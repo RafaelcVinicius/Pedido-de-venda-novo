@@ -1,0 +1,149 @@
+.header{
+    display: flex;
+    max-width: 1280px;
+    width: 100%;
+    height: 60px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30px;
+}
+.titulo h5{
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.80);
+    font-size: 35px;
+}
+.cadastrar{
+    display: flex;
+    width: 220px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 15px;
+    color: #fff;
+    background-color: rgb(0, 132, 255);
+    justify-content: center;
+    align-items: center;
+    margin-left: 15px;
+}
+.novo{
+    display: flex;
+}
+.novo button{
+    cursor: pointer;
+}
+.sec-1{
+    display: flex;
+    max-width: 1280px;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 5px #ccc;
+    flex-wrap: wrap;
+}
+.sec-1 > div{
+    display: flex;
+    max-width: 1220px;
+    width: 100%;
+    justify-content: space-between;
+}
+.sec-flex{
+    display: flex;
+    max-width: 1280px;
+    width: 100%;
+    margin-top: 20px;
+    column-gap: 1rem;
+}
+.artic{
+    display: flex;
+    width: 100%; 
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+    margin-bottom: 1rem;    
+    flex-wrap: wrap;
+}
+.field{
+    border: 1px solid rgba(19, 19, 19, 0.514);
+    padding: 5px;
+    position: relative;
+    border-radius: 25px;
+    height: 45px;
+}
+legend{
+margin-left: 25px;
+padding-left: 5px;
+padding-right: 5px;
+}
+.cl-5{
+    flex: 0 0 41.6666666667%;
+    max-width: 41.6666666667%;
+}
+.cl-4{
+    flex: 0 0 33.3333333333%;
+    max-width: 33.3333333333%;
+}
+.cl-3{
+    max-width: 100%;
+}
+.off{
+opacity: 0.5;
+}
+.input-form{
+    position: absolute;
+    display: flex;
+    top: 7px;
+    align-items: center;
+    width: calc(100% - 45px);
+    font-size: 15px;
+    justify-content: space-between;
+    margin-left: 30px;
+    margin-right: 30px;
+    outline: 0;
+}
+.btn-status{
+    position: absolute;
+    right: 20px;
+    background-color: white;
+}
+
+.cursor{
+cursor: pointer;
+}
+/* desativa a lista */
+.disable{
+    display: none;
+}
+/* ativa a lista de status */
+.lista-status{
+    position: absolute;
+    justify-content: start;
+    width: 99.4%;
+    top:55px;
+    left: 0;
+    padding-top: 5px;
+    padding-bottom: 15px;
+    border-left: 1px solid rgba(19, 19, 19, 0.514);
+    border-bottom: 1px solid rgba(19, 19, 19, 0.514);
+    border-right: 1px solid rgba(19, 19, 19, 0.514); 
+    border-radius: 0 0 25px 25px;
+    background-color: white;
+    font-size: 15px;
+}
+.lista-status li {
+    list-style: none;
+    padding: 10px 20px;
+}
+.lista-status li:hover {
+    background-color: rgb(0, 132, 255);
+    color: white;
+}
+
+.ativo{
+    border: 1px solid rgba(19, 19, 19, 0.514);
+    padding: 5px;
+    position: relative;
+    border-radius:25px 25px 0 0;
+    border-bottom: none;
+    height: 45px;    
+}
+/* ------------------------------*/
