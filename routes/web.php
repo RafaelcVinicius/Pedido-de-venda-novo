@@ -37,5 +37,7 @@ Route::prefix('home')->group(function () {
         route::get('/cadastro', [PedidoController::class, 'cadastro'])->name('pedido.cadastro');
 
         route::post('/consultacliente', [PedidoController::class, 'consultacliente'])->name('pedido.consultacliente');
+
+        route::post('/consultaproduto', [PedidoController::class, 'consultaproduto'])->name('pedido.consultaproduto');
     });
 });

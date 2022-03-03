@@ -10,17 +10,25 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
     state: {
-       cliente:{}
+       cliente:{},
+       produtos:[]
     },
     getters: {
         getClientes(state) {
             return state.cliente
+        },
+        getProduto(state) {
+            console.log(state)
+            return state.produtos
         }
     },
     mutations: {
         addCliente(state, payload) {
             console.log(payload)
             state.cliente = payload
+        },
+        addProduto(state, payload){
+            state.produtos.push(payload)
         }
     }  
 })

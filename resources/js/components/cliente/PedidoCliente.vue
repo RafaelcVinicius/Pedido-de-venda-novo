@@ -40,7 +40,7 @@
 export default {
     computed:{
         cliente(){
-             return this.$store.state.cliente
+            return this.$store.state.cliente
         }
     }
 }
@@ -59,16 +59,7 @@ export default {
     #component{
         max-width: 1280px;
         width: 100%;
-    }
-    .comp-cliente{
-        display: flex;
-        flex-direction: column;
-        background-color: white;
-        max-width: 1280px;
-        width: 100%;
-        padding: 35px;
-        border-radius: 12px;
-        box-shadow: 0 0 10px #ccc;
+    
     }
     .section{
         display: flex;
