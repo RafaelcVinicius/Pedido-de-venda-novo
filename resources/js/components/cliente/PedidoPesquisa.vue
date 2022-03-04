@@ -37,6 +37,7 @@ export default {
             this.displaycliente = false
             this.nomecliente = dado.nome
             this.$store.commit('addCliente', dado)
+            this.$store.commit('cliselecionado', true)
         }
     }
 }

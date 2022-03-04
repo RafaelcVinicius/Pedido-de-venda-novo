@@ -28,7 +28,6 @@ export default {
                 this.$http.post('/home/pedido/consultaproduto', {
                 nome: this.nomeproduto 
                 }).then(res => { this.dados = res.data })
-                console.log(this.dados)
             }else{
                 this.displayproduto = false
             }

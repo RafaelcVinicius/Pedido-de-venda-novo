@@ -1,14 +1,18 @@
 <template>
     <div class="app">
         <pedido-cliente />
-        <pedido-produto />
+        <pedido-produto v-show="cliselecionado" />
     </div>
 </template>
 
 <script>
 
 export default {
-
+computed:{
+    cliselecionado(){
+        return this.$store.state.cliselecionado
+    }
+}
 }
 </script>
 
