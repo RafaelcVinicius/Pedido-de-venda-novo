@@ -5474,17 +5474,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
     produtos: function produtos() {
+      console.log(this.$store.state.produtos);
       return this.$store.state.produtos;
     }
   },
   methods: {
     tablefunction: function tablefunction(e) {
-      console.log(e);
       this.$store.commit('delProduto', e);
     }
   }
@@ -5707,7 +5705,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0_
   state: {
     cliente: {},
     produtos: [],
-    cliselecionado: false
+    cliselecionado: true
   },
   getters: {
     getClientes: function getClientes(state) {
@@ -5722,7 +5720,21 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0_
       state.cliente = payload;
     },
     addProduto: function addProduto(state, payload) {
-      state.produtos.push(payload);
+      var itemExists = state.produtos.findIndex(function (i) {
+        return i.id === payload.id;
+      });
+
+      if (itemExists >= 0) {
+        state.produtos[itemExists].qtde++;
+      } else {
+        var dados = {};
+        dados.id = payload.id;
+        dados.nome = payload.nome;
+        dados.codbarras = payload.codbarras;
+        dados.valor = Number(payload.valor);
+        dados.qtde = Number(1);
+        state.produtos.push(dados);
+      }
     },
     cliselecionado: function cliselecionado(state, payload) {
       state.cliselecionado = payload;
@@ -10875,7 +10887,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.lista[data-v-409a464a]{\n     display: flex;\n     justify-content: center;\n     max-width: 1280px;\n     width: 100%;\n}\n.table[data-v-409a464a]{\n     margin-top: 20px;\n     max-width: 1200px;\n     width: 100%;\n     border-bottom: 1px solid rgb(1, 1, 54);\n}\n.table thead[data-v-409a464a]{\n     background-color: rgb(1, 1, 54);\n     color: white;\n     height: 50px;\n}\nth[data-v-409a464a]{\n     border-color:rgb(1, 1, 54);\n}\n.table tbody[data-v-409a464a]{\n     color: rgba(0, 0, 0, 0.75);\n     height: 50px;\n}\n.lista .table tbody tr[data-v-409a464a]{\n     border-bottom: 1px solid black;\n     height: 35px;\n}\ntd[data-v-409a464a]{\n     text-align: center;\n}\na[data-v-409a464a]{\n     color: rgb(1, 1, 54);\n     text-decoration: none;\n}\n.acao[data-v-409a464a]{\n     display: flex;\n     margin-top: 15px;\n     justify-content: center;\n}\n.acao span[data-v-409a464a]{\n      margin-left: 10px;\n}\nsvg[data-v-409a464a]{\n     fill:#13395a;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.lista[data-v-409a464a]{\n     display: flex;\n     justify-content: center;\n     max-width: 1280px;\n     width: 100%;\n}\n.table[data-v-409a464a]{\n     margin-top: 20px;\n     max-width: 1200px;\n     width: 100%;\n     border-bottom: 1px solid rgb(1, 1, 54);\n}\n.table thead[data-v-409a464a]{\n     background-color: rgb(1, 1, 54);\n     color: white;\n     height: 50px;\n}\nth[data-v-409a464a]{\n     border-color:rgb(1, 1, 54);\n}\n.table tbody[data-v-409a464a]{\n     color: rgba(0, 0, 0, 0.75);\n     height: 50px;\n}\n.lista .table tbody tr[data-v-409a464a]{\n     border-bottom: 1px solid black;\n     height: 35px;\n}\ntd[data-v-409a464a]{\n     text-align: center;\n}\na[data-v-409a464a]{\n     color: rgb(1, 1, 54);\n     text-decoration: none;\n}\n.acao[data-v-409a464a]{\n     display: flex;\n     margin-top: 9px;\n     justify-content: center;\n}\n.acao span[data-v-409a464a]{\n      margin-left: 10px;\n}\nsvg[data-v-409a464a]{\n     fill:#102d46;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29915,7 +29927,7 @@ var render = function () {
             _c("td", [_vm._v(_vm._s(produto.valor))]),
             _vm._v(" "),
             _c("td", { staticClass: "acao" }, [
-              _c("span", { on: { click: _vm.func } }, [
+              _c("span", [
                 _c(
                   "svg",
                   {
