@@ -30,6 +30,8 @@ Vue.component('PedidoPesquisaProduto', require('./components/produto/PedidoPesqu
 
 Vue.component('PedidoListaDeProduto', require('./components/produto/PedidoListaDeProduto.vue').default);
 
+Vue.component('PedidoEditProduto', require('./components/produto/PedidoEditProduto.vue').default);
+
 Vue.component('PedidoCliente', require('./components/cliente/PedidoCliente.vue').default);
 
 Vue.component('PedidoStatus', require('./components/cliente/PedidoStatus.vue').default);

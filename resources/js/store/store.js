@@ -12,7 +12,8 @@ export default new Vuex.Store({
     state: {
        cliente:{},
        produtos:[],
-       cliselecionado:true
+       cliselecionado:true,
+       editPro:true,
     },
     getters: {
         getClientes(state) {
@@ -31,22 +32,31 @@ export default new Vuex.Store({
             if(itemExists >= 0 ){
                 state.produtos[itemExists].qtde++;
             } else {
-
                 let dados = {}
                 dados.id = payload.id
                 dados.nome = payload.nome
+                dados.desconto = Number(0)
                 dados.codbarras = payload.codbarras
                 dados.valor = Number(payload.valor)
                 dados.qtde = Number(1)
-                
-                state.produtos.push(dados);                
+
+                state.produtos.push(dados);                  
             }
+        },
+        editProduto(state, payload){
+            console.log(payload)
+            const itemExists = state.produtos.findIndex((i) => i.id === payload.id);
+
         },
         cliselecionado(state, payload){
             state.cliselecionado = payload
         },
         delProduto(state, payload){
             state.produtos.splice(payload, 1)
+        },
+        editProdisplay(state, payload){
+            
+            state.editPro = payload
         }
     }  
 })
