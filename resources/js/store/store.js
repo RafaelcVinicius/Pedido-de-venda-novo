@@ -11,24 +11,29 @@ export default new Vuex.Store({
 
     state: {
        cliente:{},
-       produtos:[]
+       produtos:[],
+       cliselecionado:false
     },
     getters: {
         getClientes(state) {
             return state.cliente
         },
         getProduto(state) {
-            console.log(state)
             return state.produtos
-        }
+        }        
     },
     mutations: {
         addCliente(state, payload) {
-            console.log(payload)
             state.cliente = payload
         },
         addProduto(state, payload){
             state.produtos.push(payload)
+        },
+        cliselecionado(state, payload){
+            state.cliselecionado = payload
+        },
+        delProduto(state, payload){
+            state.produtos.splice(payload, 1)
         }
     }  
 })
