@@ -5464,8 +5464,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
-    getProduto: function getProduto() {
-      console.log('oo');
+    produtos: function produtos() {
       return this.$store.state.produtos;
     }
   }
@@ -5524,7 +5523,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     defiProduto: function defiProduto(dado) {
       this.displayproduto = false;
-      this.nomeproduto = dado.nome;
+      this.nomeproduto = '';
       this.$store.commit('addProduto', dado);
     }
   }
@@ -10756,7 +10755,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#component{\n    display: flex;\n    flex-wrap: wrap;\n    max-width: 1280px;\n    width: 100%;\n}\n.app{\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    max-width: 1280px;\n    width: 100%;\n}\n.comp-cliente{\n    display: flex;\n    flex-direction: column;\n    flex-wrap: wrap;\n    background-color: white;\n    max-width: 1280px;\n    width: 100%;\n    padding: 35px;\n    border-radius: 12px;\n    box-shadow: 0 0 10px #ccc;\n    margin-bottom: 50px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.app{\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n}\n.comp-cliente{\n    display: flex;\n    flex-direction: column;\n    flex-wrap: wrap;\n    background-color: white;\n    max-width: 1280px;\n    width: 100%;\n    padding: 35px;\n    border-radius: 12px;\n    box-shadow: 0 0 10px #ccc;\n    margin-bottom: 50px;\n}\n.comp-produto{\n    display: flex;\n    flex-direction: column;\n    flex-wrap: wrap;\n    background-color: white;\n    max-width: 1280px;\n    width: 100%;\n    padding: 35px;\n    border-radius: 12px;\n    box-shadow: 0 0 10px #ccc;\n    margin-bottom: 50px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10876,7 +10875,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nh5{\n    font-size: 25px;\n    color: rgba(0, 0, 0, 0.75);\n    font-weight: 400;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nh5{\n    font-size: 25px;\n    color: rgba(0, 0, 0, 0.75);\n    font-weight: 400;\n}\n.comp-produto{\n    display: flex;\n    flex-direction: column;\n    flex-wrap: wrap;\n    background-color: white;\n    max-width: 1280px;\n    width: 100%;\n    padding: 35px;\n    border-radius: 12px;\n    box-shadow: 0 0 10px #ccc;\n    margin-bottom: 50px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29791,14 +29790,21 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "lista" }, [
     _c("table", [
       _vm._m(0),
       _vm._v(" "),
       _c(
         "tbody",
         _vm._l(_vm.produtos, function (produto, i) {
-          return _c("tr", { key: i }, [_c("li", [_vm._v(_vm._s(produto))])])
+          return _c(
+            "tr",
+            { key: i },
+            _vm._l(produto, function (dados, i) {
+              return _c("td", { key: i }, [_vm._v(_vm._s(dados))])
+            }),
+            0
+          )
         }),
         0
       ),
@@ -29944,7 +29950,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "comp-cliente" },
+    { staticClass: "comp-produto" },
     [
       _c("h5", [_vm._v("Produto")]),
       _vm._v(" "),

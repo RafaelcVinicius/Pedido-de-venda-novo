@@ -35,7 +35,7 @@ export default {
         },
         defiProduto(dado) {
             this.displayproduto = false
-            this.nomeproduto = dado.nome
+            this.nomeproduto = ''
             this.$store.commit('addProduto', dado)
         }
     }

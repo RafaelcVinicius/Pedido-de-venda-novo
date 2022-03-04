@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="lista">
         <table>
             <thead>
                 <tr>
@@ -12,9 +12,9 @@
                 </tr>
             </thead>    
             <tbody>
-                <tr v-for="(produto, i) in produtos" :key="i">
-                    <li >{{ produto }}</li>
-                </tr>
+                 <tr v-for="(produto, i) in produtos" :key="i">
+                    <td v-for="(dados, i) in produto" :key="i">{{dados}}</td> 
+                </tr>  
             </tbody>
         </table>
     </div>
@@ -23,9 +23,8 @@
 <script>
 export default {
     computed: {
-        getProduto(){
-            console.log('oo')
-              return this.$store.state.produtos
+        produtos(){
+            return this.$store.state.produtos
         }
     }
 }
