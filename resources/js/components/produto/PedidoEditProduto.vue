@@ -1,5 +1,7 @@
 <template>
-  <div class="editar">     
+  <div class="editar">
+        <div class="nada" @click="fechardisplay">
+        </div>     
         <div class="display-edit">
             <div @click="fechardisplay" class="fechar">
                 <svg width="13px" height="13px" viewBox="0 0 364 364">
@@ -12,20 +14,23 @@
             <div class="div-input">
                 <div>
                     <label for="">Quantidade</label>
-                    <input type="text">      
+                    <input type="text" v-model="produto.qtde"  >      
                 </div>
                 <div>
                     <label for="">Valor un.(R$)</label>
-                    <input type="text">           
+                    <input type="text" v-model="produto.valor">           
                 </div>
                 <div>
                     <label for="">Desconto(%)</label> 
-                    <input type="text">   
+                    <input type="text" v-model="produto.desconto">   
                 </div>
                 <div>
                     <label for="">Acréscimo(%)</label>
-                    <input type="text">    
+                    <input type="text" v-model="produto.acrescimo">    
                 </div>
+            </div>
+            <div class="div-btn">
+                <button @click="fechardisplay">Salvar</button>
             </div>
         </div>
     </div>
@@ -35,13 +40,19 @@
 export default {
     methods:{
         fechardisplay(){
-               this.$store.commit('editProdisplay', false)
+            this.$store.commit('editProdisplay', false)
+        }
+    },
+    computed: {
+        produto(){
+            return this.$store.state.produtoeditado
         }
     }
 }
 </script>
 
 <style scoped>
+
     .editar{
         position: fixed;
         width: 100vw;
@@ -49,7 +60,11 @@ export default {
         top: 0;
         left: 0;
         z-index: 51;
-        background-color: rgba(14, 14, 14, 0.329);
+    }
+    .nada{
+        width: 100%;
+        height: 100%;
+        background-color: rgba(14, 14, 14, 0.3);
     }
     .display-edit{
         flex-wrap: wrap;
@@ -59,7 +74,7 @@ export default {
         max-width: 500px;
         height: 100vh;
         width: 100%;        
-        background-color: rgb(235, 235, 235);
+        background-color: rgb(255, 255, 255)
     }
     .header{
         display: flex;
@@ -75,7 +90,7 @@ export default {
         display: flex;
         flex-direction:column;
         font-size: 25px;
-        color: #fff;
+        color:  rgb(255, 255, 255)
     }
     .div-input{
         margin-top: 50px;
@@ -104,7 +119,7 @@ export default {
         height: 50px;
         left: 5px;
         border: 1px solid rgba(0, 0, 0, 0.45);
-        box-shadow: 0 0 10px #ccc;
+        box-shadow: 0 0 10px  rgb(255, 255, 255)
     }
     .fechar{
         position: absolute;
@@ -113,5 +128,22 @@ export default {
         z-index: 60;
         fill: white;
         padding: 15px;
+    }
+    .div-btn{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+    .div-btn button{
+        max-width: 300px;
+        width: 100%;
+        height: 50px;
+        border-radius: 7px;
+        background-color: rgb(0, 153, 255);
+        color: white;
+        font-size: 16px;
+    }
+    .div-btn button:hover{
+        background-color: rgb(3, 126, 241);
     }
 </style>

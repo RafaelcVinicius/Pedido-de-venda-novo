@@ -5269,7 +5269,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['vendedor'],
   computed: {
     cliselecionado: function cliselecionado() {
       return this.$store.state.cliselecionado;
@@ -5480,10 +5483,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   methods: {
     fechardisplay: function fechardisplay() {
       this.$store.commit('editProdisplay', false);
+    }
+  },
+  computed: {
+    produto: function produto() {
+      return this.$store.state.produtoeditado;
     }
   }
 });
@@ -5530,11 +5543,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
     produtos: function produtos() {
-      console.log(this.$store.state.produtos);
-      return this.$store.state.produtos.sort();
+      return this.$store.state.produtos;
     }
   },
   methods: {
@@ -5772,9 +5787,10 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0_
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   state: {
     cliente: {},
-    produtos: [],
-    cliselecionado: true,
-    editPro: true
+    produtos: [].sort(),
+    cliselecionado: false,
+    editPro: false,
+    produtoeditado: []
   },
   getters: {
     getClientes: function getClientes(state) {
@@ -5803,14 +5819,15 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0_
         dados.codbarras = payload.codbarras;
         dados.valor = Number(payload.valor);
         dados.qtde = Number(1);
+        dados.acrescimo = Number(0);
         state.produtos.push(dados);
       }
     },
     editProduto: function editProduto(state, payload) {
-      console.log(payload);
-      var itemExists = state.produtos.findIndex(function (i) {
-        return i.id === payload.id;
+      var itemExists = state.produtos.find(function (_p, i, _a) {
+        return i === payload;
       });
+      state.produtoeditado = itemExists;
     },
     cliselecionado: function cliselecionado(state, payload) {
       state.cliselecionado = payload;
@@ -5820,6 +5837,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0_
     },
     editProdisplay: function editProdisplay(state, payload) {
       state.editPro = payload;
+      state.produtoeditado = [];
     }
   }
 }));
@@ -10894,7 +10912,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.z-50{\n    z-index: 50;\n}\n.z-40{\n    z-index: 40;\n}\n.desativado{\n    opacity: 0.5;\n}\n#component{\n    max-width: 1280px;\n    width: 100%;\n}\n.section{\n    display: flex;\n    position: relative;\n    -moz-column-gap: 1rem;\n         column-gap: 1rem;\n    max-width: 1280px;\n    width: 100%;\n    margin-top: 10px;\n    color: rgba(0, 0, 0, 0.75);\n}\n.sect{\n    cursor: pointer;\n    width: 100%;\n    position: relative;\n}\n.fieldset{\n    border: 1px solid rgba(0, 0, 0, 0.288);\n    border-top-right-radius: 25px;\n    border-top-left-radius: 25px;\n    border-bottom-right-radius: 25px;\n    border-bottom-left-radius: 25px;\n    height: 65px;\n    border: 1px solid #dcdcdc;\n}\n.sect fieldset legend{\n    padding:10px;\n    font-size: 15px;\n}\n.sect fieldset input{\n    position: absolute;\n    top: 30px;\n    margin: 0 20px 0 20px ;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: calc(100% - 45px);\n    font-size: 14px;\n    height: 30px;\n    outline: 0;\n    cursor: pointer;\n    z-index: 1;\n    color: rgba(0, 0, 0, 0.75);\n}\n.cl-5{\n    flex: 0 0 41.66666%;\n    max-width: 41.666666%;\n}\n.cl-4{\n    flex: 0 0 33.333333%;\n    max-width: 33.3333333%;\n}\n.cl{\n    flex-basis: 0;\n    flex-grow: 1;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.z-50{\n    z-index: 50;\n}\n.z-40{\n    z-index: 40;\n}\n.desativado{\n    opacity: 0.5;\n}\n#component{\n    max-width: 1280px;\n    width: 100%;\n}\n.section{\n    display: flex;\n    position: relative;\n    -moz-column-gap: 1rem;\n         column-gap: 1rem;\n    max-width: 1280px;\n    width: 100%;\n    margin-top: 10px;\n    color: rgba(0, 0, 0, 0.75);\n}\n.sect{\n    cursor: pointer;\n    width: 100%;\n    position: relative;\n}\n.fieldset{\n    border: 1px solid rgba(0, 0, 0, 0.288);\n    border-top-right-radius: 25px;\n    border-top-left-radius: 25px;\n    border-bottom-right-radius: 25px;\n    border-bottom-left-radius: 25px;\n    height: 65px;\n    border: 1px solid #dcdcdc;\n}\n.sect fieldset legend{\n    padding:10px;\n    font-size: 15px;\n}\n.sect fieldset input{\n    position: absolute;\n    top: 30px;\n    left: 17px;\n    margin: 0 20px 0 20px ;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: calc(100% - 50px);\n    font-size: 14px;\n    height: 30px;\n    outline: 0;\n    cursor: pointer;\n    z-index: 1;\n    color: rgba(0, 0, 0, 0.75);\n}\n.cl-5{\n    flex: 0 0 41.66666%;\n    max-width: 41.666666%;\n}\n.cl-4{\n    flex: 0 0 33.333333%;\n    max-width: 33.3333333%;\n}\n.cl{\n    flex-basis: 0;\n    flex-grow: 1;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10942,7 +10960,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.status{\n    position: relative;\n    margin-top: 10px;\n}\n.stat{      \n    display: block;\n    position: absolute;  \n    width: calc(100% - 2px);\n    border: 1px solid #dcdcdc;\n    background-color: #fff;\n    border-top: none;\n    border-bottom-left-radius: 30px;\n    border-bottom-right-radius: 30px;\n    cursor: pointer;\n    padding-bottom: 20px;\n}\ninput{\n    position: absolute;\n    z-index: 1;\n    top: 15px;\n    margin: 0 20px 0 20px ;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: calc(100% - 45px);\n    font-size: 16px;\n    height: 35px;\n    outline: 0;\n    cursor: pointer;\n    color: rgba(0, 0, 0, 0.75);\n}\n.ativarstatus{\n    border: 1px solid rgba(0, 0, 0, 0.527);\n    border-radius:20px 20px 0 0 ;\n    border-bottom: none;\n    height: 55px;\n    border: 1px solid #dcdcdc;\n    border-bottom: none;\n}\nfieldset{\n    border: 1px solid rgba(0, 0, 0, 0.5);\n    border-radius: 25px;\n    height: 55px;\n    border: 1px solid #dcdcdc;\n}\nli{\n    list-style: none;\n    padding: 10px;\n}\nli:hover{\n     background-color: rgb(25, 87, 255);\n     color: white;\n}\n.btn{\n    position: absolute;\n    top: 25px;\n    right: 15px;\n    background-color: white;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.status{\n    position: relative;\n    margin-top: 10px;\n}\n.stat{      \n    display: block;\n    position: absolute;  \n    width: calc(100% - 2px);\n    border: 1px solid #dcdcdc;\n    background-color: #fff;\n    border-top: none;\n    border-bottom-left-radius: 30px;\n    border-bottom-right-radius: 30px;\n    cursor: pointer;\n    padding-bottom: 20px;\n}\ninput{\n    position: absolute;\n    z-index: 1;\n    top: 15px;\n    margin: 0 20px 0 20px ;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: calc(100% - 45px);\n    font-size: 16px;\n    height: 35px;\n    outline: 0;\n    cursor: pointer;\n    color: rgba(0, 0, 0, 0.75);\n}\n.ativarstatus{\n    border: 1px solid rgba(0, 0, 0, 0.527);\n    border-radius:20px 20px 0 0 ;\n    border-bottom: none;\n    height: 55px;\n    border: 1px solid #dcdcdc;\n    border-bottom: none;\n}\nfieldset{\n    border: 1px solid rgba(0, 0, 0, 0.5);\n    border-radius: 25px;\n    height: 55px;\n    border: 1px solid #dcdcdc;\n}\nli{\n    list-style: none;\n    padding: 10px;\n}\nli:hover{\n     background-color: rgb(25, 87, 255);\n     color: white;\n}\n.btn{\n    position: absolute;\n    top: 25px;\n    right: 15px;\n    background-color: white;\n    z-index: 55;\n    cursor: pointer;\n    fill: rgba(0, 0, 0, 0.65);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10966,7 +10984,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.editar[data-v-d770ccce]{\n    position: fixed;\n    width: 100vw;\n    height: 100vh;\n    top: 0;\n    left: 0;\n    z-index: 51;\n    background-color: rgba(14, 14, 14, 0.329);\n}\n.display-edit[data-v-d770ccce]{\n    flex-wrap: wrap;\n    position: absolute;\n    right: 0;\n    top: 0;\n    max-width: 500px;\n    height: 100vh;\n    width: 100%;        \n    background-color: rgb(235, 235, 235);\n}\n.header[data-v-d770ccce]{\n    display: flex;\n    flex-wrap: wrap;\n    position:relative;\n    justify-content: center;\n    align-items: center;\n    height: 130px;\n    background-color: rgba(0, 140, 255, 0.966);\n    z-index: 53;\n}\n.header h6[data-v-d770ccce]{\n    display: flex;\n    flex-direction:column;\n    font-size: 25px;\n    color: #fff;\n}\n.div-input[data-v-d770ccce]{\n    margin-top: 50px;\n    display: flex;\n    flex-wrap: wrap;\n    height: 400px;\n    z-index: 53;\n    width: 100%;\n    padding: 10px;\n}\nlabel[data-v-d770ccce]{\n    margin-left: 25px;\n}\n.div-input > div[data-v-d770ccce]{\n    position: relative;\n    width: 100%;\n    margin-right: 25px;\n}\ninput[data-v-d770ccce]{\n    position: absolute;\n    background-color: rgb(255, 255, 255);\n    border-radius: 7px;\n    padding: 20px; \n    top: 30px;\n    right: 5px;\n    height: 50px;\n    left: 5px;\n    border: 1px solid rgba(0, 0, 0, 0.45);\n    box-shadow: 0 0 10px #ccc;\n}\n.fechar[data-v-d770ccce]{\n    position: absolute;\n    top:0px;\n    right: 15px;\n    z-index: 60;\n    fill: white;\n    padding: 15px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.editar[data-v-d770ccce]{\n    position: fixed;\n    width: 100vw;\n    height: 100vh;\n    top: 0;\n    left: 0;\n    z-index: 51;\n}\n.nada[data-v-d770ccce]{\n    width: 100%;\n    height: 100%;\n    background-color: rgba(14, 14, 14, 0.3);\n}\n.display-edit[data-v-d770ccce]{\n    flex-wrap: wrap;\n    position: absolute;\n    right: 0;\n    top: 0;\n    max-width: 500px;\n    height: 100vh;\n    width: 100%;        \n    background-color: rgb(255, 255, 255)\n}\n.header[data-v-d770ccce]{\n    display: flex;\n    flex-wrap: wrap;\n    position:relative;\n    justify-content: center;\n    align-items: center;\n    height: 130px;\n    background-color: rgba(0, 140, 255, 0.966);\n    z-index: 53;\n}\n.header h6[data-v-d770ccce]{\n    display: flex;\n    flex-direction:column;\n    font-size: 25px;\n    color:  rgb(255, 255, 255)\n}\n.div-input[data-v-d770ccce]{\n    margin-top: 50px;\n    display: flex;\n    flex-wrap: wrap;\n    height: 400px;\n    z-index: 53;\n    width: 100%;\n    padding: 10px;\n}\nlabel[data-v-d770ccce]{\n    margin-left: 25px;\n}\n.div-input > div[data-v-d770ccce]{\n    position: relative;\n    width: 100%;\n    margin-right: 25px;\n}\ninput[data-v-d770ccce]{\n    position: absolute;\n    background-color: rgb(255, 255, 255);\n    border-radius: 7px;\n    padding: 20px; \n    top: 30px;\n    right: 5px;\n    height: 50px;\n    left: 5px;\n    border: 1px solid rgba(0, 0, 0, 0.45);\n    box-shadow: 0 0 10px  rgb(255, 255, 255)\n}\n.fechar[data-v-d770ccce]{\n    position: absolute;\n    top:0px;\n    right: 15px;\n    z-index: 60;\n    fill: white;\n    padding: 15px;\n}\n.div-btn[data-v-d770ccce]{\n    display: flex;\n    width: 100%;\n    justify-content: center;\n}\n.div-btn button[data-v-d770ccce]{\n    max-width: 300px;\n    width: 100%;\n    height: 50px;\n    border-radius: 7px;\n    background-color: rgb(0, 153, 255);\n    color: white;\n    font-size: 16px;\n}\n.div-btn button[data-v-d770ccce]:hover{\n    background-color: rgb(3, 126, 241);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10990,7 +11008,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.lista[data-v-409a464a]{\n     display: flex;\n     justify-content: center;\n     max-width: 1280px;\n     width: 100%;\n}\n.table[data-v-409a464a]{\n     margin-top: 20px;\n     max-width: 1200px;\n     width: 100%;\n     border-bottom: 1px solid rgb(1, 1, 54);\n}\n.table thead[data-v-409a464a]{\n     background-color: rgb(1, 1, 54);\n     color: white;\n     height: 50px;\n}\nth[data-v-409a464a]{\n     border-color:rgb(1, 1, 54);\n}\n.table tbody[data-v-409a464a]{\n     color: rgba(0, 0, 0, 0.75);\n     height: 50px;\n}\n.lista .table tbody tr[data-v-409a464a]{\n     border-bottom: 1px solid black;\n     height: 35px;\n}\ntd[data-v-409a464a]{\n     text-align: center;\n}\na[data-v-409a464a]{\n     color: rgb(1, 1, 54);\n     text-decoration: none;\n}\n.acao[data-v-409a464a]{\n     display: flex;\n     margin-top: 9px;\n     justify-content: center;\n}\n.acao span[data-v-409a464a]{\n      margin-left: 10px;\n}\nsvg[data-v-409a464a]{\n     fill:#102d46;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.lista[data-v-409a464a]{\n     display: flex;\n     justify-content: center;\n     max-width: 1280px;\n     width: 100%;\n}\n.table[data-v-409a464a]{\n     margin-top: 20px;\n     max-width: 1200px;\n     width: 100%;\n     border-bottom: 1px solid rgb(1, 1, 54);\n}\n.table thead[data-v-409a464a]{\n     background-color: rgb(1, 1, 54);\n     color: white;\n     height: 50px;\n}\nth[data-v-409a464a]{\n     border-color:rgb(1, 1, 54);\n}\n.table tbody[data-v-409a464a]{\n     color: rgba(0, 0, 0, 0.75);\n     height: 50px;\n}\n.lista .table tbody tr[data-v-409a464a]{\n     border-bottom: 1px solid black;\n     height: 35px;\n}\ntd[data-v-409a464a]{\n     text-align: center;\n}\na[data-v-409a464a]{\n     color: rgb(1, 1, 54);\n     text-decoration: none;\n}\n.acao[data-v-409a464a]{\n     display: flex;\n     margin-top: 9px;\n     justify-content: center;\n}\n.acao span[data-v-409a464a]{\n      margin-left: 10px;\n      cursor: pointer;\n}\nsvg[data-v-409a464a]{\n     fill:#102d46;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29775,7 +29793,12 @@ var render = function () {
     "div",
     { staticClass: "app" },
     [
-      _c("pedido-cliente"),
+      _c("pedido-cliente", [
+        _c("input", {
+          attrs: { readonly: "readonly", type: "text" },
+          domProps: { value: _vm.vendedor },
+        }),
+      ]),
       _vm._v(" "),
       _c("pedido-produto", {
         directives: [
@@ -29816,9 +29839,16 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "comp-cliente" }, [
     _c("section", { staticClass: "section z-50" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "desativado cl-5 sect" }, [
+        _c(
+          "fieldset",
+          { staticClass: "fieldset" },
+          [_c("legend", [_vm._v("Vendedor")]), _vm._v(" "), _vm._t("default")],
+          2
+        ),
+      ]),
       _vm._v(" "),
-      _vm._m(1),
+      _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "cl" }, [_c("PedidoStatus")], 1),
     ]),
@@ -29859,22 +29889,10 @@ var render = function () {
       ]),
     ]),
     _vm._v(" "),
-    _vm._m(2),
+    _vm._m(1),
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "desativado cl-5 sect" }, [
-      _c("fieldset", { staticClass: "fieldset" }, [
-        _c("legend", [_vm._v("Vendedor")]),
-        _vm._v(" "),
-        _c("input", { attrs: { readonly: "readonly", type: "text " } }),
-      ]),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -30041,7 +30059,22 @@ var render = function () {
             },
           },
         },
-        [_vm._v("X")]
+        [
+          _c(
+            "svg",
+            {
+              attrs: { width: "18px", height: "18px", viewBox: "0 0 900 300" },
+            },
+            [
+              _c("path", {
+                staticClass: "fillButton",
+                attrs: {
+                  d: "M312 251l222 -236c10,-9 23,-15 37,-15l1 0c29,0 53,24 53,53 0,14 -6,27 -17,38l-258 274c-8,7 -17,12 -27,14 -4,1 -7,1 -11,1 -3,0 -7,0 -10,-1 -11,-2 -20,-7 -26,-13l-261 -276c-10,-10 -15,-23 -15,-37 0,-29 24,-53 53,-53l1 0c14,0 27,6 35,15l223 236z",
+                },
+              }),
+            ]
+          ),
+        ]
       ),
     ]),
     _vm._v(" "),
@@ -30129,6 +30162,8 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "editar" }, [
+    _c("div", { staticClass: "nada", on: { click: _vm.fechardisplay } }),
+    _vm._v(" "),
     _c("div", { staticClass: "display-edit" }, [
       _c("div", { staticClass: "fechar", on: { click: _vm.fechardisplay } }, [
         _c(
@@ -30147,7 +30182,111 @@ var render = function () {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _vm._m(1),
+      _c("div", { staticClass: "div-input" }, [
+        _c("div", [
+          _c("label", { attrs: { for: "" } }, [_vm._v("Quantidade")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.produto.qtde,
+                expression: "produto.qtde",
+              },
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.produto.qtde },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.produto, "qtde", $event.target.value)
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("label", { attrs: { for: "" } }, [_vm._v("Valor un.(R$)")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.produto.valor,
+                expression: "produto.valor",
+              },
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.produto.valor },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.produto, "valor", $event.target.value)
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("label", { attrs: { for: "" } }, [_vm._v("Desconto(%)")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.produto.desconto,
+                expression: "produto.desconto",
+              },
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.produto.desconto },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.produto, "desconto", $event.target.value)
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _c("label", { attrs: { for: "" } }, [_vm._v("Acréscimo(%)")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.produto.acrescimo,
+                expression: "produto.acrescimo",
+              },
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.produto.acrescimo },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.produto, "acrescimo", $event.target.value)
+              },
+            },
+          }),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "div-btn" }, [
+        _c("button", { on: { click: _vm.fechardisplay } }, [_vm._v("Salvar")]),
+      ]),
     ]),
   ])
 }
@@ -30158,36 +30297,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "header" }, [
       _c("h6", [_vm._v("Inclusão de produto")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "div-input" }, [
-      _c("div", [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Quantidade")]),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "text" } }),
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Valor un.(R$)")]),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "text" } }),
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Desconto(%)")]),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "text" } }),
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Acréscimo(%)")]),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "text" } }),
-      ]),
     ])
   },
 ]
@@ -30226,6 +30335,8 @@ var render = function () {
             _c("td", [_vm._v(_vm._s(produto.nome))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(produto.codbarras))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(produto.acrescimo))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(produto.desconto))]),
             _vm._v(" "),
@@ -30274,6 +30385,7 @@ var render = function () {
                   ),
                 ]
               ),
+              _vm._v(" "),
               _c(
                 "span",
                 {
@@ -30326,6 +30438,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Nome")]),
         _vm._v(" "),
         _c("th", [_vm._v("Código de barras")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aacréscimo")]),
         _vm._v(" "),
         _c("th", [_vm._v("Desconto")]),
         _vm._v(" "),

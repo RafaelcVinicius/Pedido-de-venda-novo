@@ -1,6 +1,8 @@
 <template>
     <div class="app">
-        <pedido-cliente />
+        <pedido-cliente>
+            <input readonly="readonly" :value="vendedor" type="text">
+        </pedido-cliente>
         <pedido-produto v-show="cliselecionado" />
     </div>
 </template>
@@ -8,11 +10,13 @@
 <script>
 
 export default {
-computed:{
-    cliselecionado(){
-        return this.$store.state.cliselecionado
+    props:['vendedor'],
+    computed:{
+        
+        cliselecionado(){
+            return this.$store.state.cliselecionado
+        }
     }
-}
 }
 </script>
 

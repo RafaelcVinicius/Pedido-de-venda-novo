@@ -3,7 +3,7 @@
         <section class="section z-50">
             <div class="desativado cl-5 sect">
                 <fieldset class="fieldset"><legend>Vendedor</legend>
-                   <input readonly="readonly" type="text ">
+                    <slot></slot>
                 </fieldset>
             </div>
             <div class="cl-4 sect">
@@ -92,11 +92,12 @@ export default {
     .sect fieldset input{
         position: absolute;
         top: 30px;
+        left: 17px;
         margin: 0 20px 0 20px ;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: calc(100% - 45px);
+        width: calc(100% - 50px);
         font-size: 14px;
         height: 30px;
         outline: 0;

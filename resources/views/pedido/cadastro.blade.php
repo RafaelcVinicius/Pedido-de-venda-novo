@@ -12,7 +12,7 @@
             </div>            
     </header>
     <div id="component">
-        <pedido-de-venda />
+        <pedido-de-venda :vendedor="{{json_encode(Auth::user()->name)}}" />
     </div>
 
    
