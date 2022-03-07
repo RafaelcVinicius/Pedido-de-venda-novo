@@ -39,5 +39,13 @@ Route::prefix('home')->group(function () {
         route::post('/consultacliente', [PedidoController::class, 'consultacliente'])->name('pedido.consultacliente');
 
         route::post('/consultaproduto', [PedidoController::class, 'consultaproduto'])->name('pedido.consultaproduto');
+
+        route::post('/gravar', [PedidoController::class, 'gravar'])->name('pedido.gravar');
+
+        route::post('/gravarproduto', [PedidoController::class, 'gravarpedidoproduto'])->name('pedido.gravarproduto');
+        
+        route::post('/gravarcliente', [PedidoController::class, 'gravarpedidocliente'])->name('pedido.gravarcliente');
+
+        route::post('/gravarclientealterar', [PedidoController::class, 'gravarpedidoclientealterar'])->name('pedido.gravarclientealterar');
     });
 });

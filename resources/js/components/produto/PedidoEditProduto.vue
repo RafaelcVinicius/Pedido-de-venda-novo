@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="div-btn">
-                <button @click="fechardisplay">Salvar</button>
+                <button @click.prevent="fechardisplay">Salvar</button>
             </div>
         </div>
     </div>

@@ -19,7 +19,12 @@ export default {
             displayproduto: false,
             dados:[]
         }
-    },     
+    },  
+    computed:{
+        cliente(){
+            return this.$store.state.cliente
+        }
+    },   
     methods: {
         produto() {
             this.displayproduto = true
@@ -31,11 +36,25 @@ export default {
             }else{
                 this.displayproduto = false
             }
+          
         },
         defiProduto(dado) {
+            console.log(this.$store.state.idpedido)
+            this.$http.post('/home/pedido/gravarproduto', {
+                idvenda: this.$store.state.idpedido,
+                idproduto: dado.id,
+                valor: Number(dado.valor),
+                qtde: Number(1),
+                percacrescimo: Number(0),
+                percdesconto: Number(0),
+            }).then(res => res)
+            
             this.displayproduto = false
             this.nomeproduto = ''
             this.$store.commit('addProduto', dado)
+         console.log(dado)              
+
+
         }
     }
 }

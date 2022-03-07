@@ -12,27 +12,29 @@ export default new Vuex.Store({
     state: {
        cliente:{},
        produtos:[].sort(),
-       cliselecionado:false,
+       cliselecionado:true,
        editPro:false,
-       produtoeditado:[]
+       produtoeditado:[],
+       idpedido:0
+       
     },
     getters: {
-        getClientes(state) {
-            return state.cliente
-        },
-        getProduto(state) {
-            return state.produtos
-        }        
+
     },
     mutations: {
+        addIdPedido(state, payload){
+            console.log(payload)
+            state.idpedido = payload
+        },
         addCliente(state, payload) {
-            state.cliente = payload
+            state.cliente = payload           
         },
         addProduto(state, payload){         
             const itemExists = state.produtos.findIndex((i) => i.id === payload.id);
             if(itemExists >= 0 ){
                 state.produtos[itemExists].qtde++;
-            } else {
+            } else {             
+
                 let dados = {}
                 dados.id = payload.id
                 dados.nome = payload.nome
@@ -41,8 +43,9 @@ export default new Vuex.Store({
                 dados.valor = Number(payload.valor)
                 dados.qtde = Number(1)
                 dados.acrescimo = Number(0)
-
-                state.produtos.push(dados);                  
+                state.produtos.push(dados); 
+                
+               
             }
         },
         editProduto(state, payload){     
@@ -58,6 +61,7 @@ export default new Vuex.Store({
         editProdisplay(state, payload){
             state.editPro = payload
             state.produtoeditado = []
-        }
+        },
+
     }  
 })

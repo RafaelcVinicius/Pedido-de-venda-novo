@@ -8,12 +8,13 @@
             </div>
             <div class="novo">
                 <button class="cadastrar" href="{{route('pedido.cadastro')}}">Cancelar</button>
-                <button class="cadastrar" href="{{route('pedido.cadastro')}}">Gravar</button>
+                <button class="cadastrar" onclick="document.getElementById('form-pedido').submit()" >Gravar</button>
             </div>            
     </header>
     <div id="component">
-        <pedido-de-venda :vendedor="{{json_encode(Auth::user()->name)}}" />
+        <form action="{{route('pedido.gravar')}}" method="post" id="form-pedido">
+                @csrf        
+                <pedido-de-venda :vendedor="{{json_encode(Auth::user()->name)}}" :idvendedor="{{Auth::user()->id}}" />            
+        </form>
     </div>
-
-   
 @endsection

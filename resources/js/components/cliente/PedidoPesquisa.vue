@@ -1,7 +1,7 @@
 <template>
     <div class="pes sect">
         <fieldset class="fieldset" :class="{ativocli: displaycliente }"><legend>Cliente</legend>
-            <input  @keyup.prevent="cliente" v-model="nomecliente" type="text ">
+            <input autocomplete="off"  @keyup.prevent="cliente" v-model="nomecliente" name="cliente" type="text ">
         </fieldset>
         <div   v-show="displaycliente" class="stat">
             <ul>
@@ -13,17 +13,17 @@
 
 <script>
 export default {
+    props:{idvendedor: Number},
     data(){
         return{
             nomecliente:'',
             displaycliente: false,
-            dados:[]
+            dados:[],
         }
     },     
     methods: {
         cliente() {
             this.displaycliente = true
-
         if(this.nomecliente.length > 0){
             this.$http.post('/home/pedido/consultacliente', {
             nome: this.nomecliente 
@@ -31,9 +31,21 @@ export default {
         }else{
             this.displaycliente = false
         }
-
         },
         defiCliente(dado) {
+
+            if(this.$store.state.idpedido === 0){
+                this.$http.post('/home/pedido/gravarcliente', {
+                    idvendedor: this.idvendedor,
+                    idcliente: dado.id
+                }).then(res => {this.$store.commit('addIdPedido', res.data) })
+            }else{
+                this.$http.post('/home/pedido/gravarclientealterar', {
+                    idpedido: this.$store.state.idpedido,
+                    idcliente: dado.id
+                }).then(res => res.data)
+            }
+
             this.displaycliente = false
             this.nomecliente = dado.nome
             this.$store.commit('addCliente', dado)

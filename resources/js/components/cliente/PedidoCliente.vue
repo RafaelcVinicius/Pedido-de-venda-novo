@@ -8,7 +8,7 @@
             </div>
             <div class="cl-4 sect">
                 <fieldset class="fieldset" ><legend>Data</legend>
-                    <input type="date"  name="" id="">
+                    <input type="date"  name="dataentrega" id="">
                 </fieldset>
             </div>
             <div class="cl">               
@@ -17,19 +17,19 @@
         </section>
         <section class="section z-40">
             <div class="cl-5 cliente sect">
-                <PedidoPesquisa>                    
+                <PedidoPesquisa :idvendedor="idvendedor">                    
                 </PedidoPesquisa>
             </div>
             <div class=" cl-4 cnpj sect">
                 <fieldset class="fieldset desativado"><legend>CNPJ/CPF</legend>
-                    <input v-model="cliente.cnpjcpf" readonly="readonly" type="text ">
+                    <input v-model="cliente.cnpjcpf" name="cnpjcpf" readonly="readonly" type="text">
                 </fieldset>
-            </div>  
+            </div>
         </section>
         <section class="section">
-            <div class="cl-5 sect email desativado">
+            <div class="cl-5 sect email">
                 <fieldset class="fieldset"><legend>E-mail</legend>
-                    <input readonly="readonly" type="text ">
+                    <input name="email" type="text">
                 </fieldset>
             </div>
         </section>
@@ -38,6 +38,10 @@
 
 <script>
 export default {
+    props:{idvendedor:Number},
+    methods:{
+
+    },
     computed:{
         cliente(){
             return this.$store.state.cliente
@@ -59,7 +63,6 @@ export default {
     #component{
         max-width: 1280px;
         width: 100%;
-    
     }
     .section{
         display: flex;
@@ -82,8 +85,7 @@ export default {
         border-bottom-right-radius: 25px;
         border-bottom-left-radius: 25px;
         height: 65px;
-        border: 1px solid #dcdcdc;
-        
+        border: 1px solid #dcdcdc;        
     }
     .sect fieldset legend{
         padding:10px;
@@ -109,13 +111,16 @@ export default {
         flex: 0 0 41.66666%;
         max-width: 41.666666%;
     }
-     .cl-4{
+    .cl-4{
         flex: 0 0 33.333333%;
         max-width: 33.3333333%;
     }
-     .cl{
+    .cl{
         flex-basis: 0;
         flex-grow: 1;
+    }
+    .email{
+        background-color: white;
     }
    
 </style>

@@ -5272,7 +5272,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['vendedor'],
+  props: {
+    vendedor: String,
+    idvendedor: Number
+  },
   computed: {
     cliselecionado: function cliselecionado() {
       return this.$store.state.cliselecionado;
@@ -5332,6 +5335,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    idvendedor: Number
+  },
+  methods: {},
   computed: {
     cliente: function cliente() {
       return this.$store.state.cliente;
@@ -5366,6 +5373,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    idvendedor: Number
+  },
   data: function data() {
     return {
       nomecliente: '',
@@ -5390,6 +5400,24 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     defiCliente: function defiCliente(dado) {
+      var _this2 = this;
+
+      if (this.$store.state.idpedido === 0) {
+        this.$http.post('/home/pedido/gravarcliente', {
+          idvendedor: this.idvendedor,
+          idcliente: dado.id
+        }).then(function (res) {
+          _this2.$store.commit('addIdPedido', res.data);
+        });
+      } else {
+        this.$http.post('/home/pedido/gravarclientealterar', {
+          idpedido: this.$store.state.idpedido,
+          idcliente: dado.id
+        }).then(function (res) {
+          return res.data;
+        });
+      }
+
       this.displaycliente = false;
       this.nomecliente = dado.nome;
       this.$store.commit('addCliente', dado);
@@ -5597,6 +5625,11 @@ __webpack_require__.r(__webpack_exports__);
       dados: []
     };
   },
+  computed: {
+    cliente: function cliente() {
+      return this.$store.state.cliente;
+    }
+  },
   methods: {
     produto: function produto() {
       var _this = this;
@@ -5614,9 +5647,21 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     defiProduto: function defiProduto(dado) {
+      console.log(this.$store.state.idpedido);
+      this.$http.post('/home/pedido/gravarproduto', {
+        idvenda: this.$store.state.idpedido,
+        idproduto: dado.id,
+        valor: Number(dado.valor),
+        qtde: Number(1),
+        percacrescimo: Number(0),
+        percdesconto: Number(0)
+      }).then(function (res) {
+        return res;
+      });
       this.displayproduto = false;
       this.nomeproduto = '';
       this.$store.commit('addProduto', dado);
+      console.log(dado);
     }
   }
 });
@@ -5788,19 +5833,17 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0_
   state: {
     cliente: {},
     produtos: [].sort(),
-    cliselecionado: false,
+    cliselecionado: true,
     editPro: false,
-    produtoeditado: []
+    produtoeditado: [],
+    idpedido: 0
   },
-  getters: {
-    getClientes: function getClientes(state) {
-      return state.cliente;
-    },
-    getProduto: function getProduto(state) {
-      return state.produtos;
-    }
-  },
+  getters: {},
   mutations: {
+    addIdPedido: function addIdPedido(state, payload) {
+      console.log(payload);
+      state.idpedido = payload;
+    },
     addCliente: function addCliente(state, payload) {
       state.cliente = payload;
     },
@@ -10912,7 +10955,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.z-50{\n    z-index: 50;\n}\n.z-40{\n    z-index: 40;\n}\n.desativado{\n    opacity: 0.5;\n}\n#component{\n    max-width: 1280px;\n    width: 100%;\n}\n.section{\n    display: flex;\n    position: relative;\n    -moz-column-gap: 1rem;\n         column-gap: 1rem;\n    max-width: 1280px;\n    width: 100%;\n    margin-top: 10px;\n    color: rgba(0, 0, 0, 0.75);\n}\n.sect{\n    cursor: pointer;\n    width: 100%;\n    position: relative;\n}\n.fieldset{\n    border: 1px solid rgba(0, 0, 0, 0.288);\n    border-top-right-radius: 25px;\n    border-top-left-radius: 25px;\n    border-bottom-right-radius: 25px;\n    border-bottom-left-radius: 25px;\n    height: 65px;\n    border: 1px solid #dcdcdc;\n}\n.sect fieldset legend{\n    padding:10px;\n    font-size: 15px;\n}\n.sect fieldset input{\n    position: absolute;\n    top: 30px;\n    left: 17px;\n    margin: 0 20px 0 20px ;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: calc(100% - 50px);\n    font-size: 14px;\n    height: 30px;\n    outline: 0;\n    cursor: pointer;\n    z-index: 1;\n    color: rgba(0, 0, 0, 0.75);\n}\n.cl-5{\n    flex: 0 0 41.66666%;\n    max-width: 41.666666%;\n}\n.cl-4{\n    flex: 0 0 33.333333%;\n    max-width: 33.3333333%;\n}\n.cl{\n    flex-basis: 0;\n    flex-grow: 1;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.z-50{\n    z-index: 50;\n}\n.z-40{\n    z-index: 40;\n}\n.desativado{\n    opacity: 0.5;\n}\n#component{\n    max-width: 1280px;\n    width: 100%;\n}\n.section{\n    display: flex;\n    position: relative;\n    -moz-column-gap: 1rem;\n         column-gap: 1rem;\n    max-width: 1280px;\n    width: 100%;\n    margin-top: 10px;\n    color: rgba(0, 0, 0, 0.75);\n}\n.sect{\n    cursor: pointer;\n    width: 100%;\n    position: relative;\n}\n.fieldset{\n    border: 1px solid rgba(0, 0, 0, 0.288);\n    border-top-right-radius: 25px;\n    border-top-left-radius: 25px;\n    border-bottom-right-radius: 25px;\n    border-bottom-left-radius: 25px;\n    height: 65px;\n    border: 1px solid #dcdcdc;\n}\n.sect fieldset legend{\n    padding:10px;\n    font-size: 15px;\n}\n.sect fieldset input{\n    position: absolute;\n    top: 30px;\n    left: 17px;\n    margin: 0 20px 0 20px ;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: calc(100% - 50px);\n    font-size: 14px;\n    height: 30px;\n    outline: 0;\n    cursor: pointer;\n    z-index: 1;\n    color: rgba(0, 0, 0, 0.75);\n}\n.cl-5{\n    flex: 0 0 41.66666%;\n    max-width: 41.666666%;\n}\n.cl-4{\n    flex: 0 0 33.333333%;\n    max-width: 33.3333333%;\n}\n.cl{\n    flex-basis: 0;\n    flex-grow: 1;\n}\n.email{\n    background-color: white;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29793,7 +29836,7 @@ var render = function () {
     "div",
     { staticClass: "app" },
     [
-      _c("pedido-cliente", [
+      _c("pedido-cliente", { attrs: { idvendedor: _vm.idvendedor } }, [
         _c("input", {
           attrs: { readonly: "readonly", type: "text" },
           domProps: { value: _vm.vendedor },
@@ -29857,7 +29900,7 @@ var render = function () {
       _c(
         "div",
         { staticClass: "cl-5 cliente sect" },
-        [_c("PedidoPesquisa")],
+        [_c("PedidoPesquisa", { attrs: { idvendedor: _vm.idvendedor } })],
         1
       ),
       _vm._v(" "),
@@ -29874,7 +29917,7 @@ var render = function () {
                 expression: "cliente.cnpjcpf",
               },
             ],
-            attrs: { readonly: "readonly", type: "text " },
+            attrs: { name: "cnpjcpf", readonly: "readonly", type: "text" },
             domProps: { value: _vm.cliente.cnpjcpf },
             on: {
               input: function ($event) {
@@ -29901,7 +29944,7 @@ var staticRenderFns = [
       _c("fieldset", { staticClass: "fieldset" }, [
         _c("legend", [_vm._v("Data")]),
         _vm._v(" "),
-        _c("input", { attrs: { type: "date", name: "", id: "" } }),
+        _c("input", { attrs: { type: "date", name: "dataentrega", id: "" } }),
       ]),
     ])
   },
@@ -29910,11 +29953,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("section", { staticClass: "section" }, [
-      _c("div", { staticClass: "cl-5 sect email desativado" }, [
+      _c("div", { staticClass: "cl-5 sect email" }, [
         _c("fieldset", { staticClass: "fieldset" }, [
           _c("legend", [_vm._v("E-mail")]),
           _vm._v(" "),
-          _c("input", { attrs: { readonly: "readonly", type: "text " } }),
+          _c("input", { attrs: { name: "email", type: "text" } }),
         ]),
       ]),
     ])
@@ -29958,7 +30001,7 @@ var render = function () {
               expression: "nomecliente",
             },
           ],
-          attrs: { type: "text " },
+          attrs: { autocomplete: "off", name: "cliente", type: "text " },
           domProps: { value: _vm.nomecliente },
           on: {
             keyup: function ($event) {
@@ -30040,7 +30083,7 @@ var render = function () {
       _c("legend", [_vm._v("Status")]),
       _vm._v(" "),
       _c("input", {
-        attrs: { readonly: "readonly", type: "text" },
+        attrs: { readonly: "readonly", type: "text", name: "status" },
         domProps: { value: _vm.status },
         on: {
           click: function ($event) {
@@ -30285,7 +30328,18 @@ var render = function () {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "div-btn" }, [
-        _c("button", { on: { click: _vm.fechardisplay } }, [_vm._v("Salvar")]),
+        _c(
+          "button",
+          {
+            on: {
+              click: function ($event) {
+                $event.preventDefault()
+                return _vm.fechardisplay.apply(null, arguments)
+              },
+            },
+          },
+          [_vm._v("Salvar")]
+        ),
       ]),
     ]),
   ])
