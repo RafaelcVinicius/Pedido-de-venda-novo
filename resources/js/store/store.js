@@ -23,7 +23,6 @@ export default new Vuex.Store({
     },
     mutations: {
         addIdPedido(state, payload){
-            console.log(payload)
             state.idpedido = payload
         },
         addCliente(state, payload) {

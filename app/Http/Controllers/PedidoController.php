@@ -8,6 +8,7 @@ use App\Models\Itempedido;
 use App\Models\Clientes;
 use App\Models\Produtos;
 use Illuminate\Http\Request;
+use Laravel\Ui\Presets\React;
 
 class PedidoController extends Controller
 {
@@ -42,6 +43,29 @@ class PedidoController extends Controller
 
     }
 
+    public function deleteproduto(Request $request){
+        $dados = Itempedido::where('id_venda', $request->idpedido)->where('id_produto', $request->idproduto)->first();
+        $dados->delete();
+    }
+
+
+
+
+    public function editarproduto(Request $request){
+        $dados = Itempedido::where('id_venda', $request->idpedido)->where('id_produto', $request->idproduto)->first();
+        $dados->valor = $request->valor;
+        $dados->qtde = $request->qtde;
+        $dados->percacrescimo = $request->acrescimo;
+        $dados->percdesconto = $request->desconto;
+        $dados->save();
+    }
+
+
+
+
+
+
+    
     public function gravarpedidoclientealterar(Request $request){
         
         $dados = Pedido::find($request->idpedido);

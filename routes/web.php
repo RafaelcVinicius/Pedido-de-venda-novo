@@ -43,6 +43,10 @@ Route::prefix('home')->group(function () {
         route::post('/gravar', [PedidoController::class, 'gravar'])->name('pedido.gravar');
 
         route::post('/gravarproduto', [PedidoController::class, 'gravarpedidoproduto'])->name('pedido.gravarproduto');
+
+        route::post('/editarproduto', [PedidoController::class, 'editarproduto'])->name('pedido.editarproduto');
+
+        route::post('/deleteproduto', [PedidoController::class, 'deleteproduto'])->name('pedido.deleteproduto');
         
         route::post('/gravarcliente', [PedidoController::class, 'gravarpedidocliente'])->name('pedido.gravarcliente');
 

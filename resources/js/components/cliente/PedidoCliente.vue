@@ -119,8 +119,5 @@ export default {
         flex-basis: 0;
         flex-grow: 1;
     }
-    .email{
-        background-color: white;
-    }
    
 </style>

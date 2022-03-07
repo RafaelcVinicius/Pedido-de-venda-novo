@@ -5517,13 +5517,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      pro: {}
+    };
+  },
   methods: {
     fechardisplay: function fechardisplay() {
       this.$store.commit('editProdisplay', false);
+      console.log(this.pro);
+    },
+    editProduto: function editProduto() {
+      var _this = this;
+
+      this.$http.post('/home/pedido/editarproduto', {
+        idpedido: this.$store.state.idpedido,
+        idproduto: this.$store.state.produtoeditado.id,
+        valor: this.$store.state.produtoeditado.valor,
+        qtde: this.$store.state.produtoeditado.qtde,
+        desconto: this.$store.state.produtoeditado.desconto,
+        acrescimo: this.$store.state.produtoeditado.acrescimo
+      }).then(function (res) {
+        _this.dados = res.data;
+      });
+      this.$store.commit('editProdisplay', false);
     }
+  },
+  updated: function updated() {
+    //  this.pro = this.$store.state.produtoeditado
+    console.log(this.$store.state.produtoeditado);
   },
   computed: {
     produto: function produto() {
+      // this.pro = this.$store.state.produtoeditado
       return this.$store.state.produtoeditado;
     }
   }
@@ -5581,10 +5607,18 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    delProduto: function delProduto(e) {
+    delProduto: function delProduto(e, id) {
+      var _this = this;
+
+      this.$http.post('/home/pedido/deleteproduto', {
+        idpedido: this.$store.state.idpedido,
+        idproduto: id
+      }).then(function (res) {
+        _this.dados = res.data;
+      });
       this.$store.commit('delProduto', e);
     },
-    editProduto: function editProduto(e) {
+    editProduto: function editProduto(e, produto) {
       this.$store.commit('editProdisplay', true);
       this.$store.commit('editProduto', e);
     }
@@ -5661,7 +5695,6 @@ __webpack_require__.r(__webpack_exports__);
       this.displayproduto = false;
       this.nomeproduto = '';
       this.$store.commit('addProduto', dado);
-      console.log(dado);
     }
   }
 });
@@ -5841,7 +5874,6 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0_
   getters: {},
   mutations: {
     addIdPedido: function addIdPedido(state, payload) {
-      console.log(payload);
       state.idpedido = payload;
     },
     addCliente: function addCliente(state, payload) {
@@ -10955,7 +10987,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.z-50{\n    z-index: 50;\n}\n.z-40{\n    z-index: 40;\n}\n.desativado{\n    opacity: 0.5;\n}\n#component{\n    max-width: 1280px;\n    width: 100%;\n}\n.section{\n    display: flex;\n    position: relative;\n    -moz-column-gap: 1rem;\n         column-gap: 1rem;\n    max-width: 1280px;\n    width: 100%;\n    margin-top: 10px;\n    color: rgba(0, 0, 0, 0.75);\n}\n.sect{\n    cursor: pointer;\n    width: 100%;\n    position: relative;\n}\n.fieldset{\n    border: 1px solid rgba(0, 0, 0, 0.288);\n    border-top-right-radius: 25px;\n    border-top-left-radius: 25px;\n    border-bottom-right-radius: 25px;\n    border-bottom-left-radius: 25px;\n    height: 65px;\n    border: 1px solid #dcdcdc;\n}\n.sect fieldset legend{\n    padding:10px;\n    font-size: 15px;\n}\n.sect fieldset input{\n    position: absolute;\n    top: 30px;\n    left: 17px;\n    margin: 0 20px 0 20px ;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: calc(100% - 50px);\n    font-size: 14px;\n    height: 30px;\n    outline: 0;\n    cursor: pointer;\n    z-index: 1;\n    color: rgba(0, 0, 0, 0.75);\n}\n.cl-5{\n    flex: 0 0 41.66666%;\n    max-width: 41.666666%;\n}\n.cl-4{\n    flex: 0 0 33.333333%;\n    max-width: 33.3333333%;\n}\n.cl{\n    flex-basis: 0;\n    flex-grow: 1;\n}\n.email{\n    background-color: white;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.z-50{\n    z-index: 50;\n}\n.z-40{\n    z-index: 40;\n}\n.desativado{\n    opacity: 0.5;\n}\n#component{\n    max-width: 1280px;\n    width: 100%;\n}\n.section{\n    display: flex;\n    position: relative;\n    -moz-column-gap: 1rem;\n         column-gap: 1rem;\n    max-width: 1280px;\n    width: 100%;\n    margin-top: 10px;\n    color: rgba(0, 0, 0, 0.75);\n}\n.sect{\n    cursor: pointer;\n    width: 100%;\n    position: relative;\n}\n.fieldset{\n    border: 1px solid rgba(0, 0, 0, 0.288);\n    border-top-right-radius: 25px;\n    border-top-left-radius: 25px;\n    border-bottom-right-radius: 25px;\n    border-bottom-left-radius: 25px;\n    height: 65px;\n    border: 1px solid #dcdcdc;\n}\n.sect fieldset legend{\n    padding:10px;\n    font-size: 15px;\n}\n.sect fieldset input{\n    position: absolute;\n    top: 30px;\n    left: 17px;\n    margin: 0 20px 0 20px ;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: calc(100% - 50px);\n    font-size: 14px;\n    height: 30px;\n    outline: 0;\n    cursor: pointer;\n    z-index: 1;\n    color: rgba(0, 0, 0, 0.75);\n}\n.cl-5{\n    flex: 0 0 41.66666%;\n    max-width: 41.666666%;\n}\n.cl-4{\n    flex: 0 0 33.333333%;\n    max-width: 33.3333333%;\n}\n.cl{\n    flex-basis: 0;\n    flex-grow: 1;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -30098,6 +30130,7 @@ var render = function () {
           staticClass: "btn",
           on: {
             click: function ($event) {
+              $event.preventDefault()
               _vm.displaystatus = !_vm.displaystatus
             },
           },
@@ -30334,7 +30367,7 @@ var render = function () {
             on: {
               click: function ($event) {
                 $event.preventDefault()
-                return _vm.fechardisplay.apply(null, arguments)
+                return _vm.editProduto(_vm.produto)
               },
             },
           },
@@ -30404,7 +30437,7 @@ var render = function () {
                 {
                   on: {
                     click: function ($event) {
-                      return _vm.editProduto(i)
+                      return _vm.editProduto(i, produto)
                     },
                   },
                 },
@@ -30445,7 +30478,7 @@ var render = function () {
                 {
                   on: {
                     click: function ($event) {
-                      return _vm.delProduto(i)
+                      return _vm.delProduto(i, produto.id)
                     },
                   },
                 },

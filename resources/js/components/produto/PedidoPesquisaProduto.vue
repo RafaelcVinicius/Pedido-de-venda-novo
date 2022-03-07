@@ -51,8 +51,7 @@ export default {
             
             this.displayproduto = false
             this.nomeproduto = ''
-            this.$store.commit('addProduto', dado)
-         console.log(dado)              
+            this.$store.commit('addProduto', dado)           
 
 
         }

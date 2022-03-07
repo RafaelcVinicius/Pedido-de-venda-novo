@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="div-btn">
-                <button @click.prevent="fechardisplay">Salvar</button>
+                <button @click.prevent="editProduto(produto)">Salvar</button>
             </div>
         </div>
     </div>
@@ -38,13 +38,35 @@
 
 <script>
 export default {
+    data(){
+        return{
+            pro:{}
+        }
+    },
     methods:{
         fechardisplay(){
             this.$store.commit('editProdisplay', false)
+            console.log(this.pro)
+        },
+        editProduto(){
+            this.$http.post('/home/pedido/editarproduto', {
+            idpedido: this.$store.state.idpedido,
+            idproduto: this.$store.state.produtoeditado.id,
+            valor: this.$store.state.produtoeditado.valor,
+            qtde: this.$store.state.produtoeditado.qtde,
+            desconto: this.$store.state.produtoeditado.desconto,
+            acrescimo: this.$store.state.produtoeditado.acrescimo
+            }).then(res => { this.dados = res.data }) 
+            this.$store.commit('editProdisplay', false)
         }
+    },
+    updated(){
+        //  this.pro = this.$store.state.produtoeditado
+           console.log(this.$store.state.produtoeditado )
     },
     computed: {
         produto(){
+           // this.pro = this.$store.state.produtoeditado
             return this.$store.state.produtoeditado
         }
     }
