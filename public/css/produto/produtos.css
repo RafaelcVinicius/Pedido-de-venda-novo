@@ -33,11 +33,11 @@
     box-shadow: 0 0 5px #ccc;
 }
 .tb{
-position: relative;
-max-width: 1200px;
-width: 100%;
-display: flex;
-align-items: center;
+    position: relative;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 thead{
@@ -50,12 +50,22 @@ thead{
 }
 .td-table{
     font-size: 16px;
-    border-bottom: 1px solid #00223388;
-    border-left: 1px solid #00223388;;
-    border-right: 1px solid #00223388;
+    border-bottom: 1px solid #092344a4;
     padding: 8px;
 }
 .acao{
     height: 70px;
     width: 80px;
+}
+tbody tr{
+    height: 35px;
+    text-align: center;
+}
+tbody tr td{
+    border-bottom: 1px solid #092344a4;
+}
+.search{
+    height: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.801);
+    color: black;
 }

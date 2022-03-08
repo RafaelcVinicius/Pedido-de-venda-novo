@@ -4,7 +4,7 @@
             <input autocomplete="off"  @keyup.prevent="cliente" v-model="nomecliente" name="cliente" type="text ">
         </fieldset>
         <div   v-show="displaycliente" class="stat">
-            <ul>
+            <ul class="ul">
                 <li @click="defiCliente(dado)" v-for="(dado, i) in dados" :key="i">{{dado.nome}}</li>
             </ul>
         </div>
@@ -54,12 +54,37 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
     .ativocli{
         border-top-right-radius: 25px;
         border-top-left-radius: 25px;
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
-        border-bottom:none ;
+        border-bottom:none;
+    }
+    li{
+        display: flex;
+        align-items: center;
+        list-style: none;
+        height: 15px;
+        padding: 10px;  
+    }
+    ul{
+        list-style: none;
+        height: 50;
+        border: 1px solid rgba(0, 0, 0, 0.20);
+        border-top:none ;
+        background-color: white;
+        border-radius: 0 0 25px 25px;
+        color: rgba(0, 0, 0, 0.62);
+    }
+    li:hover{
+        background-color: rgb(29, 98, 247);
+        color: white;
+    }
+    .stat{
+        position: absolute;
+        width: 100%;
+        padding-bottom: 30px;
     }
 </style>

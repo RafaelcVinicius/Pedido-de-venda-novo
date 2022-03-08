@@ -38,6 +38,11 @@ Vue.component('PedidoStatus', require('./components/cliente/PedidoStatus.vue').d
 
 Vue.component('PedidoPesquisa', require('./components/cliente/PedidoPesquisa.vue').default);
 
+Vue.component('CadastroProduto', require('./components/cadastrodeproduto/CadastroProduto.vue').default);
+
+Vue.component('CadastroCliente', require('./components/cadastrodecliente/CadastroCliente.vue').default);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

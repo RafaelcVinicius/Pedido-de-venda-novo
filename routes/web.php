@@ -36,6 +36,8 @@ Route::prefix('home')->group(function () {
 
         route::get('/cadastro', [PedidoController::class, 'cadastro'])->name('pedido.cadastro');
 
+        route::get('/cadastro/{id}', [PedidoController::class, 'editarpedido'])->name('pedido.editarpedido');
+
         route::post('/consultacliente', [PedidoController::class, 'consultacliente'])->name('pedido.consultacliente');
 
         route::post('/consultaproduto', [PedidoController::class, 'consultaproduto'])->name('pedido.consultaproduto');
@@ -51,5 +53,6 @@ Route::prefix('home')->group(function () {
         route::post('/gravarcliente', [PedidoController::class, 'gravarpedidocliente'])->name('pedido.gravarcliente');
 
         route::post('/gravarclientealterar', [PedidoController::class, 'gravarpedidoclientealterar'])->name('pedido.gravarclientealterar');
+
     });
 });

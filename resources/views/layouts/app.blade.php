@@ -37,14 +37,14 @@
                     @endif
                     @else
                         <ul>
-                            <li class="{{request()->routeIs('home') ? 'active' : ''}}"><a href="{{route('home')}}">Início</a></li>
-                            <li class="{{request()->routeIs('pedido.*') ? 'active' : ''}}" ><a href="{{route('pedido.index')}}">Pedidos</a></li>
-                            <li class="{{request()->routeIs('clientes.*') ? 'active' : ''}}"><a href="{{route('clientes.index')}}">Clientes</a></li>
-                            <li class="{{request()->routeIs('produtos.*') ? 'active' : ''}}"><a href="{{route('produtos.index')}}">Produtos</a></li>
+                            <li class="{{request()->routeIs('home') ? 'active' : ''}}"><a class="a-nav-bar" href="{{route('home')}}">Início</a></li>
+                            <li class="{{request()->routeIs('pedido.*') ? 'active' : ''}}" ><a class="a-nav-bar"  href="{{route('pedido.index')}}">Pedidos</a></li>
+                            <li class="{{request()->routeIs('clientes.*') ? 'active' : ''}}"><a class="a-nav-bar"  href="{{route('clientes.index')}}">Clientes</a></li>
+                            <li class="{{request()->routeIs('produtos.*') ? 'active' : ''}}"><a class="a-nav-bar"  href="{{route('produtos.index')}}">Produtos</a></li>
                         </ul>
                         <ul>
-                            <li><a href="">Configuração</a></li>
-                            <li><a class="logout" href="{{ route('logout') }}"
+                            <li><a class="a-nav-bar" class="{{request()->routeIs('produtos.*') ? 'active' : ''}}" href="#">Configuração</a></li>
+                            <li><a class="a-nav-bar" class="logout" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                                 {{ __('Sair') }}

@@ -48,12 +48,16 @@ thead{
 .tabela-1{
     width: 1200px;
 }
+tbody tr{
+    height: 35px;
+    text-align: center;
+}
 .td-table{
     font-size: 16px;
-    border-bottom: 1px solid #00223388;
-    border-left: 1px solid #00223388;;
-    border-right: 1px solid #00223388;
     padding: 8px;
+}
+tbody tr td{
+    border-bottom: 1px solid #092344a4;
 }
 .acao{
     height: 70px;

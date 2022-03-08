@@ -21,3 +21,42 @@
     justify-content: center;
     align-items: center;
 }
+#app{
+    margin-top: 100px;
+}
+.section-pedido{
+    max-width: 1280px;
+    width: 100%;
+    margin-bottom: 50px;
+}
+.cadastro{
+    max-width: 1280px;
+    width: 100%;
+    background-color: white;
+    border-radius: 7px;
+    box-shadow: 0 0 5px #ccc;
+}
+.tb{
+    padding: 50px;
+    max-width: 1180px;
+    width: 100%;
+}
+.tabela-1{
+    width: 100%;
+}
+.tabela-1 thead{
+    background-color: #03202e;
+    color: white;
+    height: 50px;
+}
+tbody tr{
+    height: 35px;
+    text-align: center;
+}
+tbody tr td{
+    border-bottom: 1px solid #092344a4;
+}
+.acao-table{
+    color: black;
+    padding: 10px;
+}

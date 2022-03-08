@@ -32,6 +32,6 @@ class Itempedido extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('itempedido');
     }
 }

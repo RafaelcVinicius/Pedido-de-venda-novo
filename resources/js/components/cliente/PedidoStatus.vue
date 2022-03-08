@@ -26,13 +26,12 @@ export default {
 }
 </script>
 
-<style>
+<style  scoped>
     .status{
         position: relative;
         margin-top: 10px;
     }
     .stat{      
-        display: block;
         position: absolute;  
         width: calc(100% - 2px);
         border: 1px solid #dcdcdc;
@@ -73,12 +72,15 @@ export default {
         border: 1px solid #dcdcdc;
     }
     li{
+        display: flex;
+        align-items: center;
         list-style: none;
-        padding: 10px;
+        height: 15px;
+        padding: 10px;  
     }
      li:hover{
-         background-color: rgb(25, 87, 255);
-         color: white;
+        background-color: rgb(25, 87, 255);
+        color: white;
      }
     .btn{
         position: absolute;

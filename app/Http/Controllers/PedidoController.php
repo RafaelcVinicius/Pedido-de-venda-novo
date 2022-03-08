@@ -14,7 +14,10 @@ class PedidoController extends Controller
 {
 
     function index() {
-        return view('pedido.index');
+        
+        $dados = Pedido::get();
+        
+        return view('pedido.index')->with('pedidos', $dados);
     }
     function cadastro() {
         return view('pedido.cadastro');
@@ -32,16 +35,14 @@ class PedidoController extends Controller
 
     public function gravar(Request $request){
 
-            $dados = Pedido::where('id', $request->id_pedido)->first();
-            $dados->email = $request->email;
-            $dados->situacao = $request->situacao;
-            $dados->previsaoentrega = $request->previsaoentrega;
-            $dados->save();
+        $dados = Pedido::where('id', $request->id_pedido)->first();
+        $dados->email = $request->email;
+        $dados->situacao = $request->situacao;
+        $dados->previsaoentrega = $request->previsaoentrega;
+        $dados->save();
 
-            return redirect()->route('pedido.index');
+        return redirect()->route('pedido.index');
     }
-
-
 
 
     public function gravarpedidoproduto(Request $request){ 
@@ -54,16 +55,12 @@ class PedidoController extends Controller
         $dados->percacrescimo = 0;
         $dados->percdesconto = 0;
         $dados->save();
-
     }
 
     public function deleteproduto(Request $request){
         $dados = Itempedido::where('id_venda', $request->idpedido)->where('id_produto', $request->idproduto)->first();
         $dados->delete();
     }
-
-
-
 
     public function editarproduto(Request $request){
         $dados = Itempedido::where('id_venda', $request->idpedido)->where('id_produto', $request->idproduto)->first();
@@ -73,7 +70,6 @@ class PedidoController extends Controller
         $dados->percdesconto = $request->desconto;
         $dados->save();
     }
-
     
     public function gravarpedidoclientealterar(Request $request){
         
@@ -83,8 +79,7 @@ class PedidoController extends Controller
     }
 
     public function gravarpedidocliente(Request $request){
-        
-
+    
         $dados = new Pedido();
         $dados->id_cliente = $request->idcliente;
         $dados->id_vendedor = $request->idvendedor;
@@ -92,6 +87,10 @@ class PedidoController extends Controller
         $dados->save();
 
         return json_encode($dados->id);
+    }
 
+    public function editarpedido($id){
+            
     }
 }
+

@@ -18,7 +18,7 @@ class Pedido extends Migration
             $table->integer('id_cliente');
             $table->integer('id_vendedor');
             $table->string('email', 50)->nullable();
-            $table->string('Situacao', 20);
+            $table->string('situacao', 20);
             $table->date('previsaoentrega')->nullable();
             $table->decimal('totalpedido', 15,2)->default(0.00);
             $table->timestamps();
@@ -32,6 +32,6 @@ class Pedido extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('pedido');
     }
 }
