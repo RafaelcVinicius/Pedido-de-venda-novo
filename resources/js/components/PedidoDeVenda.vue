@@ -1,5 +1,6 @@
 <template>
     <div class="app">
+        <input type="hidden" :value="idPedido" name="id_pedido">
         <pedido-cliente :idvendedor="idvendedor">
             <input readonly="readonly" :value="vendedor" type="text">
         </pedido-cliente>
@@ -17,6 +18,9 @@ export default {
     computed:{        
         cliselecionado(){
             return this.$store.state.cliselecionado
+        },
+        idPedido(){
+            return this.$store.state.idpedido
         }
     }
 }

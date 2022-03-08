@@ -3,9 +3,29 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-// Vue.filter('dinheiro', valor => {
-// 	return `R$ ${parseFloat(valor).toFixed(2)}`.replace('.', ',')
-// })
+Vue.filter('colocarvirgula', valor => {
+	return `R$ ${parseFloat(valor).toFixed(2)}`.replace('.', ',')
+})
+
+Vue.filter('cpfcnpj', function(valor) {
+    const arr = `${valor}`.split('')
+
+    if(arr.length === 11){
+        arr.splice(3, 0, '.')
+        arr.splice(7, 0, '.')
+        arr.splice(11, 0, '-')
+        return arr.join('')
+    }
+    else if(arr.length === 14){
+        arr.splice(2, 0, '.')
+        arr.splice(7, 0, '.')
+        arr.splice(11, 0, '/')
+        arr.splice(15, 0, '-')
+        return arr.join('')
+    }else{
+        return ''
+    }
+})
 
 export default new Vuex.Store({
 
@@ -14,7 +34,7 @@ export default new Vuex.Store({
        produtos:[].sort(),
        cliselecionado:true,
        editPro:false,
-       produtoeditado:[],
+       produtonovo:[],
        idpedido:0
        
     },
@@ -42,14 +62,11 @@ export default new Vuex.Store({
                 dados.valor = Number(payload.valor)
                 dados.qtde = Number(1)
                 dados.acrescimo = Number(0)
-                state.produtos.push(dados); 
-                
-               
+                state.produtos.push(dados);                            
             }
         },
         editProduto(state, payload){     
-            const itemExists = state.produtos.find((_p, i, _a) => i === payload);
-            state.produtoeditado = itemExists        
+            state.produtonovo = payload
         },
         cliselecionado(state, payload){
             state.cliselecionado = payload
@@ -59,8 +76,17 @@ export default new Vuex.Store({
         },
         editProdisplay(state, payload){
             state.editPro = payload
-            state.produtoeditado = []
         },
+        alterarproduto(state, payload){
+                console.log(payload)
+            const indexProduto = state.produtos.findIndex((produto) => produto.id === payload.id)
+
+            state.produtos[indexProduto].valor = payload.valor
+            state.produtos[indexProduto].qtde = payload.qtde
+            state.produtos[indexProduto].acrescimo = payload.acrescimo
+            state.produtos[indexProduto].desconto = payload.desconto
+            console.log(state.produtos)
+        }
 
     }  
 })

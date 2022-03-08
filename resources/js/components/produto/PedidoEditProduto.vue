@@ -14,23 +14,23 @@
             <div class="div-input">
                 <div>
                     <label for="">Quantidade</label>
-                    <input type="text" v-model="produto.qtde"  >      
+                    <input type="text" v-model="pro.qtde">      
                 </div>
                 <div>
                     <label for="">Valor un.(R$)</label>
-                    <input type="text" v-model="produto.valor">           
+                    <input type="text" v-model="pro.valor">           
                 </div>
                 <div>
                     <label for="">Desconto(%)</label> 
-                    <input type="text" v-model="produto.desconto">   
+                    <input type="text" v-model="pro.desconto">   
                 </div>
                 <div>
                     <label for="">Acréscimo(%)</label>
-                    <input type="text" v-model="produto.acrescimo">    
+                    <input type="text" v-model="pro.acrescimo">    
                 </div>
             </div>
             <div class="div-btn">
-                <button @click.prevent="editProduto(produto)">Salvar</button>
+                <button @click.prevent="editProduto">Salvar</button>
             </div>
         </div>
     </div>
@@ -40,36 +40,41 @@
 export default {
     data(){
         return{
-            pro:{}
+            pro:{
+                qtde: this.$store.state.produtonovo.qtde,
+                id: this.$store.state.produtonovo.id,
+                valor: this.$store.state.produtonovo.valor,
+                desconto: this.$store.state.produtonovo.desconto,
+                acrescimo: this.$store.state.produtonovo.acrescimo,
+            }
         }
     },
     methods:{
         fechardisplay(){
             this.$store.commit('editProdisplay', false)
-            console.log(this.pro)
         },
         editProduto(){
+
+            //this.$store.state.produtonovo = this.pro
+
+
+
+            this.$store.commit('alterarproduto', this.pro)
+            
             this.$http.post('/home/pedido/editarproduto', {
             idpedido: this.$store.state.idpedido,
-            idproduto: this.$store.state.produtoeditado.id,
-            valor: this.$store.state.produtoeditado.valor,
-            qtde: this.$store.state.produtoeditado.qtde,
-            desconto: this.$store.state.produtoeditado.desconto,
-            acrescimo: this.$store.state.produtoeditado.acrescimo
+            idproduto: this.pro.id,
+            valor: this.pro.valor,
+            qtde: this.pro.qtde,
+            desconto: this.pro.desconto,
+            acrescimo: this.pro.acrescimo
             }).then(res => { this.dados = res.data }) 
+
+
+
             this.$store.commit('editProdisplay', false)
         }
     },
-    updated(){
-        //  this.pro = this.$store.state.produtoeditado
-           console.log(this.$store.state.produtoeditado )
-    },
-    computed: {
-        produto(){
-           // this.pro = this.$store.state.produtoeditado
-            return this.$store.state.produtoeditado
-        }
-    }
 }
 </script>
 

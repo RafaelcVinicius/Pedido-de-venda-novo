@@ -17,9 +17,9 @@ class Pedido extends Migration
             $table->id();
             $table->integer('id_cliente');
             $table->integer('id_vendedor');
-            $table->string('email', 50);
-            $table->string('Situação', 20);
-            $table->date('previsaoentrega');
+            $table->string('email', 50)->nullable();
+            $table->string('Situacao', 20);
+            $table->date('previsaoentrega')->nullable();
             $table->decimal('totalpedido', 15,2)->default(0.00);
             $table->timestamps();
         });

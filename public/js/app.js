@@ -5271,6 +5271,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     vendedor: String,
@@ -5279,6 +5280,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     cliselecionado: function cliselecionado() {
       return this.$store.state.cliselecionado;
+    },
+    idPedido: function idPedido() {
+      return this.$store.state.idpedido;
     }
   }
 });
@@ -5519,38 +5523,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      pro: {}
+      pro: {
+        qtde: this.$store.state.produtonovo.qtde,
+        id: this.$store.state.produtonovo.id,
+        valor: this.$store.state.produtonovo.valor,
+        desconto: this.$store.state.produtonovo.desconto,
+        acrescimo: this.$store.state.produtonovo.acrescimo
+      }
     };
   },
   methods: {
     fechardisplay: function fechardisplay() {
       this.$store.commit('editProdisplay', false);
-      console.log(this.pro);
     },
     editProduto: function editProduto() {
       var _this = this;
 
+      //this.$store.state.produtonovo = this.pro
+      this.$store.commit('alterarproduto', this.pro);
       this.$http.post('/home/pedido/editarproduto', {
         idpedido: this.$store.state.idpedido,
-        idproduto: this.$store.state.produtoeditado.id,
-        valor: this.$store.state.produtoeditado.valor,
-        qtde: this.$store.state.produtoeditado.qtde,
-        desconto: this.$store.state.produtoeditado.desconto,
-        acrescimo: this.$store.state.produtoeditado.acrescimo
+        idproduto: this.pro.id,
+        valor: this.pro.valor,
+        qtde: this.pro.qtde,
+        desconto: this.pro.desconto,
+        acrescimo: this.pro.acrescimo
       }).then(function (res) {
         _this.dados = res.data;
       });
       this.$store.commit('editProdisplay', false);
-    }
-  },
-  updated: function updated() {
-    //  this.pro = this.$store.state.produtoeditado
-    console.log(this.$store.state.produtoeditado);
-  },
-  computed: {
-    produto: function produto() {
-      // this.pro = this.$store.state.produtoeditado
-      return this.$store.state.produtoeditado;
     }
   }
 });
@@ -5601,6 +5602,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      produtonovo: {}
+    };
+  },
   computed: {
     produtos: function produtos() {
       return this.$store.state.produtos;
@@ -5619,8 +5625,9 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.commit('delProduto', e);
     },
     editProduto: function editProduto(e, produto) {
+      this.produtonovo = produto;
       this.$store.commit('editProdisplay', true);
-      this.$store.commit('editProduto', e);
+      this.$store.commit('editProduto', this.produtonovo);
     }
   }
 });
@@ -5681,7 +5688,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     defiProduto: function defiProduto(dado) {
-      console.log(this.$store.state.idpedido);
       this.$http.post('/home/pedido/gravarproduto', {
         idvenda: this.$store.state.idpedido,
         idproduto: dado.id,
@@ -5858,17 +5864,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]); // Vue.filter('dinheiro', valor => {
-// 	return `R$ ${parseFloat(valor).toFixed(2)}`.replace('.', ',')
-// })
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('colocarvirgula', function (valor) {
+  return "R$ ".concat(parseFloat(valor).toFixed(2)).replace('.', ',');
+});
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('cpfcnpj', function (valor) {
+  var arr = "".concat(valor).split('');
 
+  if (arr.length === 11) {
+    arr.splice(3, 0, '.');
+    arr.splice(7, 0, '.');
+    arr.splice(11, 0, '-');
+    return arr.join('');
+  } else if (arr.length === 14) {
+    arr.splice(2, 0, '.');
+    arr.splice(7, 0, '.');
+    arr.splice(11, 0, '/');
+    arr.splice(15, 0, '-');
+    return arr.join('');
+  } else {
+    return '';
+  }
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   state: {
     cliente: {},
     produtos: [].sort(),
     cliselecionado: true,
     editPro: false,
-    produtoeditado: [],
+    produtonovo: [],
     idpedido: 0
   },
   getters: {},
@@ -5899,10 +5923,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0_
       }
     },
     editProduto: function editProduto(state, payload) {
-      var itemExists = state.produtos.find(function (_p, i, _a) {
-        return i === payload;
-      });
-      state.produtoeditado = itemExists;
+      state.produtonovo = payload;
     },
     cliselecionado: function cliselecionado(state, payload) {
       state.cliselecionado = payload;
@@ -5912,7 +5933,17 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0_
     },
     editProdisplay: function editProdisplay(state, payload) {
       state.editPro = payload;
-      state.produtoeditado = [];
+    },
+    alterarproduto: function alterarproduto(state, payload) {
+      console.log(payload);
+      var indexProduto = state.produtos.findIndex(function (produto) {
+        return produto.id === payload.id;
+      });
+      state.produtos[indexProduto].valor = payload.valor;
+      state.produtos[indexProduto].qtde = payload.qtde;
+      state.produtos[indexProduto].acrescimo = payload.acrescimo;
+      state.produtos[indexProduto].desconto = payload.desconto;
+      console.log(state.produtos);
     }
   }
 }));
@@ -29868,6 +29899,11 @@ var render = function () {
     "div",
     { staticClass: "app" },
     [
+      _c("input", {
+        attrs: { type: "hidden", name: "id_pedido" },
+        domProps: { value: _vm.idPedido },
+      }),
+      _vm._v(" "),
       _c("pedido-cliente", { attrs: { idvendedor: _vm.idvendedor } }, [
         _c("input", {
           attrs: { readonly: "readonly", type: "text" },
@@ -29941,24 +29977,8 @@ var render = function () {
           _c("legend", [_vm._v("CNPJ/CPF")]),
           _vm._v(" "),
           _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.cliente.cnpjcpf,
-                expression: "cliente.cnpjcpf",
-              },
-            ],
             attrs: { name: "cnpjcpf", readonly: "readonly", type: "text" },
-            domProps: { value: _vm.cliente.cnpjcpf },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.cliente, "cnpjcpf", $event.target.value)
-              },
-            },
+            domProps: { value: _vm._f("cpfcnpj")(_vm.cliente.cnpjcpf) },
           }),
         ]),
       ]),
@@ -29976,7 +29996,7 @@ var staticRenderFns = [
       _c("fieldset", { staticClass: "fieldset" }, [
         _c("legend", [_vm._v("Data")]),
         _vm._v(" "),
-        _c("input", { attrs: { type: "date", name: "dataentrega", id: "" } }),
+        _c("input", { attrs: { type: "date", name: "previsaoentrega" } }),
       ]),
     ])
   },
@@ -30111,48 +30131,57 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "status" }, [
-    _c("fieldset", { class: { ativarstatus: _vm.displaystatus } }, [
-      _c("legend", [_vm._v("Status")]),
-      _vm._v(" "),
-      _c("input", {
-        attrs: { readonly: "readonly", type: "text", name: "status" },
-        domProps: { value: _vm.status },
-        on: {
-          click: function ($event) {
-            _vm.displaystatus = !_vm.displaystatus
-          },
-        },
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn",
+    _c(
+      "fieldset",
+      { class: { ativarstatus: _vm.displaystatus } },
+      [
+        _c("legend", [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { readonly: "readonly", type: "text", name: "situacao" },
+          domProps: { value: _vm.status },
           on: {
             click: function ($event) {
-              $event.preventDefault()
               _vm.displaystatus = !_vm.displaystatus
             },
           },
-        },
-        [
-          _c(
-            "svg",
-            {
-              attrs: { width: "18px", height: "18px", viewBox: "0 0 900 300" },
+        }),
+        _vm._v(" "),
+        _c(
+          "spam",
+          {
+            staticClass: "btn",
+            on: {
+              click: function ($event) {
+                $event.preventDefault()
+                _vm.displaystatus = !_vm.displaystatus
+              },
             },
-            [
-              _c("path", {
-                staticClass: "fillButton",
+          },
+          [
+            _c(
+              "svg",
+              {
                 attrs: {
-                  d: "M312 251l222 -236c10,-9 23,-15 37,-15l1 0c29,0 53,24 53,53 0,14 -6,27 -17,38l-258 274c-8,7 -17,12 -27,14 -4,1 -7,1 -11,1 -3,0 -7,0 -10,-1 -11,-2 -20,-7 -26,-13l-261 -276c-10,-10 -15,-23 -15,-37 0,-29 24,-53 53,-53l1 0c14,0 27,6 35,15l223 236z",
+                  width: "18px",
+                  height: "18px",
+                  viewBox: "0 0 900 300",
                 },
-              }),
-            ]
-          ),
-        ]
-      ),
-    ]),
+              },
+              [
+                _c("path", {
+                  staticClass: "fillButton",
+                  attrs: {
+                    d: "M312 251l222 -236c10,-9 23,-15 37,-15l1 0c29,0 53,24 53,53 0,14 -6,27 -17,38l-258 274c-8,7 -17,12 -27,14 -4,1 -7,1 -11,1 -3,0 -7,0 -10,-1 -11,-2 -20,-7 -26,-13l-261 -276c-10,-10 -15,-23 -15,-37 0,-29 24,-53 53,-53l1 0c14,0 27,6 35,15l223 236z",
+                  },
+                }),
+              ]
+            ),
+          ]
+        ),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "div",
@@ -30267,18 +30296,18 @@ var render = function () {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.produto.qtde,
-                expression: "produto.qtde",
+                value: _vm.pro.qtde,
+                expression: "pro.qtde",
               },
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.produto.qtde },
+            domProps: { value: _vm.pro.qtde },
             on: {
               input: function ($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.produto, "qtde", $event.target.value)
+                _vm.$set(_vm.pro, "qtde", $event.target.value)
               },
             },
           }),
@@ -30292,18 +30321,18 @@ var render = function () {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.produto.valor,
-                expression: "produto.valor",
+                value: _vm.pro.valor,
+                expression: "pro.valor",
               },
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.produto.valor },
+            domProps: { value: _vm.pro.valor },
             on: {
               input: function ($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.produto, "valor", $event.target.value)
+                _vm.$set(_vm.pro, "valor", $event.target.value)
               },
             },
           }),
@@ -30317,18 +30346,18 @@ var render = function () {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.produto.desconto,
-                expression: "produto.desconto",
+                value: _vm.pro.desconto,
+                expression: "pro.desconto",
               },
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.produto.desconto },
+            domProps: { value: _vm.pro.desconto },
             on: {
               input: function ($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.produto, "desconto", $event.target.value)
+                _vm.$set(_vm.pro, "desconto", $event.target.value)
               },
             },
           }),
@@ -30342,18 +30371,18 @@ var render = function () {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.produto.acrescimo,
-                expression: "produto.acrescimo",
+                value: _vm.pro.acrescimo,
+                expression: "pro.acrescimo",
               },
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.produto.acrescimo },
+            domProps: { value: _vm.pro.acrescimo },
             on: {
               input: function ($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.produto, "acrescimo", $event.target.value)
+                _vm.$set(_vm.pro, "acrescimo", $event.target.value)
               },
             },
           }),
@@ -30367,7 +30396,7 @@ var render = function () {
             on: {
               click: function ($event) {
                 $event.preventDefault()
-                return _vm.editProduto(_vm.produto)
+                return _vm.editProduto.apply(null, arguments)
               },
             },
           },
@@ -30664,16 +30693,7 @@ var render = function () {
       _vm._v(" "),
       _c("pedido-lista-de-produto"),
       _vm._v(" "),
-      _c("pedido-edit-produto", {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.displayeditproduto,
-            expression: "displayeditproduto",
-          },
-        ],
-      }),
+      _vm.displayeditproduto ? _c("pedido-edit-produto") : _vm._e(),
     ],
     1
   )

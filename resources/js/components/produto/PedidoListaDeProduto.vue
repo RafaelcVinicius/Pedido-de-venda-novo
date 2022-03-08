@@ -32,6 +32,11 @@
 
 <script>
 export default {
+    data(){
+        return{
+            produtonovo:{}
+        }
+    },
     computed: {
         produtos(){            
             return  this.$store.state.produtos
@@ -39,7 +44,6 @@ export default {
     },
     methods: {         
         delProduto(e, id){
-
             this.$http.post('/home/pedido/deleteproduto', {
             idpedido: this.$store.state.idpedido,
             idproduto: id
@@ -48,8 +52,12 @@ export default {
         },
         editProduto(e, produto){
 
+            this.produtonovo = produto
+
+
             this.$store.commit('editProdisplay', true)
-            this.$store.commit('editProduto', e)
+            this.$store.commit('editProduto', this.produtonovo)
+
         }
     }
 }

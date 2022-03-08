@@ -18,9 +18,8 @@
                         <tr>
                             <th>Código</th>
                             <th>Nome</th>
-                            <th>Código de barras</th>
-                            <th>Qtde</th>
-                            <th>Valor</th>
+                            <th>CNPJ/CPF</th>
+                            <th>CEP</th>
                             <th>Ação</th>
                         </tr>
                     </thead>
@@ -29,9 +28,8 @@
                             <tr>
                                 <td class="td-table">{{$cliente->id}}</td>
                                 <td class="td-table">{{$cliente->nome}}</td>
-                                <td class="td-table">{{$cliente->codbarras}}</td>
-                                <td class="td-table">{{$cliente->qtde}}</td>
-                                <td class="td-table">{{$cliente->valor}}</td>
+                                <td class="td-table">{{$cliente->cnpjcpf}}</td>
+                                <td class="td-table">{{$cliente->cep}}</td>
                                 <td class="td-table">Ação</td>
                             </tr>
                             @endforeach                    

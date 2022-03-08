@@ -30,6 +30,20 @@ class PedidoController extends Controller
         return json_decode($dados);        
     }
 
+    public function gravar(Request $request){
+
+            $dados = Pedido::where('id', $request->id_pedido)->first();
+            $dados->email = $request->email;
+            $dados->situacao = $request->situacao;
+            $dados->previsaoentrega = $request->previsaoentrega;
+            $dados->save();
+
+            return redirect()->route('pedido.index');
+    }
+
+
+
+
     public function gravarpedidoproduto(Request $request){ 
 
         $dados = new Itempedido();
@@ -59,11 +73,6 @@ class PedidoController extends Controller
         $dados->percdesconto = $request->desconto;
         $dados->save();
     }
-
-
-
-
-
 
     
     public function gravarpedidoclientealterar(Request $request){

@@ -7,8 +7,8 @@
                 </fieldset>
             </div>
             <div class="cl-4 sect">
-                <fieldset class="fieldset" ><legend>Data</legend>
-                    <input type="date"  name="dataentrega" id="">
+                <fieldset class="fieldset"><legend>Data</legend>
+                    <input type="date"  name="previsaoentrega" >
                 </fieldset>
             </div>
             <div class="cl">               
@@ -22,14 +22,14 @@
             </div>
             <div class=" cl-4 cnpj sect">
                 <fieldset class="fieldset desativado"><legend>CNPJ/CPF</legend>
-                    <input v-model="cliente.cnpjcpf" name="cnpjcpf" readonly="readonly" type="text">
+                    <input :value="cliente.cnpjcpf | cpfcnpj" name="cnpjcpf" readonly="readonly" type="text">
                 </fieldset>
             </div>
         </section>
         <section class="section">
             <div class="cl-5 sect email">
                 <fieldset class="fieldset"><legend>E-mail</legend>
-                    <input name="email" type="text">
+                    <input name="email"  type="text">
                 </fieldset>
             </div>
         </section>

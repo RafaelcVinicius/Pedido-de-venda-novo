@@ -39,7 +39,6 @@ export default {
           
         },
         defiProduto(dado) {
-            console.log(this.$store.state.idpedido)
             this.$http.post('/home/pedido/gravarproduto', {
                 idvenda: this.$store.state.idpedido,
                 idproduto: dado.id,
