@@ -1,12 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios';
 
 Vue.use(Vuex)
 
 Vue.filter('colocarvirgula', valor => {
-	return `R$ ${parseFloat(valor).toFixed(2)}`.replace('.', ',')
+	return `${parseFloat(valor).toFixed(2)}`.replace('.', ',')
 })
 
+Vue.filter('RS', valor => {
+	return `R$ ${parseFloat(valor).toFixed(2)}`.replace('.', ',')
+})
 Vue.filter('cpfcnpj', function(valor) {
     const arr = `${valor}`.split('')
 
@@ -32,11 +36,10 @@ export default new Vuex.Store({
     state: {
        cliente:{},
        produtos:[].sort(),
-       cliselecionado:true,
+       cliselecionado:false,
        editPro:false,
        produtonovo:[],
-       idpedido:0
-       
+       idpedido:0,      
     },
     getters: {
 
@@ -53,7 +56,6 @@ export default new Vuex.Store({
             if(itemExists >= 0 ){
                 state.produtos[itemExists].qtde++;
             } else {             
-
                 let dados = {}
                 dados.id = payload.id
                 dados.nome = payload.nome

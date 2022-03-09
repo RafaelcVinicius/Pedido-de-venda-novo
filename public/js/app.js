@@ -5275,7 +5275,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     vendedor: String,
-    idvendedor: Number
+    idvendedor: Number,
+    dados: Object
   },
   computed: {
     cliselecionado: function cliselecionado() {
@@ -5283,6 +5284,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     idPedido: function idPedido() {
       return this.$store.state.idpedido;
+    }
+  },
+  created: function created() {
+    if (this.dados != null) {
+      this.$store.state.idpedido = this.dados.id;
+      this.$store.state.produtos = this.dados.produtos;
+      console.log(this.$store.state.produtos);
+      this.$store.state.cliente = this.dados.cliente;
+      this.$store.state.cliente.email = this.dados.email;
+      this.$store.state.cliente.data = this.dados.data;
+      this.$store.state.cliente.status = this.dados.situacao;
+      this.$store.state.cliselecionado = true;
     }
   }
 });
@@ -5426,6 +5439,11 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     idvendedor: Number
   },
+  data: function data() {
+    return {
+      email: ''
+    };
+  },
   methods: {},
   computed: {
     cliente: function cliente() {
@@ -5511,6 +5529,9 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.commit('addCliente', dado);
       this.$store.commit('cliselecionado', true);
     }
+  },
+  created: function created() {
+    this.nomecliente = this.$store.state.cliente.nome;
   }
 });
 
@@ -5550,6 +5571,13 @@ __webpack_require__.r(__webpack_exports__);
       status: 'Aberto',
       displaystatus: false
     };
+  },
+  created: function created() {
+    if (this.$store.state.cliente.status != null) {
+      this.status = this.$store.state.cliente.status;
+    } else {
+      this.status = 'Aberto';
+    }
   }
 });
 
@@ -5700,6 +5728,7 @@ __webpack_require__.r(__webpack_exports__);
     delProduto: function delProduto(e, id) {
       var _this = this;
 
+      console.log(this.$store.state.idpedido);
       this.$http.post('/home/pedido/deleteproduto', {
         idpedido: this.$store.state.idpedido,
         idproduto: id
@@ -5946,15 +5975,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
 
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('colocarvirgula', function (valor) {
+
+vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_2__["default"].filter('colocarvirgula', function (valor) {
+  return "".concat(parseFloat(valor).toFixed(2)).replace('.', ',');
+});
+vue__WEBPACK_IMPORTED_MODULE_2__["default"].filter('RS', function (valor) {
   return "R$ ".concat(parseFloat(valor).toFixed(2)).replace('.', ',');
 });
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('cpfcnpj', function (valor) {
+vue__WEBPACK_IMPORTED_MODULE_2__["default"].filter('cpfcnpj', function (valor) {
   var arr = "".concat(valor).split('');
 
   if (arr.length === 11) {
@@ -5976,7 +6011,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].filter('cpfcnpj', function (valor) {
   state: {
     cliente: {},
     produtos: [].sort(),
-    cliselecionado: true,
+    cliselecionado: false,
     editPro: false,
     produtonovo: [],
     idpedido: 0
@@ -30335,7 +30370,16 @@ var render = function () {
         ),
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "cl-4 sect" }, [
+        _c("fieldset", { staticClass: "fieldset" }, [
+          _c("legend", [_vm._v("Data")]),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "date", name: "previsaoentrega" },
+            domProps: { value: _vm.cliente.data },
+          }),
+        ]),
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "cl" }, [_c("PedidoStatus")], 1),
     ]),
@@ -30360,37 +30404,21 @@ var render = function () {
       ]),
     ]),
     _vm._v(" "),
-    _vm._m(1),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cl-4 sect" }, [
-      _c("fieldset", { staticClass: "fieldset" }, [
-        _c("legend", [_vm._v("Data")]),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "date", name: "previsaoentrega" } }),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "section" }, [
+    _c("section", { staticClass: "section" }, [
       _c("div", { staticClass: "cl-5 sect email" }, [
         _c("fieldset", { staticClass: "fieldset" }, [
           _c("legend", [_vm._v("E-mail")]),
           _vm._v(" "),
-          _c("input", { attrs: { name: "email", type: "text" } }),
+          _c("input", {
+            attrs: { name: "email", type: "text" },
+            domProps: { value: _vm.cliente.email },
+          }),
         ]),
       ]),
-    ])
-  },
-]
+    ]),
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -30508,57 +30536,48 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "status" }, [
-    _c(
-      "fieldset",
-      { class: { ativarstatus: _vm.displaystatus } },
-      [
-        _c("legend", [_vm._v("Status")]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { readonly: "readonly", type: "text", name: "situacao" },
-          domProps: { value: _vm.status },
+    _c("fieldset", { class: { ativarstatus: _vm.displaystatus } }, [
+      _c("legend", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("input", {
+        attrs: { readonly: "readonly", type: "text", name: "situacao" },
+        domProps: { value: _vm.status },
+        on: {
+          click: function ($event) {
+            _vm.displaystatus = !_vm.displaystatus
+          },
+        },
+      }),
+      _vm._v(" "),
+      _c(
+        "span",
+        {
+          staticClass: "btn",
           on: {
             click: function ($event) {
+              $event.preventDefault()
               _vm.displaystatus = !_vm.displaystatus
             },
           },
-        }),
-        _vm._v(" "),
-        _c(
-          "spam",
-          {
-            staticClass: "btn",
-            on: {
-              click: function ($event) {
-                $event.preventDefault()
-                _vm.displaystatus = !_vm.displaystatus
-              },
+        },
+        [
+          _c(
+            "svg",
+            {
+              attrs: { width: "18px", height: "18px", viewBox: "0 0 900 300" },
             },
-          },
-          [
-            _c(
-              "svg",
-              {
+            [
+              _c("path", {
+                staticClass: "fillButton",
                 attrs: {
-                  width: "18px",
-                  height: "18px",
-                  viewBox: "0 0 900 300",
+                  d: "M312 251l222 -236c10,-9 23,-15 37,-15l1 0c29,0 53,24 53,53 0,14 -6,27 -17,38l-258 274c-8,7 -17,12 -27,14 -4,1 -7,1 -11,1 -3,0 -7,0 -10,-1 -11,-2 -20,-7 -26,-13l-261 -276c-10,-10 -15,-23 -15,-37 0,-29 24,-53 53,-53l1 0c14,0 27,6 35,15l223 236z",
                 },
-              },
-              [
-                _c("path", {
-                  staticClass: "fillButton",
-                  attrs: {
-                    d: "M312 251l222 -236c10,-9 23,-15 37,-15l1 0c29,0 53,24 53,53 0,14 -6,27 -17,38l-258 274c-8,7 -17,12 -27,14 -4,1 -7,1 -11,1 -3,0 -7,0 -10,-1 -11,-2 -20,-7 -26,-13l-261 -276c-10,-10 -15,-23 -15,-37 0,-29 24,-53 53,-53l1 0c14,0 27,6 35,15l223 236z",
-                  },
-                }),
-              ]
-            ),
-          ]
-        ),
-      ],
-      1
-    ),
+              }),
+            ]
+          ),
+        ]
+      ),
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -30829,13 +30848,17 @@ var render = function () {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(produto.codbarras))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(produto.acrescimo))]),
+            _c("td", [
+              _vm._v(_vm._s(_vm._f("colocarvirgula")(produto.acrescimo))),
+            ]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(produto.desconto))]),
+            _c("td", [
+              _vm._v(_vm._s(_vm._f("colocarvirgula")(produto.desconto))),
+            ]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(produto.qtde))]),
+            _c("td", [_vm._v(_vm._s(_vm._f("colocarvirgula")(produto.qtde)))]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(produto.valor))]),
+            _c("td", [_vm._v(_vm._s(_vm._f("colocarvirgula")(produto.valor)))]),
             _vm._v(" "),
             _c("td", { staticClass: "acao" }, [
               _c(
@@ -30932,13 +30955,13 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Código de barras")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Aacréscimo")]),
+        _c("th", [_vm._v("Acréscimo(%)")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Desconto")]),
+        _c("th", [_vm._v("Desconto(%)")]),
         _vm._v(" "),
         _c("th", [_vm._v("Qtde")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Valor")]),
+        _c("th", [_vm._v("Valor(UN)")]),
         _vm._v(" "),
         _c("th", [_vm._v("Ação")]),
       ]),

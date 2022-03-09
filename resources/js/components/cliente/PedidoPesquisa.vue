@@ -51,7 +51,12 @@ export default {
             this.$store.commit('addCliente', dado)
             this.$store.commit('cliselecionado', true)
         }
-    }
+    },
+    created()
+       {
+        this.nomecliente = this.$store.state.cliente.nome
+        }
+    
 }
 </script>
 <style scoped>

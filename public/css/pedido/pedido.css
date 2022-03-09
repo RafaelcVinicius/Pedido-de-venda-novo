@@ -21,13 +21,15 @@
     justify-content: center;
     align-items: center;
 }
-#app{
-    margin-top: 100px;
-}
+
 .section-pedido{
+    display: flex;
+    flex-wrap: wrap;
     max-width: 1280px;
     width: 100%;
-    margin-bottom: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 130px;
 }
 .cadastro{
     max-width: 1280px;

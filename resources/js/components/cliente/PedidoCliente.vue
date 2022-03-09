@@ -8,7 +8,7 @@
             </div>
             <div class="cl-4 sect">
                 <fieldset class="fieldset"><legend>Data</legend>
-                    <input type="date"  name="previsaoentrega" >
+                    <input type="date" :value="cliente.data"  name="previsaoentrega" >
                 </fieldset>
             </div>
             <div class="cl">               
@@ -29,7 +29,7 @@
         <section class="section">
             <div class="cl-5 sect email">
                 <fieldset class="fieldset"><legend>E-mail</legend>
-                    <input name="email"  type="text">
+                    <input name="email" :value="cliente.email" type="text">
                 </fieldset>
             </div>
         </section>
@@ -39,6 +39,11 @@
 <script>
 export default {
     props:{idvendedor:Number},
+    data(){
+        return{
+            email:''
+        }
+    },
     methods:{
 
     },

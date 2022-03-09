@@ -13,7 +13,8 @@
 export default {
     props:{
         vendedor:String,
-        idvendedor:Number
+        idvendedor:Number,
+        dados:Object,
     },
     computed:{        
         cliselecionado(){
@@ -21,6 +22,18 @@ export default {
         },
         idPedido(){
             return this.$store.state.idpedido
+        }
+    },
+    created(){
+        if(this.dados != null){
+        this.$store.state.idpedido = this.dados.id
+        this.$store.state.produtos = this.dados.produtos
+        console.log( this.$store.state.produtos )
+        this.$store.state.cliente = this.dados.cliente
+        this.$store.state.cliente.email = this.dados.email
+        this.$store.state.cliente.data = this.dados.data
+        this.$store.state.cliente.status = this.dados.situacao
+        this.$store.state.cliselecionado = true   
         }
     }
 }

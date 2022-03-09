@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\DomPedfController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProdutoController;
 use Illuminate\Support\Facades\Auth;
@@ -55,4 +56,5 @@ Route::prefix('home')->group(function () {
         route::post('/gravarclientealterar', [PedidoController::class, 'gravarpedidoclientealterar'])->name('pedido.gravarclientealterar');
 
     });
+    route::get('pdf', [DomPedfController::class, 'pdfteste'])->name('pdf');
 });

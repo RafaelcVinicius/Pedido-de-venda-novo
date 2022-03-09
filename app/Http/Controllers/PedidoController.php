@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Resources\PedidoResource;
 use App\Models\Pedido;
 use App\Models\Itempedido;
 use App\Models\Clientes;
@@ -12,7 +12,6 @@ use Laravel\Ui\Presets\React;
 
 class PedidoController extends Controller
 {
-
     function index() {
         
         $dados = Pedido::get();
@@ -47,14 +46,19 @@ class PedidoController extends Controller
 
     public function gravarpedidoproduto(Request $request){ 
 
-        $dados = new Itempedido();
-        $dados->id_venda = $request->idvenda;
-        $dados->id_produto = $request->idproduto;
-        $dados->qtde = $request->qtde;
-        $dados->valor = $request->valor;
-        $dados->percacrescimo = 0;
-        $dados->percdesconto = 0;
-        $dados->save();
+        $dado = Itempedido::where('id_venda', $request->idvenda)->where('id_produto', $request->idproduto)->first();
+        if($dado != null){
+            $dado->qtde =  $dado->qtde + 1;            
+        }else{
+            $dado = new Itempedido();
+            $dado->id_venda = $request->idvenda;
+            $dado->id_produto = $request->idproduto;
+            $dado->qtde = $request->qtde;
+            $dado->valor = $request->valor;
+            $dado->percacrescimo = 0;
+            $dado->percdesconto = 0;
+        }
+        $dado->save();
     }
 
     public function deleteproduto(Request $request){
@@ -90,7 +94,14 @@ class PedidoController extends Controller
     }
 
     public function editarpedido($id){
-            
+
+        $dados = Pedido::findOrFail($id);
+        $dados = new PedidoResource($dados);
+
+    //     return json_encode($dados);
+
+       return view('pedido.editar')->with('dados', $dados);
     }
+
 }
 
