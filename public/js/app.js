@@ -5328,6 +5328,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -11180,7 +11183,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cadastrar-gravar[data-v-696200e4]{\n    display: flex;\n    width: 220px;\n    height: 40px;\n    border-radius: 20px;\n    font-size: 15px;\n    color: #fff;\n    background-color: rgb(0, 132, 255);\n    justify-content: center;\n    align-items: center;\n}\n.abrirmaisopcoes[data-v-696200e4]{\n    border-radius: 20px 20px 0 0;        \n    background-color: rgb(0, 132, 255);\n}\n.button[data-v-696200e4]{\n    position: relative;\n    height: 40px;\n    width: 100%;\n}\n.btn-detalhes[data-v-696200e4]{\n    position: relative;\n    width: 100%;\n}\n.btn-mais-detalhes[data-v-696200e4]{\n    position: absolute;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 50px;\n    height: 40px;\n    right: 0;\n    top: 0;\n    border-radius: 25px;\n    background-color: rgb(0, 132, 255);\n}\n.btn-mais-detalhes[data-v-696200e4]:hover{\n    background-color: rgb(29, 146, 255);\n}\nsvg[data-v-696200e4]{\n    fill:white\n}\n.lista[data-v-696200e4]{\n    position: absolute;\n    top: 40;\n    width: 100%;\n    background-color: rgb(48, 207, 207);\n    height: 100%;\n    z-index: 65;\n}\nli[data-v-696200e4]{\n    list-style: none;\n    width: 100%;\n    background-color: bisque;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cadastrar-gravar[data-v-696200e4]{\n    display: flex;\n    width: 220px;\n    height: 40px;\n    border-radius: 20px;\n    font-size: 15px;\n    color: #fff;\n    background-color: rgb(0, 132, 255);\n    justify-content: center;\n    align-items: center;\n}\n.abrirmaisopcoes[data-v-696200e4]{\n    border-radius: 20px 20px 0 0;      \n    background-color: rgb(0, 132, 255);\n}\n.button[data-v-696200e4]{\n    position: relative;\n    height: 40px;\n    width: 100%;\n    z-index: 58;\n}\n.btn-detalhes[data-v-696200e4]{\n    position: relative;\n    width: 100%;\n}\n.btn-mais-detalhes[data-v-696200e4]{\n    position: absolute;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 50px;\n    height: 40px;\n    right: 0;\n    top: 0;\n    border-radius: 25px;\n    background-color: rgb(0, 132, 255);\n}\n.btn-mais-detalhes[data-v-696200e4]:hover{\n    background-color: rgb(29, 146, 255);\n}\nsvg[data-v-696200e4]{\n    fill:white\n}\n.lista[data-v-696200e4]{\n    position: absolute;\n    top: 40;\n    width: 100%;\n    height: 100%;\n    border-radius: 0 0 20px 20px;\n}\n.lista ul[data-v-696200e4]{\n    border-top:1px solid rgba(6, 104, 216, 0.781);\n    background-color:  rgb(0, 132, 255);\n    border-radius:0 0 20px 20px ;\n    padding-bottom: 20px;\n}\nli[data-v-696200e4]{\n    margin: 0;\n    list-style: none;\n    width: 100%;\n}\nbutton[data-v-696200e4]:hover{\n    background-color: rgba(6, 104, 216, 0.781);\n}\nbutton[data-v-696200e4]{\n    width: 100%;\n    height: 120%;\n    background-color: rgb(0, 132, 255);\n    color:white;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -30347,7 +30350,7 @@ var render = function () {
     { staticClass: "app" },
     [
       _c("input", {
-        attrs: { type: "hidden", name: "id_pedido" },
+        attrs: { type: "hidden", id: "idpedido", name: "id_pedido" },
         domProps: { value: _vm.idPedido },
       }),
       _vm._v(" "),
@@ -30403,7 +30406,7 @@ var render = function () {
         class: { abrirmaisopcoes: !_vm.abrirmaisopcoes },
       },
       [
-        _vm._t("default"),
+        _vm._t("p"),
         _c(
           "button",
           {
@@ -30453,15 +30456,29 @@ var render = function () {
         staticClass: "lista",
       },
       [
-        _c("ul", [
-          _c("li", [_vm._t("slot1")], 2),
-          _vm._v(" "),
-          _c("li", [_vm._t("slot2")], 2),
-          _vm._v(" "),
-          _c("li", [_vm._t("slot3")], 2),
-          _vm._v(" "),
-          _c("li", [_vm._t("slot4")], 2),
-        ]),
+        _c(
+          "ul",
+          {
+            on: {
+              click: function ($event) {
+                _vm.abrirmaisopcoes = !_vm.abrirmaisopcoes
+              },
+            },
+          },
+          [
+            _c("li", [_vm._t("slot1")], 2),
+            _vm._v(" "),
+            _c("li", [_vm._t("slot2")], 2),
+            _vm._v(" "),
+            _c("li", [_vm._t("slot3")], 2),
+            _vm._v(" "),
+            _c("li", [_vm._t("slot4")], 2),
+            _vm._v(" "),
+            _c("li", [_vm._t("slot5")], 2),
+            _vm._v(" "),
+            _c("li", [_vm._t("slot6")], 2),
+          ]
+        ),
       ]
     ),
   ])

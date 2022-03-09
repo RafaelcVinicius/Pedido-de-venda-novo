@@ -7,13 +7,14 @@
                 <h5>Pedidos - Cadastro</h5>
             </div>
             <div class="novo">
-                <button class="cadastrar"><a href="{{route('pedido.index')}}" > Cancelar </a></button>                
+                <button class="cadastrar"><a href="{{route('pedido.index')}}" > Cancelar </a></button> 
+
                 <div id="component2">
                     <botao-salvar-pedido>
-                        <button class="cadastrar-gravar" onclick="document.getElementById('form-pedido').submit()" >Gravar</button>
-                        <button v-slot="slot1">nome1</button>
-                        <button v-slot="slot2">nome1</button>
-                        <button v-slot="slot3">nome1</button>
+                        <button slot="p" class="cadastrar-gravar" onclick="document.getElementById('form-pedido').submit()" >Gravar</button>
+                        <button h onclick="gravareimprimir()" slot="slot1">Gravar / Imprimir A4</button>
+                        <button onclick="finalizarpedido()" slot="slot2">Finalizar</button>
+                        <button onclick="finalizareimprimir()" slot="slot3">Finalizar / Imprimir A4</button>
                     </botao-salvar-pedido>   
                 </div>
             </div>            
@@ -25,3 +26,20 @@
         </form>
     </div>
 @endsection
+
+<script>
+    function gravareimprimir(){        
+        
+        let idpedido = document.querySelector('#idpedido').value
+        document.getElementById('form-pedido').submit()
+        window.open('http://localhost:8000/home/pdf'+idpedido);
+    
+    }
+    function finalizarpedido(){
+        alert( 'final');
+    }
+    function finalizareimprimir(){
+        alert( 'finae im');
+    }
+
+</script>

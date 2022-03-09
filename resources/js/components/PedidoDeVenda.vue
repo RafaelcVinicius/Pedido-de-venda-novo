@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <input type="hidden" :value="idPedido" name="id_pedido">
+        <input type="hidden" id="idpedido" :value="idPedido" name="id_pedido">
         <pedido-cliente :idvendedor="idvendedor">
             <input readonly="readonly" :value="vendedor" type="text">
         </pedido-cliente>

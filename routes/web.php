@@ -55,6 +55,8 @@ Route::prefix('home')->group(function () {
 
         route::post('/gravarclientealterar', [PedidoController::class, 'gravarpedidoclientealterar'])->name('pedido.gravarclientealterar');
 
+        route::get('pdf/{id}', [DomPedfController::class, 'imprimirpdf'])->name('imprimirpdf');
+
     });
     route::get('pdf', [DomPedfController::class, 'pdfteste'])->name('pdf');
 });
