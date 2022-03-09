@@ -42,6 +42,8 @@ Vue.component('CadastroProduto', require('./components/cadastrodeproduto/Cadastr
 
 Vue.component('CadastroCliente', require('./components/cadastrodecliente/CadastroCliente.vue').default);
 
+Vue.component('BotaoSalvarPedido', require('./components/botao/BotaoSalvarPedido.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -53,3 +55,8 @@ const app = new Vue({
     store,
     el: '#component',
 });
+const app2 = new Vue({
+    store,
+    el: '#component2',
+});
+

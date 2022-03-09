@@ -7,8 +7,15 @@
                 <h5>Pedidos - Cadastro</h5>
             </div>
             <div class="novo">
-                <button class="cadastrar"><a href="{{route('pedido.index')}}" > Cancelar </a></button>
-                <button class="cadastrar" onclick="document.getElementById('form-pedido').submit()" >Gravar</button>
+                <button class="cadastrar"><a href="{{route('pedido.index')}}" > Cancelar </a></button>                
+                <div id="component2">
+                    <botao-salvar-pedido>
+                        <button class="cadastrar-gravar" onclick="document.getElementById('form-pedido').submit()" >Gravar</button>
+                        <button v-slot="slot1">nome1</button>
+                        <button v-slot="slot2">nome1</button>
+                        <button v-slot="slot3">nome1</button>
+                    </botao-salvar-pedido>   
+                </div>
             </div>            
     </header>
     <div id="component">

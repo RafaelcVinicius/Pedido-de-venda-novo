@@ -38,7 +38,6 @@
             </table>               
         </div> 
     </div>
-    <a style="color:black" href="{{route('pdf')}}">PDF-PDF</a>
 </section>
 
 @endsection

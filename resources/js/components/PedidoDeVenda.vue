@@ -28,7 +28,6 @@ export default {
         if(this.dados != null){
         this.$store.state.idpedido = this.dados.id
         this.$store.state.produtos = this.dados.produtos
-        console.log( this.$store.state.produtos )
         this.$store.state.cliente = this.dados.cliente
         this.$store.state.cliente.email = this.dados.email
         this.$store.state.cliente.data = this.dados.data

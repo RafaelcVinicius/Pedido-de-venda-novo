@@ -9,6 +9,7 @@
 <body>
     <ul>
         <li>Olá MUndo</li>
+        <li>{{$dados->produtos}}</li>
     </ul>
 </body>
 </html>
