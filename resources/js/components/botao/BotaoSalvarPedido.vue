@@ -43,13 +43,14 @@ export default {
         border-radius: 20px 20px 0 0;      
         background-color: rgb(0, 132, 255);
     }
+
     .button{
         position: relative;
         height: 40px;
         width: 100%;
         z-index: 58;
-
     }
+
     .btn-detalhes{
         position: relative;
         width: 100%;
@@ -92,9 +93,12 @@ export default {
         width: 100%;
     }
     button:hover{
-        background-color: rgba(6, 104, 216, 0.781);;
+        background-color: rgba(4, 112, 253, 0.781);
      }
-
+    .abrirmaisopcoes button:hover{
+        background-color: rgba(2, 122, 235, 0.781);
+        border-radius:20px 20px 0 0 ;
+     }
     button{
         width: 100%;
         height: 120%;

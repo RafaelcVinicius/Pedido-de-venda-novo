@@ -42,7 +42,13 @@ export default new Vuex.Store({
        idpedido:0,      
     },
     getters: {
-
+        valorTotal(state){
+            return state.produtos.map(produto => ((produto.acrescimo / 100) * (produto.valor * produto.qtde) - (produto.desconto / 100) * (produto.valor * produto.qtde)) + produto.valor * produto.qtde )
+            .reduce((total, atual) => total + atual, 0)
+        },
+        valorTotalUn(state){
+            return state.produtos.map(produto => ((produto.acrescimo / 100) * (produto.valor * produto.qtde) - (produto.desconto / 100) * (produto.valor * produto.qtde)) + produto.valor * produto.qtde )
+        }
     },
     mutations: {
         addIdPedido(state, payload){

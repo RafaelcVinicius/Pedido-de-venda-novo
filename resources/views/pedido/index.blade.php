@@ -16,8 +16,8 @@
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>ID Cliente</th>
-                        <th>ID Vendedor</th>
+                        <th>Cliente</th>
+                        <th>Vendedor</th>
                         <th>Previsão entrega</th>
                         <th>Situação</th>
                         <th>Ação</th>
@@ -27,8 +27,8 @@
                     @foreach ($pedidos as $pedido)
                     <tr>
                         <td class="td-table">{{$pedido->id}}</td>
-                        <td class="td-table">{{$pedido->id_cliente}}</td>
-                        <td class="td-table">{{$pedido->id_vendedor}}</td>
+                        <td class="td-table">{{$pedido->cliente->nome}}</td>
+                        <td class="td-table">{{$pedido->user->name}}</td>
                         <td class="td-table">{{$pedido->previsaoentrega}}</td>
                         <td class="td-table">{{$pedido->situacao}}</td>
                         <td class="td-table"><a class="acao-table" href="{{route('pedido.editarpedido', $pedido->id)}}"> Ação </a></td>

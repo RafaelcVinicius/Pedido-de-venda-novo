@@ -58,5 +58,5 @@ Route::prefix('home')->group(function () {
         route::get('pdf/{id}', [DomPedfController::class, 'imprimirpdf'])->name('imprimirpdf');
 
     });
-    route::get('pdf', [DomPedfController::class, 'pdfteste'])->name('pdf');
+    // route::get('pdf', [DomPedfController::class, 'pdfteste'])->name('pdf');
 });

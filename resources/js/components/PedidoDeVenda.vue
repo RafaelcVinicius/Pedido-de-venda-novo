@@ -1,5 +1,5 @@
 <template>
-    <div class="app">
+    <div @click.prevent="fechar" class="app">
         <input type="hidden" id="idpedido" :value="idPedido" name="id_pedido">
         <pedido-cliente :idvendedor="idvendedor">
             <input readonly="readonly" :value="vendedor" type="text">
@@ -9,14 +9,18 @@
 </template>
 
 <script>
-
 export default {
     props:{
         vendedor:String,
         idvendedor:Number,
         dados:Object,
     },
-    computed:{        
+    data(){
+        return{
+            displays:false
+        }
+    },
+    computed:{
         cliselecionado(){
             return this.$store.state.cliselecionado
         },
@@ -32,7 +36,16 @@ export default {
         this.$store.state.cliente.email = this.dados.email
         this.$store.state.cliente.data = this.dados.data
         this.$store.state.cliente.status = this.dados.situacao
-        this.$store.state.cliselecionado = true   
+        this.$store.state.cliselecionado = true
+        }
+    },
+    methods:{
+        fechar(event){
+            console.log(event.target);
+
+            //  if (event.target.className.includes('fechar') || event.target.className.includes('div-pri')) {
+            //     this.$emit('modal', false)
+            // }
         }
     }
 }

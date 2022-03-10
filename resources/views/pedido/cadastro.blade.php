@@ -30,16 +30,19 @@
 <script>
     function gravareimprimir(){        
         
-        let idpedido = document.querySelector('#idpedido').value
-        document.getElementById('form-pedido').submit()
+        let idpedido = document.querySelector('#idpedido').value;
+        document.getElementById('form-pedido').submit();
         window.open('http://localhost:8000/home/pdf'+idpedido);
-    
+        
     }
     function finalizarpedido(){
-        alert( 'final');
+        document.getElementById('situacao').value = 'Finalizado';
+        document.getElementById('form-pedido').submit();
     }
     function finalizareimprimir(){
-        alert( 'finae im');
+        document.getElementById('situacao').value = 'Finalizado';
+        document.getElementById('form-pedido').submit();
+        window.open('http://localhost:8000/home/pedido/pdf/'+idpedido);
     }
 
 </script>

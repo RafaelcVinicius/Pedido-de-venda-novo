@@ -29,6 +29,6 @@ class Pedido extends Model
     }
 
     public function getTotalPedidoAttribute() {
-        return ;
+        return 1500;
     }
 }

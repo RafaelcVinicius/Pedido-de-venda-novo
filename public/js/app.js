@@ -5278,6 +5278,11 @@ __webpack_require__.r(__webpack_exports__);
     idvendedor: Number,
     dados: Object
   },
+  data: function data() {
+    return {
+      displays: false
+    };
+  },
   computed: {
     cliselecionado: function cliselecionado() {
       return this.$store.state.cliselecionado;
@@ -5295,6 +5300,13 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.state.cliente.data = this.dados.data;
       this.$store.state.cliente.status = this.dados.situacao;
       this.$store.state.cliselecionado = true;
+    }
+  },
+  methods: {
+    fechar: function fechar(event) {
+      console.log(event.target); //  if (event.target.className.includes('fechar') || event.target.className.includes('div-pri')) {
+      //     this.$emit('modal', false)
+      // }
     }
   }
 });
@@ -5752,6 +5764,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5761,6 +5775,12 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     produtos: function produtos() {
       return this.$store.state.produtos;
+    },
+    valorTotal: function valorTotal() {
+      return this.$store.getters.valorTotal;
+    },
+    valorTotalUn: function valorTotalUn() {
+      return this.$store.getters.valorTotalUn;
     }
   },
   methods: {
@@ -6060,7 +6080,20 @@ vue__WEBPACK_IMPORTED_MODULE_2__["default"].filter('cpfcnpj', function (valor) {
     produtonovo: [],
     idpedido: 0
   },
-  getters: {},
+  getters: {
+    valorTotal: function valorTotal(state) {
+      return state.produtos.map(function (produto) {
+        return produto.acrescimo / 100 * (produto.valor * produto.qtde) - produto.desconto / 100 * (produto.valor * produto.qtde) + produto.valor * produto.qtde;
+      }).reduce(function (total, atual) {
+        return total + atual;
+      }, 0);
+    },
+    valorTotalUn: function valorTotalUn(state) {
+      return state.produtos.map(function (produto) {
+        return produto.acrescimo / 100 * (produto.valor * produto.qtde) - produto.desconto / 100 * (produto.valor * produto.qtde) + produto.valor * produto.qtde;
+      });
+    }
+  },
   mutations: {
     addIdPedido: function addIdPedido(state, payload) {
       state.idpedido = payload;
@@ -11183,7 +11216,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cadastrar-gravar[data-v-696200e4]{\n    display: flex;\n    width: 220px;\n    height: 40px;\n    border-radius: 20px;\n    font-size: 15px;\n    color: #fff;\n    background-color: rgb(0, 132, 255);\n    justify-content: center;\n    align-items: center;\n}\n.abrirmaisopcoes[data-v-696200e4]{\n    border-radius: 20px 20px 0 0;      \n    background-color: rgb(0, 132, 255);\n}\n.button[data-v-696200e4]{\n    position: relative;\n    height: 40px;\n    width: 100%;\n    z-index: 58;\n}\n.btn-detalhes[data-v-696200e4]{\n    position: relative;\n    width: 100%;\n}\n.btn-mais-detalhes[data-v-696200e4]{\n    position: absolute;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 50px;\n    height: 40px;\n    right: 0;\n    top: 0;\n    border-radius: 25px;\n    background-color: rgb(0, 132, 255);\n}\n.btn-mais-detalhes[data-v-696200e4]:hover{\n    background-color: rgb(29, 146, 255);\n}\nsvg[data-v-696200e4]{\n    fill:white\n}\n.lista[data-v-696200e4]{\n    position: absolute;\n    top: 40;\n    width: 100%;\n    height: 100%;\n    border-radius: 0 0 20px 20px;\n}\n.lista ul[data-v-696200e4]{\n    border-top:1px solid rgba(6, 104, 216, 0.781);\n    background-color:  rgb(0, 132, 255);\n    border-radius:0 0 20px 20px ;\n    padding-bottom: 20px;\n}\nli[data-v-696200e4]{\n    margin: 0;\n    list-style: none;\n    width: 100%;\n}\nbutton[data-v-696200e4]:hover{\n    background-color: rgba(6, 104, 216, 0.781);\n}\nbutton[data-v-696200e4]{\n    width: 100%;\n    height: 120%;\n    background-color: rgb(0, 132, 255);\n    color:white;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cadastrar-gravar[data-v-696200e4]{\n    display: flex;\n    width: 220px;\n    height: 40px;\n    border-radius: 20px;\n    font-size: 15px;\n    color: #fff;\n    background-color: rgb(0, 132, 255);\n    justify-content: center;\n    align-items: center;\n}\n.abrirmaisopcoes[data-v-696200e4]{\n    border-radius: 20px 20px 0 0;      \n    background-color: rgb(0, 132, 255);\n}\n.button[data-v-696200e4]{\n    position: relative;\n    height: 40px;\n    width: 100%;\n    z-index: 58;\n}\n.btn-detalhes[data-v-696200e4]{\n    position: relative;\n    width: 100%;\n}\n.btn-mais-detalhes[data-v-696200e4]{\n    position: absolute;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 50px;\n    height: 40px;\n    right: 0;\n    top: 0;\n    border-radius: 25px;\n    background-color: rgb(0, 132, 255);\n}\n.btn-mais-detalhes[data-v-696200e4]:hover{\n    background-color: rgb(29, 146, 255);\n}\nsvg[data-v-696200e4]{\n    fill:white\n}\n.lista[data-v-696200e4]{\n    position: absolute;\n    top: 40;\n    width: 100%;\n    height: 100%;\n    border-radius: 0 0 20px 20px;\n}\n.lista ul[data-v-696200e4]{\n    border-top:1px solid rgba(6, 104, 216, 0.781);\n    background-color:  rgb(0, 132, 255);\n    border-radius:0 0 20px 20px ;\n    padding-bottom: 20px;\n}\nli[data-v-696200e4]{\n    margin: 0;\n    list-style: none;\n    width: 100%;\n}\nbutton[data-v-696200e4]:hover{\n    background-color: rgba(4, 112, 253, 0.781);\n}\n.abrirmaisopcoes button[data-v-696200e4]:hover{\n    background-color: rgba(2, 122, 235, 0.781);\n    border-radius:20px 20px 0 0 ;\n}\nbutton[data-v-696200e4]{\n    width: 100%;\n    height: 120%;\n    background-color: rgb(0, 132, 255);\n    color:white;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -30347,7 +30380,15 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "app" },
+    {
+      staticClass: "app",
+      on: {
+        click: function ($event) {
+          $event.preventDefault()
+          return _vm.fechar.apply(null, arguments)
+        },
+      },
+    },
     [
       _c("input", {
         attrs: { type: "hidden", id: "idpedido", name: "id_pedido" },
@@ -30833,7 +30874,12 @@ var render = function () {
       _c("legend", [_vm._v("Status")]),
       _vm._v(" "),
       _c("input", {
-        attrs: { readonly: "readonly", type: "text", name: "situacao" },
+        attrs: {
+          readonly: "readonly",
+          type: "text",
+          id: "situacao",
+          name: "situacao",
+        },
         domProps: { value: _vm.status },
         on: {
           click: function ($event) {
@@ -31142,16 +31188,22 @@ var render = function () {
             _c("td", [_vm._v(_vm._s(produto.codbarras))]),
             _vm._v(" "),
             _c("td", [
-              _vm._v(_vm._s(_vm._f("colocarvirgula")(produto.acrescimo))),
+              _vm._v(
+                "% " + _vm._s(_vm._f("colocarvirgula")(produto.acrescimo))
+              ),
             ]),
             _vm._v(" "),
             _c("td", [
-              _vm._v(_vm._s(_vm._f("colocarvirgula")(produto.desconto))),
+              _vm._v("% " + _vm._s(_vm._f("colocarvirgula")(produto.desconto))),
             ]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(_vm._f("colocarvirgula")(produto.qtde)))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(_vm._f("colocarvirgula")(produto.valor)))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(_vm._s(_vm._f("colocarvirgula")(_vm.valorTotalUn[i]))),
+            ]),
             _vm._v(" "),
             _c("td", { staticClass: "acao" }, [
               _c(
@@ -31255,6 +31307,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Qtde")]),
         _vm._v(" "),
         _c("th", [_vm._v("Valor(UN)")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Valor Total")]),
         _vm._v(" "),
         _c("th", [_vm._v("Ação")]),
       ]),
