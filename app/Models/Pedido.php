@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Clientes;
 use App\Models\User;
 use App\Models\Itempedido;
+use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class Pedido extends Model
 {
@@ -16,8 +18,9 @@ class Pedido extends Model
     protected $primarykey = 'id';
     public $timestamps = true;
 
+   
     public function cliente(){
-            return $this->hasOne(Clientes::class, 'id', 'id_cliente');
+        return $this->hasOne(Clientes::class, 'id', 'id_cliente');
     }
 
     public function user(){
@@ -28,7 +31,25 @@ class Pedido extends Model
         return $this->hasMany(Itempedido::class, 'id_venda', 'id');
     }
 
-    public function getTotalPedidoAttribute() {
-        return 1500;
+    public function getTotalProdutosAttribute() {    
+
+        $produto = DB::table('itempedido')->select(DB::raw(' cast(SUM(valor * qtde)as decimal(15,2) ) as valorTotal'))->where('id_venda', $this->id)->first();
+        return $produto;
+    }
+    public function getTotalPedidoAttribute() {    
+        $produto = DB::table('itempedido')->select(DB::raw(' cast(SUM(((percacrescimo / 100) * (valor * qtde) - (percdesconto / 100) * (valor * qtde)) + valor * qtde)as decimal(15,2)) as valorTotal'))->where('id_venda', $this->id)->first();
+        return $produto;
+    }
+
+    public function getTotalAcrescimoAttribute() {    
+
+        $produto = DB::table('itempedido')->select(DB::raw('cast(SUM((percacrescimo / 100) * (valor * qtde))as decimal(15,2)) as valorTotal'))->where('id_venda', $this->id)->first();
+        return $produto;
+    }
+
+    public function getTotalDescontoAttribute() {    
+
+        $produto = DB::table('itempedido')->select(DB::raw('cast(SUM((percdesconto / 100) * (valor * qtde))as decimal(15,2)) as valorTotal'))->where('id_venda', $this->id)->first();
+        return $produto;
     }
 }

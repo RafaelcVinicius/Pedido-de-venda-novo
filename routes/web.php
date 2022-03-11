@@ -4,7 +4,9 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DomPedfController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProdutoController;
+use App\Jobs\newMail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,5 +60,11 @@ Route::prefix('home')->group(function () {
         route::get('pdf/{id}', [DomPedfController::class, 'imprimirpdf'])->name('imprimirpdf');
 
     });
-    // route::get('pdf', [DomPedfController::class, 'pdfteste'])->name('pdf');
+    route::get('teste', [PedidoController::class, 'teste'])->name('teste');
+
+    route::get('email', function (){
+            // return new newMail();
+
+        newMail::dispatch()->delay(now()->addSeconds('2'));
+        });
 });

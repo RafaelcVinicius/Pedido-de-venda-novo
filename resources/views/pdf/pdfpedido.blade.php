@@ -114,7 +114,7 @@
                         <td>UF:</td>
                     </tr>
                     <tr>
-                        <td> E-mail: {{$dados->email}}</td>
+                        <td> E-mail: {{$dados->email === null ? '' : $dados->email }}</td>
                         <td> </td>
                         <td></td>
                     </tr>
@@ -173,23 +173,19 @@
             <table>  
                 <tr>                                  
                     <td>Valor dos produtos...........................................................................R$</td>
-                    <td>{{$dados->TotalPedido}}</td>
+                    <td>{{$dados->TotalProdutos->valorTotal}}</td>
                 </tr>    
                 <tr>
                     <td>Valor acréscimo...............................................................................R$</td>
-                    <td>{{$dados->TotalPedido}}</td>
+                    <td>{{$dados->TotalAcrescimo->valorTotal}}</td>
                 </tr>    
                 <tr>
                     <td>Valor desconto.................................................................................R$</td>
-                    <td>{{$dados->TotalPedido}}</td>
-                </tr>    
-                <tr>
-                    <td>Valor acréscimo financeiro...............................................................R$</td>
-                    <td>{{$dados->TotalPedido}}</td>
-                </tr>    
+                    <td>{{$dados->TotalDesconto->valorTotal}}</td>
+                </tr>      
                 <tr>
                     <td>Valor líquido.....................................................................................R$</td>
-                    <td>{{$dados->TotalPedido}}</td>
+                    <td>{{$dados->totalpedido->valorTotal}}</td>
                 </tr>    
             </table>
         </div>

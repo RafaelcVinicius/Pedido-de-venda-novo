@@ -103,5 +103,11 @@ class PedidoController extends Controller
        return view('pedido.editar')->with('dados', $dados);
     }
 
+    // public function teste(){
+    //     $dados = Pedido::where('id', '=', 1)->first();
+
+    //     dd($dados->TotalDesconto);
+    // }
+
 }
 

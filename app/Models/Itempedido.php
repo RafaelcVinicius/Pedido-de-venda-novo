@@ -13,9 +13,7 @@ class Itempedido extends Model
     protected $primarykey = 'id';
     public $timestamps = true;
 
-
     public function produto(){
         return $this->hasOne(Produtos::class, 'id', 'id_produto' );
     }
-
 }

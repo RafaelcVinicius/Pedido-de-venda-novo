@@ -32,14 +32,14 @@
         
         let idpedido = document.querySelector('#idpedido').value;
         document.getElementById('form-pedido').submit();
-        window.open('http://localhost:8000/home/pdf'+idpedido);
-        
+        window.open('http://localhost:8000/home/pedido/pdf/'+idpedido);        
     }
     function finalizarpedido(){
         document.getElementById('situacao').value = 'Finalizado';
         document.getElementById('form-pedido').submit();
     }
     function finalizareimprimir(){
+        let idpedido = document.querySelector('#idpedido').value;
         document.getElementById('situacao').value = 'Finalizado';
         document.getElementById('form-pedido').submit();
         window.open('http://localhost:8000/home/pedido/pdf/'+idpedido);

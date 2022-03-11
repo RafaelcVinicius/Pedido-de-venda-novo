@@ -20,6 +20,8 @@ class DomPedfController extends Controller
     public function imprimirpdf($id){
         $dados = new stdClass();
         $dados = Pedido::find($id);
+
+        // dd($dados->TotalPedido);
         return PDF::loadView('pdf.pdfpedido', compact('dados'))->setPaper('a4', 'portrait')->stream('Pedido'.$id.'.pdf');
     }
 }
