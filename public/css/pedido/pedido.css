@@ -44,21 +44,83 @@
     width: 100%;
 }
 .tabela-1{
+    color: rgba(0, 0, 0, 0.75);
     width: 100%;
+    border-left: 1px solid rgb(0, 175, 255);
+    border-right: 1px solid rgb(0, 175, 255);
+
 }
 .tabela-1 thead{
     background-color: #03202e;
     color: white;
-    height: 50px;
+    height: 60px;
 }
 tbody tr{
-    height: 35px;
+    height: 50px;
     text-align: center;
+    fill:rgb(0, 195, 255);
+    
 }
+
 tbody tr td{
-    border-bottom: 1px solid #092344a4;
+    border-bottom: 1px solid rgb(0, 175, 255);
+    font-size: 15px;
 }
 .acao-table{
-    color: black;
     padding: 10px;
+}
+.Aberto{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(27, 27, 27);
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 15px;
+    width: 70%;
+    height: 25px;
+    font-size: 13px;
+}
+.Finalizado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 153, 0, 0.616);
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 15px;
+    width: 70%;
+    height: 25px;
+    font-size: 13px;
+}
+.Cancelado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(167, 0, 0);
+    color:  #fff;
+    text-transform: uppercase;
+    border-radius: 15px;
+    width: 70%;
+    height: 25px;
+    font-size: 13px;
+}
+svg{
+    fill:rgb(0, 140, 255);
+}
+.border-left{
+    border-left: 1px solid rgb(0, 175, 255);
+    position: relative;
+}
+.ativo-cancelar{
+position: absolute;
+width: 250px;
+height: 100px;
+background-color: aqua;
+right: 35px;
+top: 50px;
+z-index: 69;
+display: flex;
+justify-content: center;
+align-items: center;
 }
