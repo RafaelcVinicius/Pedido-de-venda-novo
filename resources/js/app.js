@@ -6,7 +6,9 @@
  import Vue from 'vue';
  import './plugins/axios'
  import store from './store/store'
+ import VMask from 'v-mask';
 
+Vue.use(VMask);
 require('./bootstrap');
 
 window.Vue = require('vue').default;
@@ -37,8 +39,6 @@ Vue.component('PedidoCliente', require('./components/cliente/PedidoCliente.vue')
 Vue.component('PedidoStatus', require('./components/cliente/PedidoStatus.vue').default);
 
 Vue.component('PedidoPesquisa', require('./components/cliente/PedidoPesquisa.vue').default);
-
-Vue.component('TesteVini', require('./components/cadastrodecliente/TesteVini.vue').default);
 
 Vue.component('CadastroProduto', require('./components/cadastrodeproduto/CadastroProduto.vue').default);
 

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Uf extends Model
 {
     use HasFactory;
+
+    protected $table = 'uf';
+    protected $primarykey = 'id';
+    public $timestamps = true;
 }

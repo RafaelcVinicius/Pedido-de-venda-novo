@@ -72,19 +72,7 @@ fieldset .input{
     max-width: 800px;
     width: 100%;
 }
-.input {
-    max-width: 500px;
-    width: 100%;
-    margin: 20px;
-    height: 40px;
-    border: 1px solid rgba(0, 0, 0, 0.74);
-    border-radius: 30px;
-    padding: 8px;
-    background-color: none;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-}
+
 .input input{
     width: calc(100% - 30px);
     height: 33px;

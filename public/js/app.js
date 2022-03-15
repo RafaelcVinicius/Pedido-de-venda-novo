@@ -5431,9 +5431,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      telefone: "",
+      maskcnpjcpf: "",
+      erroApi: false,
+      erroCidade: false,
+      displayUF: false,
+      displayCidade: false,
       consultaCep: '',
       apiCep: {
         bairro: "",
@@ -5446,16 +5472,79 @@ __webpack_require__.r(__webpack_exports__);
         logradouro: "",
         siafi: "",
         uf: ""
-      }
+      },
+      ufs: [],
+      cidades: {},
+      cnpjcpf: ""
     };
   },
   methods: {
     consultarCep: function consultarCep() {
       var _this = this;
 
+      this.apiCep = {
+        cep: ""
+      };
       this.$api.get('/ws/' + this.consultaCep + '/json/').then(function (res) {
-        _this.apiCep = res.data, console.log(res.data);
+        _this.apiCep = res.data, _this.setState;
+      })["catch"](function (error) {
+        _this.erroApi = true;
+        setTimeout(function () {
+          _this.erroApi = false;
+        }, 10000);
       });
+    },
+    definirUF: function definirUF(uf) {
+      var _this2 = this;
+
+      this.apiCep.uf = uf.uf;
+      this.displayUF = false;
+      this.apiCep.localidade = "";
+      this.$http.post('/api/consultacidadesuf', {
+        idcidade: uf.id
+      }).then(function (res) {
+        _this2.cidades = res.data;
+      });
+    },
+    definirCidade: function definirCidade(cidade) {
+      this.apiCep.localidade = cidade.nome;
+      this.displayCidade = false;
+    }
+  },
+  created: function created() {
+    var _this3 = this;
+
+    this.$http.get('/api/consultauf').then(function (res) {
+      _this3.ufs = res.data;
+    });
+  },
+  watch: {
+    displayUF: function displayUF() {
+      if (this.displayUF == true) {
+        this.displayCidade = false;
+      }
+    },
+    displayCidade: function displayCidade() {
+      var _this4 = this;
+
+      if (this.displayCidade == true) {
+        this.displayUF = false;
+      }
+
+      if (this.apiCep.uf == "") {
+        this.erroCidade = true;
+        setTimeout(function () {
+          _this4.erroCidade = false;
+        }, 10000);
+        this.displayCidade = false;
+      }
+    },
+    cnpjcpf: function cnpjcpf() {
+      if (this.cnpjcpf.length < 15) {
+        this.maskcnpjcpf = '###.###.###-##';
+      } else {
+        this.maskcnpjcpf = '##.###.###/####-##';
+      }
     }
   }
 });
@@ -6022,9 +6111,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _plugins_axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./plugins/axios */ "./resources/js/plugins/axios.js");
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/store */ "./resources/js/store/store.js");
+/* harmony import */ var v_mask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! v-mask */ "./node_modules/v-mask/dist/v-mask.esm.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -6033,6 +6123,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(v_mask__WEBPACK_IMPORTED_MODULE_2__["default"]);
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
@@ -6047,29 +6139,28 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('PedidoDeVenda', (__webpack_require__(/*! ./components/PedidoDeVenda.vue */ "./resources/js/components/PedidoDeVenda.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('PedidoProduto', (__webpack_require__(/*! ./components/produto/PedidoProduto.vue */ "./resources/js/components/produto/PedidoProduto.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('PedidoPesquisaProduto', (__webpack_require__(/*! ./components/produto/PedidoPesquisaProduto.vue */ "./resources/js/components/produto/PedidoPesquisaProduto.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('PedidoListaDeProduto', (__webpack_require__(/*! ./components/produto/PedidoListaDeProduto.vue */ "./resources/js/components/produto/PedidoListaDeProduto.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('PedidoEditProduto', (__webpack_require__(/*! ./components/produto/PedidoEditProduto.vue */ "./resources/js/components/produto/PedidoEditProduto.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('PedidoCliente', (__webpack_require__(/*! ./components/cliente/PedidoCliente.vue */ "./resources/js/components/cliente/PedidoCliente.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('PedidoStatus', (__webpack_require__(/*! ./components/cliente/PedidoStatus.vue */ "./resources/js/components/cliente/PedidoStatus.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('PedidoPesquisa', (__webpack_require__(/*! ./components/cliente/PedidoPesquisa.vue */ "./resources/js/components/cliente/PedidoPesquisa.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('TesteVini', Object(function webpackMissingModule() { var e = new Error("Cannot find module './components/cadastrodecliente/TesteVini.vue'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('CadastroProduto', (__webpack_require__(/*! ./components/cadastrodeproduto/CadastroProduto.vue */ "./resources/js/components/cadastrodeproduto/CadastroProduto.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('CadastroCliente', (__webpack_require__(/*! ./components/cadastrodecliente/CadastroCliente.vue */ "./resources/js/components/cadastrodecliente/CadastroCliente.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].component('BotaoSalvarPedido', (__webpack_require__(/*! ./components/botao/BotaoSalvarPedido.vue */ "./resources/js/components/botao/BotaoSalvarPedido.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoDeVenda', (__webpack_require__(/*! ./components/PedidoDeVenda.vue */ "./resources/js/components/PedidoDeVenda.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoProduto', (__webpack_require__(/*! ./components/produto/PedidoProduto.vue */ "./resources/js/components/produto/PedidoProduto.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoPesquisaProduto', (__webpack_require__(/*! ./components/produto/PedidoPesquisaProduto.vue */ "./resources/js/components/produto/PedidoPesquisaProduto.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoListaDeProduto', (__webpack_require__(/*! ./components/produto/PedidoListaDeProduto.vue */ "./resources/js/components/produto/PedidoListaDeProduto.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoEditProduto', (__webpack_require__(/*! ./components/produto/PedidoEditProduto.vue */ "./resources/js/components/produto/PedidoEditProduto.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoCliente', (__webpack_require__(/*! ./components/cliente/PedidoCliente.vue */ "./resources/js/components/cliente/PedidoCliente.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoStatus', (__webpack_require__(/*! ./components/cliente/PedidoStatus.vue */ "./resources/js/components/cliente/PedidoStatus.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoPesquisa', (__webpack_require__(/*! ./components/cliente/PedidoPesquisa.vue */ "./resources/js/components/cliente/PedidoPesquisa.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('CadastroProduto', (__webpack_require__(/*! ./components/cadastrodeproduto/CadastroProduto.vue */ "./resources/js/components/cadastrodeproduto/CadastroProduto.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('CadastroCliente', (__webpack_require__(/*! ./components/cadastrodecliente/CadastroCliente.vue */ "./resources/js/components/cadastrodecliente/CadastroCliente.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('BotaoSalvarPedido', (__webpack_require__(/*! ./components/botao/BotaoSalvarPedido.vue */ "./resources/js/components/botao/BotaoSalvarPedido.vue")["default"]));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new vue__WEBPACK_IMPORTED_MODULE_2__["default"]({
+var app = new vue__WEBPACK_IMPORTED_MODULE_3__["default"]({
   store: _store_store__WEBPACK_IMPORTED_MODULE_1__["default"],
   el: '#component'
 });
-var app2 = new vue__WEBPACK_IMPORTED_MODULE_2__["default"]({
+var app2 = new vue__WEBPACK_IMPORTED_MODULE_3__["default"]({
   store: _store_store__WEBPACK_IMPORTED_MODULE_1__["default"],
   el: '#component2'
 });
@@ -11350,7 +11441,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.div-flex[data-v-3654f052] {\n    display: flex;\n    flex-wrap: wrap;\n    max-width: 1280px;\n    width: 100%;\n}\nfieldset[data-v-3654f052]{\n    color: rgba(0, 0, 0, 0.103);\n}\n.input[data-v-3654f052]{\n    border: 1px solid rgb(0 0 0 / 26%) !important;\n    margin: 10px !important;\n}\ninput[data-v-3654f052]{\n    font-size: 15px;\n}\n.form[data-v-3654f052]{\n    display: flex;\n    flex-wrap: wrap;\n    max-width: 1280px;\n    width: 100%;\n    padding: 40px;\n}\n.cep[data-v-3654f052]{\n    position: relative;\n    max-width: 250px;\n    width: 100%;\n}\n.cep input[data-v-3654f052]{\n   position: absolute;\n   left: 20px;\n}\n.cep i[data-v-3654f052]{\n    position: absolute;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    top:-9px;\n    right: -5px;\n    background-color: white;\n    width: 50px;\n    height: 47px;\n    border-radius: 0 25px  25px 0;\n    border-top: 1px solid rgba(0, 0, 0, 0.30) !important;        \n    border-bottom: 1px solid rgba(0, 0, 0, 0.30) !important;        \n    border-right: 1px solid rgba(0, 0, 0, 0.305) !important;\n}\n.uf[data-v-3654f052]{\n    max-width: 180x;\n    width: 100%;\n}\n.uf input[data-v-3654f052] {\n    max-width: 65px;\n    position: absolute;\n    left: 20px;\n}\n.uf i[data-v-3654f052] {\n      position: absolute;\n      top: 5px;\n      right: 10px;\n      background-color: rgb(255, 255, 255);\n}\n.uf i svg[data-v-3654f052]{\n    fill: rgba(0, 0, 0, 0.73);\n}\n.cep i svg[data-v-3654f052]{\n    fill: rgba(0, 0, 0, 0.73);\n}\n.cl[data-v-3654f052]{\n    flex-basis: 0;\n    flex-grow: 1;\n}\n.cl-3[data-v-3654f052]{\n    flex: 0 0 32.66666%;\n    max-width: 32.666666%;\n}\n.cl-4[data-v-3654f052]{\n    flex: 0 0 42.66666%;\n    max-width: 42.666666%;\n}\n.cl-5[data-v-3654f052]{\n    flex: 0 0  59.7%;\n    max-width: 60.666666%;\n}\n.cl-6[data-v-3654f052]{\n    flex: 0 0 66.0000%;\n    max-width: 66.666666%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n[data-v-3654f052]::-webkit-scrollbar {\n    width: 12px;\n}\n[data-v-3654f052]::-webkit-scrollbar-track {\nbackground: white;        /* color of the tracking area */\n}\n[data-v-3654f052]::-webkit-scrollbar-thumb {\n    background-color: #03202e;    /* color of the scroll thumb */\n    border-radius: 20px;       /* roundness of the scroll thumb */\n    border: 3px solid white;  /* creates padding around scroll thumb */\n}\n.erro[data-v-3654f052]{\n    color: red;\n    position: absolute;\n    font-size: 14px;\n    top:70px;\n    left: 40px;\n    z-index: 11;\n}\n.displayCidadeclass[data-v-3654f052]{\n     border-bottom-right-radius: 0px !important;\n    border-bottom-left-radius: 0px !important;\n    border-bottom:0px solid white !important;  \n    padding-bottom: 20px;\n}\n.displayUFclass[data-v-3654f052]{\n    border-bottom-right-radius: 0px !important;\n    border-bottom-left-radius: 0px !important;\n    border-bottom:0px solid white !important;  \n    padding-bottom: 20px;\n}\n.div-flex[data-v-3654f052] {\n    position: relative;\n    display: flex;\n    flex-wrap: wrap;\n    max-width: 1280px;\n    width: 100%;\n}\nfieldset[data-v-3654f052]{\n    color: rgba(0, 0, 0, 0.103);\n}\n.input[data-v-3654f052]{\n    border: 1px solid rgb(0 0 0 / 26%) !important;\n    margin: 10px !important;\n}\ninput[data-v-3654f052]{\n    font-size: 15px;\n}\n.form[data-v-3654f052]{\n    display: flex;\n    flex-wrap: wrap;\n    max-width: 1280px;\n    width: 100%;\n    padding: 40px;\n}\n.cep[data-v-3654f052]{\n    position: relative;\n    max-width: 250px;\n    width: 100%;\n}\n.cep input[data-v-3654f052]{\n   position: absolute;\n   left: 20px;\n}\n.cep i[data-v-3654f052]{\n    position: absolute;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    top:-9px;\n    right: -5px;\n    background-color: white;\n    width: 50px;\n    height: 47px;\n    border-radius: 0 25px  25px 0;\n    border-top: 1px solid rgba(0, 0, 0, 0.30) !important;        \n    border-bottom: 1px solid rgba(0, 0, 0, 0.30) !important;        \n    border-right: 1px solid rgba(0, 0, 0, 0.305) !important;\n}\n.uf[data-v-3654f052]{\n    max-width: 150px;\n    width: calc(100% - 35px);\n}\n.uf input[data-v-3654f052] {\n    max-width: 65px;\n    position: absolute;\n    left: 20px;\n}\n.input i[data-v-3654f052] {\n    position: absolute;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    width: 46px;\n    height: 47px;\n    top: -9px;\n    right: -1px;\n    background-color: rgb(255, 255, 255);\n    border-radius: 0 25px 25px 0;\n    border-top: 1px solid #0000003a;\n    border-right: 1px solid #0000003a;\n    border-bottom: 1px solid #0000003a;\n}\n.uf i svg[data-v-3654f052]{\n    fill: rgba(0, 0, 0, 0.73);\n}\n.cep i svg[data-v-3654f052]{\n    fill: rgba(0, 0, 0, 0.73);\n}\n.uf-relativ[data-v-3654f052]{\n    position: relative;\n    display: flex;\n    justify-content: center;\n}\n.listauf[data-v-3654f052]{\n    position: absolute;\n    top:65px;\n    z-index: 10;\n    width: calc(100% - 40.60px);\n    height: 250px;\n    overflow-y:scroll;\n    background-color: white;\n    border-bottom: 1px solid rgba(0, 0, 0, 0.3);\n    border-left: 1px solid rgba(0, 0, 0, 0.3);\n    border-right: 1px solid rgba(0, 0, 0, 0.3);\n}\n.listauf li[data-v-3654f052]{\n    font-size: 15px;\n    color: rgba(0, 0, 0, 0.75);\n    list-style: none;\n    padding: 6px;\n    padding-left: 20px;\n}\n.listauf li[data-v-3654f052]:hover{\n    background-color: rgb(0, 162, 255);\n}\n.cidade-relativ[data-v-3654f052]{\n    width: 100%;\n    position: relative;\n    display: flex;\n    justify-content: center;\n}\n.cl-dis[data-v-3654f052]{\n    flex: 0 0  43.7%;\n    max-width: 42.8666666%;\n}\n.listacidade[data-v-3654f052]{\n    position: absolute;\n    top:65px;\n    z-index: 10;\n    width: calc(100% - 22px);\n    height: 250px;\n    overflow:scroll;\n    background-color: white;\n    border-bottom: 1px solid rgba(0, 0, 0, 0.3);\n    border-left: 1px solid rgba(0, 0, 0, 0.3);\n    border-right: 1px solid rgba(0, 0, 0, 0.3);\n}\n.listacidade li[data-v-3654f052]{\n    font-size: 15px;\n    color: rgba(0, 0, 0, 0.75);\n    list-style: none;\n    padding: 6px;\n    padding-left: 20px;\n}\n.listacidade li[data-v-3654f052]:hover{\n    background-color: rgb(0, 162, 255);\n}\n.div-block[data-v-3654f052]{\n    max-width: 1280px;\n    width: 100%;\n    display: flex;\n    justify-content: flex-start;\n    margin-top: 30px;\n    margin-bottom: 20px ;\n}\n.input[data-v-3654f052] {\n    height: 40px;\n    border: 1px solid rgba(0, 0, 0, 0.74);\n    border-top-right-radius: 25px;\n    border-top-left-radius: 25px;\n    border-bottom-right-radius: 25px;\n    border-bottom-left-radius: 25px;\n    padding: 8px;\n    background-color: none;\n    display: flex;\n    align-items: flex-end;\n    justify-content: center;\n}\n.cl[data-v-3654f052]{\n    flex-basis: 0;\n    flex-grow: 1;\n}\n.cl-2[data-v-3654f052]{\n    flex: 0 0 20.66666%;\n    max-width: 20.666666%;\n}\n.cl-3[data-v-3654f052]{\n    flex: 0 0 32.66666%;\n    max-width: 32.666666%;\n}\n.cl-4[data-v-3654f052]{\n    flex: 0 0 42.66666%;\n    max-width: 42.666666%;\n}\n.cl-5[data-v-3654f052]{\n    flex: 0 0  59.7%;\n    max-width: 60.666666%;\n}\n.cl-6[data-v-3654f052]{\n    flex: 0 0 66.0000%;\n    max-width: 66.666666%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -33648,6 +33739,543 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./node_modules/v-mask/dist/v-mask.esm.js":
+/*!************************************************!*\
+  !*** ./node_modules/v-mask/dist/v-mask.esm.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "VueMaskDirective": () => (/* binding */ directive),
+/* harmony export */   "VueMaskFilter": () => (/* binding */ filter),
+/* harmony export */   "VueMaskPlugin": () => (/* binding */ plugin),
+/* harmony export */   "default": () => (/* binding */ plugin)
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+
+    if (enumerableOnly) {
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+var placeholderChar = '_';
+var strFunction = 'function';
+
+var emptyArray$1 = [];
+function convertMaskToPlaceholder() {
+  var mask = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : emptyArray$1;
+  var placeholderChar$1 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : placeholderChar;
+
+  if (!isArray(mask)) {
+    throw new Error('Text-mask:convertMaskToPlaceholder; The mask property must be an array.');
+  }
+
+  if (mask.indexOf(placeholderChar$1) !== -1) {
+    throw new Error('Placeholder character must not be used as part of the mask. Please specify a character ' + 'that is not present in your mask as your placeholder character.\n\n' + "The placeholder character that was received is: ".concat(JSON.stringify(placeholderChar$1), "\n\n") + "The mask that was received is: ".concat(JSON.stringify(mask)));
+  }
+
+  return mask.map(function (char) {
+    return char instanceof RegExp ? placeholderChar$1 : char;
+  }).join('');
+}
+function isArray(value) {
+  return Array.isArray && Array.isArray(value) || value instanceof Array;
+}
+var strCaretTrap = '[]';
+function processCaretTraps(mask) {
+  var indexes = [];
+  var indexOfCaretTrap;
+
+  while (indexOfCaretTrap = mask.indexOf(strCaretTrap), indexOfCaretTrap !== -1) {
+    indexes.push(indexOfCaretTrap);
+    mask.splice(indexOfCaretTrap, 1);
+  }
+
+  return {
+    maskWithoutCaretTraps: mask,
+    indexes: indexes
+  };
+}
+
+var emptyArray = [];
+var emptyString = '';
+function conformToMask() {
+  var rawValue = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : emptyString;
+  var mask = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : emptyArray;
+  var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  if (!isArray(mask)) {
+    if (_typeof(mask) === strFunction) {
+      mask = mask(rawValue, config);
+      mask = processCaretTraps(mask).maskWithoutCaretTraps;
+    } else {
+      throw new Error('Text-mask:conformToMask; The mask property must be an array.');
+    }
+  }
+
+  var _config$guide = config.guide,
+      guide = _config$guide === void 0 ? true : _config$guide,
+      _config$previousConfo = config.previousConformedValue,
+      previousConformedValue = _config$previousConfo === void 0 ? emptyString : _config$previousConfo,
+      _config$placeholderCh = config.placeholderChar,
+      placeholderChar$1 = _config$placeholderCh === void 0 ? placeholderChar : _config$placeholderCh,
+      _config$placeholder = config.placeholder,
+      placeholder = _config$placeholder === void 0 ? convertMaskToPlaceholder(mask, placeholderChar$1) : _config$placeholder,
+      currentCaretPosition = config.currentCaretPosition,
+      keepCharPositions = config.keepCharPositions;
+  var suppressGuide = guide === false && previousConformedValue !== undefined;
+  var rawValueLength = rawValue.length;
+  var previousConformedValueLength = previousConformedValue.length;
+  var placeholderLength = placeholder.length;
+  var maskLength = mask.length;
+  var editDistance = rawValueLength - previousConformedValueLength;
+  var isAddition = editDistance > 0;
+  var indexOfFirstChange = currentCaretPosition + (isAddition ? -editDistance : 0);
+  var indexOfLastChange = indexOfFirstChange + Math.abs(editDistance);
+
+  if (keepCharPositions === true && !isAddition) {
+    var compensatingPlaceholderChars = emptyString;
+
+    for (var i = indexOfFirstChange; i < indexOfLastChange; i++) {
+      if (placeholder[i] === placeholderChar$1) {
+        compensatingPlaceholderChars += placeholderChar$1;
+      }
+    }
+
+    rawValue = rawValue.slice(0, indexOfFirstChange) + compensatingPlaceholderChars + rawValue.slice(indexOfFirstChange, rawValueLength);
+  }
+
+  var rawValueArr = rawValue.split(emptyString).map(function (char, i) {
+    return {
+      char: char,
+      isNew: i >= indexOfFirstChange && i < indexOfLastChange
+    };
+  });
+
+  for (var _i = rawValueLength - 1; _i >= 0; _i--) {
+    var char = rawValueArr[_i].char;
+
+    if (char !== placeholderChar$1) {
+      var shouldOffset = _i >= indexOfFirstChange && previousConformedValueLength === maskLength;
+
+      if (char === placeholder[shouldOffset ? _i - editDistance : _i]) {
+        rawValueArr.splice(_i, 1);
+      }
+    }
+  }
+
+  var conformedValue = emptyString;
+  var someCharsRejected = false;
+
+  placeholderLoop: for (var _i2 = 0; _i2 < placeholderLength; _i2++) {
+    var charInPlaceholder = placeholder[_i2];
+
+    if (charInPlaceholder === placeholderChar$1) {
+      if (rawValueArr.length > 0) {
+        while (rawValueArr.length > 0) {
+          var _rawValueArr$shift = rawValueArr.shift(),
+              rawValueChar = _rawValueArr$shift.char,
+              isNew = _rawValueArr$shift.isNew;
+
+          if (rawValueChar === placeholderChar$1 && suppressGuide !== true) {
+            conformedValue += placeholderChar$1;
+            continue placeholderLoop;
+          } else if (mask[_i2].test(rawValueChar)) {
+            if (keepCharPositions !== true || isNew === false || previousConformedValue === emptyString || guide === false || !isAddition) {
+              conformedValue += rawValueChar;
+            } else {
+              var rawValueArrLength = rawValueArr.length;
+              var indexOfNextAvailablePlaceholderChar = null;
+
+              for (var _i3 = 0; _i3 < rawValueArrLength; _i3++) {
+                var charData = rawValueArr[_i3];
+
+                if (charData.char !== placeholderChar$1 && charData.isNew === false) {
+                  break;
+                }
+
+                if (charData.char === placeholderChar$1) {
+                  indexOfNextAvailablePlaceholderChar = _i3;
+                  break;
+                }
+              }
+
+              if (indexOfNextAvailablePlaceholderChar !== null) {
+                conformedValue += rawValueChar;
+                rawValueArr.splice(indexOfNextAvailablePlaceholderChar, 1);
+              } else {
+                _i2--;
+              }
+            }
+
+            continue placeholderLoop;
+          } else {
+            someCharsRejected = true;
+          }
+        }
+      }
+
+      if (suppressGuide === false) {
+        conformedValue += placeholder.substr(_i2, placeholderLength);
+      }
+
+      break;
+    } else {
+      conformedValue += charInPlaceholder;
+    }
+  }
+
+  if (suppressGuide && isAddition === false) {
+    var indexOfLastFilledPlaceholderChar = null;
+
+    for (var _i4 = 0; _i4 < conformedValue.length; _i4++) {
+      if (placeholder[_i4] === placeholderChar$1) {
+        indexOfLastFilledPlaceholderChar = _i4;
+      }
+    }
+
+    if (indexOfLastFilledPlaceholderChar !== null) {
+      conformedValue = conformedValue.substr(0, indexOfLastFilledPlaceholderChar + 1);
+    } else {
+      conformedValue = emptyString;
+    }
+  }
+
+  return {
+    conformedValue: conformedValue,
+    meta: {
+      someCharsRejected: someCharsRejected
+    }
+  };
+}
+
+var NEXT_CHAR_OPTIONAL = {
+  __nextCharOptional__: true
+};
+var defaultMaskReplacers = {
+  '#': /\d/,
+  A: /[a-z]/i,
+  N: /[a-z0-9]/i,
+  '?': NEXT_CHAR_OPTIONAL,
+  X: /./
+};
+
+var stringToRegexp = function stringToRegexp(str) {
+  var lastSlash = str.lastIndexOf('/');
+  return new RegExp(str.slice(1, lastSlash), str.slice(lastSlash + 1));
+};
+
+var makeRegexpOptional = function makeRegexpOptional(charRegexp) {
+  return stringToRegexp(charRegexp.toString().replace(/.(\/)[gmiyus]{0,6}$/, function (match) {
+    return match.replace('/', '?/');
+  }));
+};
+
+var escapeIfNeeded = function escapeIfNeeded(char) {
+  return '[\\^$.|?*+()'.indexOf(char) > -1 ? "\\".concat(char) : char;
+};
+
+var charRegexp = function charRegexp(char) {
+  return new RegExp("/[".concat(escapeIfNeeded(char), "]/"));
+};
+
+var isRegexp$1 = function isRegexp(entity) {
+  return entity instanceof RegExp;
+};
+
+var castToRegexp = function castToRegexp(char) {
+  return isRegexp$1(char) ? char : charRegexp(char);
+};
+
+function maskToRegExpMask(mask) {
+  var maskReplacers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultMaskReplacers;
+  return mask.map(function (char, index, array) {
+    var maskChar = maskReplacers[char] || char;
+    var previousChar = array[index - 1];
+    var previousMaskChar = maskReplacers[previousChar] || previousChar;
+
+    if (maskChar === NEXT_CHAR_OPTIONAL) {
+      return null;
+    }
+
+    if (previousMaskChar === NEXT_CHAR_OPTIONAL) {
+      return makeRegexpOptional(castToRegexp(maskChar));
+    }
+
+    return maskChar;
+  }).filter(Boolean);
+}
+
+function stringMaskToRegExpMask(stringMask) {
+  var maskReplacers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultMaskReplacers;
+  return maskToRegExpMask(stringMask.split(''), maskReplacers);
+}
+function arrayMaskToRegExpMask(arrayMask) {
+  var maskReplacers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultMaskReplacers;
+  var flattenedMask = arrayMask.map(function (part) {
+    if (part instanceof RegExp) {
+      return part;
+    }
+
+    if (typeof part === 'string') {
+      return part.split('');
+    }
+
+    return null;
+  }).filter(Boolean).reduce(function (mask, part) {
+    return mask.concat(part);
+  }, []);
+  return maskToRegExpMask(flattenedMask, maskReplacers);
+}
+
+var trigger = function trigger(el, type) {
+  var e = document.createEvent('HTMLEvents');
+  e.initEvent(type, true, true);
+  el.dispatchEvent(e);
+};
+var queryInputElementInside = function queryInputElementInside(el) {
+  return el instanceof HTMLInputElement ? el : el.querySelector('input') || el;
+};
+var isFunction = function isFunction(val) {
+  return typeof val === 'function';
+};
+var isString = function isString(val) {
+  return typeof val === 'string';
+};
+var isRegexp = function isRegexp(val) {
+  return val instanceof RegExp;
+};
+
+function parseMask(inputMask, maskReplacers) {
+  if (Array.isArray(inputMask)) {
+    return arrayMaskToRegExpMask(inputMask, maskReplacers);
+  }
+
+  if (isFunction(inputMask)) {
+    return inputMask;
+  }
+
+  if (isString(inputMask) && inputMask.length > 0) {
+    return stringMaskToRegExpMask(inputMask, maskReplacers);
+  }
+
+  return inputMask;
+}
+
+function createOptions() {
+  var elementOptions = new Map();
+  var defaultOptions = {
+    previousValue: '',
+    mask: []
+  };
+
+  function get(el) {
+    return elementOptions.get(el) || _objectSpread2({}, defaultOptions);
+  }
+
+  function partiallyUpdate(el, newOptions) {
+    elementOptions.set(el, _objectSpread2(_objectSpread2({}, get(el)), newOptions));
+  }
+
+  function remove(el) {
+    elementOptions.delete(el);
+  }
+
+  return {
+    partiallyUpdate: partiallyUpdate,
+    remove: remove,
+    get: get
+  };
+}
+
+function extendMaskReplacers(maskReplacers) {
+  var baseMaskReplacers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultMaskReplacers;
+
+  if (maskReplacers === null || Array.isArray(maskReplacers) || _typeof(maskReplacers) !== 'object') {
+    return baseMaskReplacers;
+  }
+
+  return Object.keys(maskReplacers).reduce(function (extendedMaskReplacers, key) {
+    var value = maskReplacers[key];
+
+    if (value !== null && !(value instanceof RegExp)) {
+      return extendedMaskReplacers;
+    }
+
+    return _objectSpread2(_objectSpread2({}, extendedMaskReplacers), {}, _defineProperty({}, key, value));
+  }, baseMaskReplacers);
+}
+
+var options = createOptions();
+
+function triggerInputUpdate(el) {
+  trigger(el, 'input');
+}
+
+function updateValue(el) {
+  var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var value = el.value;
+
+  var _options$get = options.get(el),
+      previousValue = _options$get.previousValue,
+      mask = _options$get.mask;
+
+  var isValueChanged = value !== previousValue;
+  var isLengthIncreased = value.length > previousValue.length;
+  var isUpdateNeeded = value && isValueChanged && isLengthIncreased;
+
+  if ((force || isUpdateNeeded) && mask) {
+    var _conformToMask = conformToMask(value, mask, {
+      guide: false
+    }),
+        conformedValue = _conformToMask.conformedValue;
+
+    el.value = conformedValue;
+    triggerInputUpdate(el);
+  }
+
+  options.partiallyUpdate(el, {
+    previousValue: value
+  });
+}
+
+function updateMask(el, inputMask, maskReplacers) {
+  var mask = parseMask(inputMask, maskReplacers);
+  options.partiallyUpdate(el, {
+    mask: mask
+  });
+}
+
+function maskToString(mask) {
+  var maskArray = Array.isArray(mask) ? mask : [mask];
+  var filteredMaskArray = maskArray.filter(function (part) {
+    return isString(part) || isRegexp(part);
+  });
+  return filteredMaskArray.toString();
+}
+
+function createDirective() {
+  var directiveOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var instanceMaskReplacers = extendMaskReplacers(directiveOptions && directiveOptions.placeholders);
+  return {
+    bind: function bind(el, _ref) {
+      var value = _ref.value;
+      el = queryInputElementInside(el);
+      updateMask(el, value, instanceMaskReplacers);
+      updateValue(el);
+    },
+    componentUpdated: function componentUpdated(el, _ref2) {
+      var value = _ref2.value,
+          oldValue = _ref2.oldValue;
+      el = queryInputElementInside(el);
+      var isMaskChanged = isFunction(value) || maskToString(oldValue) !== maskToString(value);
+
+      if (isMaskChanged) {
+        updateMask(el, value, instanceMaskReplacers);
+      }
+
+      updateValue(el, isMaskChanged);
+    },
+    unbind: function unbind(el) {
+      el = queryInputElementInside(el);
+      options.remove(el);
+    }
+  };
+}
+var directive = createDirective();
+
+function createFilter() {
+  var filterOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var instanceMaskReplacers = extendMaskReplacers(filterOptions && filterOptions.placeholders);
+  return function (value, inputMask) {
+    if (!isString(value) && !Number.isFinite(value)) return value;
+    var mask = parseMask(inputMask, instanceMaskReplacers);
+
+    var _conformToMask = conformToMask("".concat(value), mask, {
+      guide: false
+    }),
+        conformedValue = _conformToMask.conformedValue;
+
+    return conformedValue;
+  };
+}
+var filter = createFilter();
+
+var plugin = (function (Vue) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  Vue.directive('mask', createDirective(options));
+  Vue.filter('VMask', createFilter(options));
+});
+
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/PedidoDeVenda.vue":
 /*!***************************************************!*\
   !*** ./resources/js/components/PedidoDeVenda.vue ***!
@@ -34775,108 +35403,204 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "form" },
-    [
-      _vm._m(0),
+  return _c("div", { staticClass: "form" }, [
+    _c("div", { staticClass: "div-flex" }, [
+      _c("fieldset", { staticClass: "input  cl-3" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.cnpjcpf,
+              expression: "cnpjcpf",
+            },
+            {
+              name: "mask",
+              rawName: "v-mask",
+              value: _vm.maskcnpjcpf,
+              expression: "maskcnpjcpf",
+            },
+          ],
+          attrs: { type: "text", name: "cnpjcpf", id: "cnpjcpf" },
+          domProps: { value: _vm.cnpjcpf },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.cnpjcpf = $event.target.value
+            },
+          },
+        }),
+      ]),
       _vm._v(" "),
       _vm._m(1),
-      _vm._v(" "),
-      _c("div", { staticClass: "endereco div-flex" }, [
-        _c("fieldset", { staticClass: "input cep cl-3" }, [
-          _vm._m(2),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.consultaCep,
-                expression: "consultaCep",
-              },
-            ],
-            attrs: { type: "text", name: "cep", id: "cep" },
-            domProps: { value: _vm.consultaCep },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.consultaCep = $event.target.value
-              },
-            },
-          }),
-          _vm._v(" "),
-          _c(
-            "i",
-            {
-              on: {
-                click: function ($event) {
-                  $event.preventDefault()
-                  return _vm.consultarCep.apply(null, arguments)
-                },
-              },
-            },
-            [
-              _c(
-                "svg",
-                {
-                  attrs: {
-                    width: "18px",
-                    height: "18px",
-                    viewBox: "0 0 2117 2117",
-                  },
-                },
-                [
-                  _c("g", { attrs: { id: "Camada_x0020_1" } }, [
-                    _c("path", {
-                      staticClass: "fillButton",
-                      attrs: {
-                        d: "M1360 1499c-148,118 -330,181 -520,181 -463,0 -840,-377 -840,-840 0,-463 377,-840 840,-840 463,0 840,377 840,840 0,190 -63,372 -181,520l589 588c38,39 38,101 0,140 -19,18 -44,29 -70,29 -26,0 -51,-11 -70,-29l-588 -589zm-520 -16c355,0 643,-288 643,-643 0,-354 -288,-643 -643,-643 -354,0 -643,289 -643,643 0,355 289,643 643,643z",
-                      },
-                    }),
-                  ]),
-                ]
-              ),
-            ]
-          ),
-        ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "div-flex" }, [
+      _c("fieldset", { staticClass: "input cl-3" }, [
+        _vm._m(2),
         _vm._v(" "),
-        _c("fieldset", { staticClass: "input uf cl" }, [
-          _vm._m(3),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.apiCep.uf,
-                expression: "apiCep.uf",
-              },
-            ],
-            attrs: { type: "text", name: "UF", id: "UF" },
-            domProps: { value: _vm.apiCep.uf },
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.telefone,
+              expression: "telefone",
+            },
+            {
+              name: "mask",
+              rawName: "v-mask",
+              value: "(##) #-####-####",
+              expression: "'(##) #-####-####'",
+            },
+          ],
+          attrs: { type: "text", name: "telefone", id: "telefone" },
+          domProps: { value: _vm.telefone },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.telefone = $event.target.value
+            },
+          },
+        }),
+      ]),
+      _vm._v(" "),
+      _vm._m(3),
+    ]),
+    _vm._v(" "),
+    _vm._m(4),
+    _vm._v(" "),
+    _c("div", { staticClass: "endereco div-flex" }, [
+      _c(
+        "span",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.erroApi,
+              expression: "erroApi",
+            },
+          ],
+          staticClass: "erro",
+        },
+        [_vm._v("* CEP Não encontrado")]
+      ),
+      _vm._v(" "),
+      _c("fieldset", { staticClass: "input cep cl-3" }, [
+        _vm._m(5),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.consultaCep,
+              expression: "consultaCep",
+            },
+            {
+              name: "mask",
+              rawName: "v-mask",
+              value: "#####-###",
+              expression: "'#####-###'",
+            },
+          ],
+          attrs: { type: "text", name: "cep", id: "cep" },
+          domProps: { value: _vm.consultaCep },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.consultaCep = $event.target.value
+            },
+          },
+        }),
+        _vm._v(" "),
+        _c(
+          "i",
+          {
             on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.apiCep, "uf", $event.target.value)
+              click: function ($event) {
+                $event.preventDefault()
+                return _vm.consultarCep.apply(null, arguments)
               },
             },
-          }),
-          _vm._v(" "),
-          _c(
-            "i",
-            {
-              on: {
-                click: function ($event) {
-                  $event.preventDefault()
+          },
+          [
+            _c(
+              "svg",
+              {
+                attrs: {
+                  width: "18px",
+                  height: "18px",
+                  viewBox: "0 0 2117 2117",
                 },
               },
+              [
+                _c("g", { attrs: { id: "Camada_x0020_1" } }, [
+                  _c("path", {
+                    staticClass: "fillButton",
+                    attrs: {
+                      d: "M1360 1499c-148,118 -330,181 -520,181 -463,0 -840,-377 -840,-840 0,-463 377,-840 840,-840 463,0 840,377 840,840 0,190 -63,372 -181,520l589 588c38,39 38,101 0,140 -19,18 -44,29 -70,29 -26,0 -51,-11 -70,-29l-588 -589zm-520 -16c355,0 643,-288 643,-643 0,-354 -288,-643 -643,-643 -354,0 -643,289 -643,643 0,355 289,643 643,643z",
+                    },
+                  }),
+                ]),
+              ]
+            ),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "uf-relativ cl-2" }, [
+        _c(
+          "fieldset",
+          {
+            staticClass: "input  uf",
+            class: { displayUFclass: _vm.displayUF },
+            on: {
+              click: function ($event) {
+                $event.preventDefault()
+                _vm.displayUF = !_vm.displayUF
+              },
             },
-            [
+          },
+          [
+            _vm._m(6),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.apiCep.uf,
+                  expression: "apiCep.uf",
+                },
+              ],
+              attrs: {
+                readonly: "readonly",
+                type: "text",
+                name: "uf",
+                id: "UF",
+              },
+              domProps: { value: _vm.apiCep.uf },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.apiCep, "uf", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("i", { class: { displayUFclass: _vm.displayUF } }, [
               _c(
                 "svg",
                 {
@@ -34895,169 +35619,283 @@ var render = function () {
                   }),
                 ]
               ),
-            ]
-          ),
-        ]),
+            ]),
+          ]
+        ),
         _vm._v(" "),
-        _c("fieldset", { staticClass: "input cl-4" }, [
-          _vm._m(4),
-          _vm._v(" "),
-          _c("input", {
+        _c(
+          "ul",
+          {
             directives: [
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.apiCep.localidade,
-                expression: "apiCep.localidade",
+                name: "show",
+                rawName: "v-show",
+                value: _vm.displayUF,
+                expression: "displayUF",
               },
             ],
-            attrs: { type: "text", name: "municipio", id: "municipio" },
-            domProps: { value: _vm.apiCep.localidade },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.apiCep, "localidade", $event.target.value)
+            staticClass: "listauf",
+          },
+          _vm._l(_vm.ufs, function (uf, i) {
+            return _c(
+              "li",
+              {
+                key: i,
+                on: {
+                  click: function ($event) {
+                    $event.preventDefault()
+                    return _vm.definirUF(uf)
+                  },
+                },
               },
-            },
+              [_vm._v(_vm._s(uf.uf))]
+            )
           }),
-        ]),
+          0
+        ),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "div-flex" }, [
-        _c("fieldset", { staticClass: "input cl-6" }, [
-          _vm._m(5),
-          _vm._v(" "),
-          _c("input", {
+      _c("div", { staticClass: "cidade-relativ cl-dis" }, [
+        _c(
+          "span",
+          {
             directives: [
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.apiCep.logradouro,
-                expression: "apiCep.logradouro",
+                name: "show",
+                rawName: "v-show",
+                value: _vm.erroCidade,
+                expression: "erroCidade",
               },
             ],
-            attrs: { type: "text", name: "endereco", id: "endereco" },
-            domProps: { value: _vm.apiCep.logradouro },
+            staticClass: "erro",
+          },
+          [_vm._v("* Por favor informe sua UF")]
+        ),
+        _vm._v(" "),
+        _c(
+          "fieldset",
+          {
+            staticClass: "input cl",
+            class: { displayCidadeclass: _vm.displayCidade },
             on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.apiCep, "logradouro", $event.target.value)
+              click: function ($event) {
+                $event.preventDefault()
+                _vm.displayCidade = !_vm.displayCidade
               },
             },
-          }),
-        ]),
+          },
+          [
+            _vm._m(7),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.apiCep.localidade,
+                  expression: "apiCep.localidade",
+                },
+              ],
+              attrs: {
+                readonly: "readonly",
+                type: "text",
+                name: "municipio",
+                id: "municipio",
+              },
+              domProps: { value: _vm.apiCep.localidade },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.apiCep, "localidade", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("i", { class: { displayCidadeclass: _vm.displayCidade } }, [
+              _c(
+                "svg",
+                {
+                  attrs: {
+                    width: "18px",
+                    height: "18px",
+                    viewBox: "0 0 900 300",
+                  },
+                },
+                [
+                  _c("path", {
+                    staticClass: "fillButton",
+                    attrs: {
+                      d: "M312 251l222 -236c10,-9 23,-15 37,-15l1 0c29,0 53,24 53,53 0,14 -6,27 -17,38l-258 274c-8,7 -17,12 -27,14 -4,1 -7,1 -11,1 -3,0 -7,0 -10,-1 -11,-2 -20,-7 -26,-13l-261 -276c-10,-10 -15,-23 -15,-37 0,-29 24,-53 53,-53l1 0c14,0 27,6 35,15l223 236z",
+                    },
+                  }),
+                ]
+              ),
+            ]),
+          ]
+        ),
         _vm._v(" "),
-        _vm._m(6),
+        _c(
+          "ul",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.displayCidade,
+                expression: "displayCidade",
+              },
+            ],
+            staticClass: "listacidade",
+          },
+          _vm._l(_vm.cidades, function (cidade, i) {
+            return _c(
+              "li",
+              {
+                key: i,
+                on: {
+                  click: function ($event) {
+                    $event.preventDefault()
+                    return _vm.definirCidade(cidade)
+                  },
+                },
+              },
+              [_vm._v(_vm._s(cidade.nome))]
+            )
+          }),
+          0
+        ),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "div-flex" }, [
+      _c("fieldset", { staticClass: "input cl-6" }, [
+        _vm._m(8),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.apiCep.logradouro,
+              expression: "apiCep.logradouro",
+            },
+          ],
+          attrs: { type: "text", name: "endereco", id: "endereco" },
+          domProps: { value: _vm.apiCep.logradouro },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.apiCep, "logradouro", $event.target.value)
+            },
+          },
+        }),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "div-flex" }, [
-        _c("fieldset", { staticClass: "input cl-4" }, [
-          _vm._m(7),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.apiCep.bairro,
-                expression: "apiCep.bairro",
-              },
-            ],
-            attrs: { type: "text", name: "bairro", id: "bairro" },
-            domProps: { value: _vm.apiCep.bairro },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.apiCep, "bairro", $event.target.value)
-              },
-            },
-          }),
-        ]),
+      _vm._m(9),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "div-flex" }, [
+      _c("fieldset", { staticClass: "input cl-4" }, [
+        _vm._m(10),
         _vm._v(" "),
-        _c("fieldset", { staticClass: "input cl" }, [
-          _vm._m(8),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.apiCep.complemento,
-                expression: "apiCep.complemento",
-              },
-            ],
-            attrs: { type: "text", name: "complemento", id: "complemento" },
-            domProps: { value: _vm.apiCep.complemento },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.apiCep, "complemento", $event.target.value)
-              },
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.apiCep.bairro,
+              expression: "apiCep.bairro",
             },
-          }),
-        ]),
+          ],
+          attrs: { type: "text", name: "bairro", id: "bairro" },
+          domProps: { value: _vm.apiCep.bairro },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.apiCep, "bairro", $event.target.value)
+            },
+          },
+        }),
       ]),
       _vm._v(" "),
-      _c("TesteVini"),
-    ],
-    1
-  )
+      _c("fieldset", { staticClass: "input cl" }, [
+        _vm._m(11),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.apiCep.complemento,
+              expression: "apiCep.complemento",
+            },
+          ],
+          attrs: { type: "text", name: "complemento", id: "complemento" },
+          domProps: { value: _vm.apiCep.complemento },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.apiCep, "complemento", $event.target.value)
+            },
+          },
+        }),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "div-flex" }, [
-      _c("fieldset", { staticClass: "input  cl-3" }, [
-        _c("legend", [
-          _c("label", { attrs: { for: "cnpjcpf" } }, [_vm._v("CNPJ/CPF")]),
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "text", name: "cnpjcpf", id: "cnpjcpf" },
-        }),
-      ]),
-      _vm._v(" "),
-      _c("fieldset", { staticClass: "input cl-5" }, [
-        _c("legend", [
-          _c("label", { attrs: { for: "nome" } }, [_vm._v("Nome")]),
-        ]),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "text", name: "nome", id: "nome" } }),
-      ]),
+    return _c("legend", [
+      _c("label", { attrs: { for: "cnpjcpf" } }, [_vm._v("CNPJ/CPF")]),
     ])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "div-flex" }, [
-      _c("fieldset", { staticClass: "input cl-3" }, [
-        _c("legend", [
-          _c("label", { attrs: { for: "telefone" } }, [_vm._v("Telefone")]),
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "text", name: "telefone", id: "telefone" },
-        }),
+    return _c("fieldset", { staticClass: "input cl-5" }, [
+      _c("legend", [_c("label", { attrs: { for: "nome" } }, [_vm._v("Nome")])]),
+      _vm._v(" "),
+      _c("input", { attrs: { type: "text", name: "nome", id: "nome" } }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("legend", [
+      _c("label", { attrs: { for: "telefone" } }, [_vm._v("Telefone")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("fieldset", { staticClass: "input cl-5" }, [
+      _c("legend", [
+        _c("label", { attrs: { for: "telefone" } }, [_vm._v("E-mail")]),
       ]),
       _vm._v(" "),
-      _c("fieldset", { staticClass: "input cl-5" }, [
-        _c("legend", [
-          _c("label", { attrs: { for: "telefone" } }, [_vm._v("E-mail")]),
-        ]),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "email", name: "email", id: "email" } }),
-      ]),
+      _c("input", { attrs: { type: "email", name: "email", id: "email" } }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "div-block" }, [
+      _c("h5", [_vm._v("Endereço")]),
     ])
   },
   function () {
@@ -35094,7 +35932,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("fieldset", { staticClass: "input uf cl" }, [
+    return _c("fieldset", { staticClass: "input  cl" }, [
       _c("legend", [_c("label", { attrs: { for: "numero" } }, [_vm._v("Nº")])]),
       _vm._v(" "),
       _c("input", { attrs: { type: "text", name: "numero", id: "numero" } }),
