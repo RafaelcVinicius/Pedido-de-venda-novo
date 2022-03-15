@@ -29,7 +29,12 @@ class newMail extends Mailable
     public function build()
     {
         $this->subject('novo ep');
-        $this->to('vinicius.colde@gmail.com', 'rafael');
+        $this->to('dev.rafaelvinicius@gmail.com', 'rafael');
         return $this->markdown('mail.newMail');
+
+
+        // return $this->from('to@email.com')
+        //         ->view('emails.test')
+        //         ->attach(storage_path('app/image.jpg'))
     }
 }

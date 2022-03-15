@@ -86,8 +86,7 @@ fieldset .input{
     justify-content: center;
 }
 .input input{
-    max-width: 300px;
-    width: 100%;
+    width: calc(100% - 30px);
     height: 33px;
     display: flex;
     align-items: center;
@@ -95,6 +94,8 @@ fieldset .input{
     font-size: 18px;
     position:absolute;
     top: 1px;
+    left: 20px;
+    right: 20px;
     color: rgba(0, 0, 0, 0.75);
 }
 textarea:focus, input:focus {

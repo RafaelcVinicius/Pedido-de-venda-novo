@@ -38,6 +38,8 @@ Vue.component('PedidoStatus', require('./components/cliente/PedidoStatus.vue').d
 
 Vue.component('PedidoPesquisa', require('./components/cliente/PedidoPesquisa.vue').default);
 
+Vue.component('TesteVini', require('./components/cadastrodecliente/TesteVini.vue').default);
+
 Vue.component('CadastroProduto', require('./components/cadastrodeproduto/CadastroProduto.vue').default);
 
 Vue.component('CadastroCliente', require('./components/cadastrodecliente/CadastroCliente.vue').default);

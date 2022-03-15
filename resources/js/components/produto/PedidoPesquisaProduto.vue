@@ -8,11 +8,24 @@
                 <li @click="defiProduto(dado)" v-for="(dado, i) in dados" :key="i">{{dado.nome}}</li>
             </ul>
         </div>
+         <draggable :list="list1" class="list-group" group="people">
+          <div
+            class="list-group-item cursor-pointer"
+            v-for="element in list1"
+            :key="element.name"
+          >
+            {{ element.name }}
+          </div>
+        </draggable>
     </div>
 </template>
 
 <script>
+import draggable from "vuedraggable";
 export default {
+     components: {
+        draggable
+    },
     data(){
         return{
             nomeproduto:'',
@@ -72,7 +85,8 @@ export default {
     }
     ul{
         list-style: none;
-        height: 50;
+        min-height: 50px;
+        height: 100%;
         border: 1px solid rgba(0, 0, 0, 0.20);
         border-top:none ;
         background-color: white;

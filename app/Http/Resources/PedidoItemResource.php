@@ -17,12 +17,12 @@ class PedidoItemResource extends JsonResource
         return [
             'id_item' => $this->id,
             'id' => $this->id_produto,
-            'valor'=> $this->valor,
-            'nome'=>$this->produto->nome,
-            'qtde'=>$this->qtde,
-            'codbarras'=>$this->produto->codbarras,
-            'acrescimo'=>$this->percacrescimo,
-            'desconto'=>$this->percdesconto,
+            'valor'=> intval($this->valor),
+            'nome'=> $this->produto->nome,
+            'qtde'=> intval($this->qtde),
+            'codbarras'=> intval($this->produto->codbarras),
+            'acrescimo'=>intval($this->percacrescimo),
+            'desconto'=> intval($this->percdesconto),
         ];
     }
 }

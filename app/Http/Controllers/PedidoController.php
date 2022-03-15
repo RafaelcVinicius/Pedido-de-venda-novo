@@ -109,5 +109,13 @@ class PedidoController extends Controller
     //     dd($dados->TotalDesconto);
     // }
 
+
+    public function cancelarpedido($id) {
+
+        $dados = Pedido::find($id);
+        $dados->delete();
+
+        return redirect()->route('pedido.index');
+    }
 }
 
