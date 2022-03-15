@@ -1,8 +1,8 @@
 <template>
   <div class="status">
         <fieldset :class="{ ativarstatus: displaystatus}"><legend>Status</legend>
-            <input readonly="readonly" @click="displaystatus = !displaystatus" type="text" :value="status">
-            <button class="btn"  @click="displaystatus = !displaystatus">X</button>
+            <input readonly="readonly" @click="displaystatus = !displaystatus" type="text" id="situacao" name="situacao" :value="status">
+            <span class="btn"  @click.prevent="displaystatus = !displaystatus"><svg width="18px" height="18px" viewBox="0 0 900 300"><path d="M312 251l222 -236c10,-9 23,-15 37,-15l1 0c29,0 53,24 53,53 0,14 -6,27 -17,38l-258 274c-8,7 -17,12 -27,14 -4,1 -7,1 -11,1 -3,0 -7,0 -10,-1 -11,-2 -20,-7 -26,-13l-261 -276c-10,-10 -15,-23 -15,-37 0,-29 24,-53 53,-53l1 0c14,0 27,6 35,15l223 236z" class="fillButton"></path></svg></span>
         </fieldset>
         <div  @click="displaystatus = !displaystatus" v-show="displaystatus" class="stat">
             <ul>
@@ -22,17 +22,24 @@ export default {
             status: 'Aberto',
             displaystatus: false
         }
+    },
+    created(){
+        if(this.$store.state.cliente.status != null){
+            this.status = this.$store.state.cliente.status 
+        }else{
+            this.status = 'Aberto'  
+        }
     }
+
 }
 </script>
 
-<style>
+<style  scoped>
     .status{
         position: relative;
         margin-top: 10px;
     }
     .stat{      
-        display: block;
         position: absolute;  
         width: calc(100% - 2px);
         border: 1px solid #dcdcdc;
@@ -73,17 +80,23 @@ export default {
         border: 1px solid #dcdcdc;
     }
     li{
+        display: flex;
+        align-items: center;
         list-style: none;
-        padding: 10px;
+        height: 15px;
+        padding: 10px;  
     }
      li:hover{
-         background-color: rgb(25, 87, 255);
-         color: white;
+        background-color: rgb(25, 87, 255);
+        color: white;
      }
     .btn{
         position: absolute;
         top: 25px;
         right: 15px;
         background-color: white;
+        z-index: 55;
+        cursor: pointer;
+        fill: rgba(0, 0, 0, 0.65);
     }
 </style>

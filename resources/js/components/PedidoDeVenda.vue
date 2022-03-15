@@ -1,18 +1,53 @@
 <template>
-    <div class="app">
-        <pedido-cliente />
+    <div @click.prevent="fechar" class="app">
+        <input type="hidden" id="idpedido" :value="idPedido" name="id_pedido">
+        <pedido-cliente :idvendedor="idvendedor">
+            <input readonly="readonly" :value="vendedor" type="text">
+        </pedido-cliente>
         <pedido-produto v-show="cliselecionado" />
     </div>
 </template>
 
 <script>
-
 export default {
-computed:{
-    cliselecionado(){
-        return this.$store.state.cliselecionado
+    props:{
+        vendedor:String,
+        idvendedor:Number,
+        dados:Object,
+    },
+    data(){
+        return{
+            displays:false
+        }
+    },
+    computed:{
+        cliselecionado(){
+            return this.$store.state.cliselecionado
+        },
+        idPedido(){
+            return this.$store.state.idpedido
+        }
+    },
+    created(){
+        if(this.dados != null){
+        this.$store.state.idpedido = this.dados.id
+        this.$store.state.produtos = this.dados.produtos
+        this.$store.state.cliente = this.dados.cliente
+        this.$store.state.cliente.email = this.dados.email
+        this.$store.state.cliente.data = this.dados.data
+        this.$store.state.cliente.status = this.dados.situacao
+        this.$store.state.cliselecionado = true
+        }
+    },
+    methods:{
+        fechar(event){
+            console.log(event.target);
+
+            //  if (event.target.className.includes('fechar') || event.target.className.includes('div-pri')) {
+            //     this.$emit('modal', false)
+            // }
+        }
     }
-}
 }
 </script>
 

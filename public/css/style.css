@@ -18,6 +18,13 @@ a{
     text-decoration: none;
     color: white;
 }
+.a-nav-bar{
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 5px 25px;
+}
 .header-bar{
     position: fixed;
     left: 0px;
@@ -27,7 +34,7 @@ a{
     background-color: #03202e;
     color: #fff;
     font-size: 16px;
-    z-index: 151;
+    z-index: 40;
     box-shadow: 2px 2px 4px 0px #00000042;
     display: flex;
     justify-content: center;
@@ -41,25 +48,30 @@ a{
     align-items: center;
 }
 .header-bar > nav ul {
+    position: relative;
     display: flex;
     height: 100%;
     list-style: none;
 }
 .header-bar > nav ul li{
-    padding: 10px 25px;
+    position: relative;
     display: flex;
     align-items: center;
+    list-style: none;
 }
 .header-bar > nav ul li:hover{
+
     background-color: #053750;
 }
 .active{
     border-top:5px solid #11b0ff;
     border-bottom:5px solid #00000000;
 }
+
 #app{
     display: flex;
-    justify-content: center;
+    justify-content: center;align-items: center;
+
 }
 .section-1{
     display: flex;
@@ -69,4 +81,16 @@ a{
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 130px;
+}
+.container{
+    margin-top: 100px;
+}
+div.dataTables_filter input{
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.815);
+    outline: 0;
+    border-radius: 20px;
+    padding: 0 20px 0 20px;
+    font-size: 16px;
+    margin-bottom: 15px;
 }

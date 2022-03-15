@@ -3,12 +3,17 @@
         <h5>Produto</h5>
         <pedido-pesquisa-produto />
         <pedido-lista-de-produto />
+        <pedido-edit-produto v-if="displayeditproduto"/>
     </div>
 </template>
 
 <script>
 export default {
-
+    computed:{
+        displayeditproduto(){
+        return  this.$store.state.editPro
+        }  
+    }
 }
 </script>
 

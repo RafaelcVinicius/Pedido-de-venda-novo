@@ -30,11 +30,20 @@ Vue.component('PedidoPesquisaProduto', require('./components/produto/PedidoPesqu
 
 Vue.component('PedidoListaDeProduto', require('./components/produto/PedidoListaDeProduto.vue').default);
 
+Vue.component('PedidoEditProduto', require('./components/produto/PedidoEditProduto.vue').default);
+
 Vue.component('PedidoCliente', require('./components/cliente/PedidoCliente.vue').default);
 
 Vue.component('PedidoStatus', require('./components/cliente/PedidoStatus.vue').default);
 
 Vue.component('PedidoPesquisa', require('./components/cliente/PedidoPesquisa.vue').default);
+
+Vue.component('CadastroProduto', require('./components/cadastrodeproduto/CadastroProduto.vue').default);
+
+Vue.component('CadastroCliente', require('./components/cadastrodecliente/CadastroCliente.vue').default);
+
+Vue.component('BotaoSalvarPedido', require('./components/botao/BotaoSalvarPedido.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -46,3 +55,8 @@ const app = new Vue({
     store,
     el: '#component',
 });
+const app2 = new Vue({
+    store,
+    el: '#component2',
+});
+

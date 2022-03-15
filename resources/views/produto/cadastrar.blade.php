@@ -15,29 +15,13 @@
         <div class="cadastro">
             <div class="dados">
                 <form class="form" id="form-produto" action="{{route('produtos.store')}}" method="post">
-                    @csrf                  
-                    <div class="nome">  
-                        <fieldset class="input">
-                            <legend><label for="nome">Nome</label></legend>  
-                            <input type="text" name="nome" id="nome">
-                        </fieldset>
-                        
-                        <fieldset class="input">
-                            <legend><label for="codbarras">Código de baras</label></legend>  
-                            <input type="number" name="codbarras" id="codbarras">
-                        </fieldset>
+                    @csrf    
+                    <div id="component">
+                        <cadastro-produto />
                     </div>
-                    <div class="valor-qtde">  
-                        <fieldset class="input ">
-                            <legend><label for="qtde">Quantidade</label></legend>
-                            <input type="number" name="qtde" id="Quantidade">
-                        </fieldset>
-
-                        <fieldset class="input">
-                            <legend><label for="valor">Valor</label></legend>
-                            <input type="number" name="valor" id="valor">
-                        </fieldset> 
-                    </div>
+                    
+                    
+                   
                 </form>
             </div>
         </div>
