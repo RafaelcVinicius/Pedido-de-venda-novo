@@ -41,11 +41,11 @@ export default {
     data(){
         return{
             pro:{
-                qtde: this.$store.state.produtonovo.qtde,
-                id: this.$store.state.produtonovo.id,
-                valor: this.$store.state.produtonovo.valor,
-                desconto: this.$store.state.produtonovo.desconto,
-                acrescimo: this.$store.state.produtonovo.acrescimo,
+                qtde: Number(this.$store.state.produtonovo.qtde),
+                id: Number(this.$store.state.produtonovo.id),
+                valor: Number(this.$store.state.produtonovo.valor),
+                desconto: Number(this.$store.state.produtonovo.desconto),
+                acrescimo: Number(this.$store.state.produtonovo.acrescimo),
             }
         }
     },

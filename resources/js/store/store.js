@@ -35,7 +35,7 @@ export default new Vuex.Store({
 
     state: {
        cliente:{},
-       produtos:[].sort(),
+       produtos:[],
        cliselecionado:false,
        editPro:false,
        produtonovo:[],
@@ -63,10 +63,10 @@ export default new Vuex.Store({
                 state.produtos[itemExists].qtde++;
             } else {             
                 let dados = {}
-                dados.id = payload.id
+                dados.id = Number(payload.id)
                 dados.nome = payload.nome
                 dados.desconto = Number(0)
-                dados.codbarras = payload.codbarras
+                dados.codbarras = Number(payload.codbarras)
                 dados.valor = Number(payload.valor)
                 dados.qtde = Number(1)
                 dados.acrescimo = Number(0)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clientes;
+use App\Models\Enderecocliente;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -39,10 +40,20 @@ class ClienteController extends Controller
         $dados = new Clientes();
         $dados->nome = $request->nome;
         $dados->cnpjcpf = $request->cnpjcpf;
-        $dados->cep = $request->cep;
         $dados->telefone = $request->telefone;
         $dados->save();
-        
+
+        $dadosendereco = new Enderecocliente();
+        $dadosendereco->id_cliente = $dados->id;
+        $dadosendereco->uf = $request->uf;
+        $dadosendereco->cep = $request->cep;
+        $dadosendereco->municipio = $request->municipio;
+        $dadosendereco->endereco = $request->endereco;
+        $dadosendereco->numero = $request->numero;
+        $dadosendereco->bairro = $request->bairro;
+        $dadosendereco->complemento = $request->complemento;
+        $dadosendereco->save();
+               
         return redirect()->route('clientes.index');
     }
 

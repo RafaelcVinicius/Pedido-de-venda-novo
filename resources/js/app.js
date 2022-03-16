@@ -6,7 +6,9 @@
  import Vue from 'vue';
  import './plugins/axios'
  import store from './store/store'
+ import VMask from 'v-mask';
 
+Vue.use(VMask);
 require('./bootstrap');
 
 window.Vue = require('vue').default;

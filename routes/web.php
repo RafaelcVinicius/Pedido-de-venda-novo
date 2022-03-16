@@ -59,6 +59,8 @@ Route::prefix('home')->group(function () {
 
         route::get('pdf/{id}', [DomPedfController::class, 'imprimirpdf'])->name('imprimirpdf');
 
+        route::delete('cancelarpedido/{id}', [PedidoController::class, 'cancelarpedido'])->name('cancelarpedido');
+
     });
     route::get('teste', [PedidoController::class, 'teste'])->name('teste');
 

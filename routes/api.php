@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ApiController;
+use Facade\FlareClient\Api;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Route::get('viacep.com.br/ws/{cep}/json/',[ApiController::class, 'consultaCep'])->name('consultaCep');
+
+Route::get('consultauf', [ApiController::class, 'consultaUF'])->name('Consultauf');
+
+Route::post('consultacidadesuf', [ApiController::class, 'consultacidadesuf'])->name('consultacidadesuf');

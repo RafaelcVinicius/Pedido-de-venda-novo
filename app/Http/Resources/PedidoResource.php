@@ -16,7 +16,7 @@ class PedidoResource extends JsonResource
     {
         // dd($this->cliente);
         return [
-            'id' => $this->id,
+            'id' => intval($this->id),
             'email'=> $this->email,
             'situacao'=> $this->situacao, 
             'data'=>$this->previsaoentrega,           
