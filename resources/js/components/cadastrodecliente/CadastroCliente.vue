@@ -14,7 +14,7 @@
         <div class="div-flex">  
             <fieldset class="input cl-3">
                 <legend><label for="telefone">Telefone</label></legend>
-                <input type="text" v-model="telefone" v-mask="'(##) #-####-####'" name="telefone" id="telefone">
+                <input type="text" v-model="telefone" v-mask="'(##) #-####-#####'" name="telefone" id="telefone">
             </fieldset>
             <fieldset class="input cl-5">
                 <legend><label for="telefone">E-mail</label></legend>
@@ -207,13 +207,7 @@ export default {
         border-bottom:0px solid white !important;  
         padding-bottom: 20px; 
     }
-    .div-flex {
-        position: relative;
-        display: flex;
-        flex-wrap: wrap;
-        max-width: 1280px;
-        width: 100%;
-    }
+
     fieldset{
         color: rgba(0, 0, 0, 0.103);
     }
@@ -366,28 +360,5 @@ export default {
         align-items: flex-end;
         justify-content: center;
     }
-    .cl{
-        flex-basis: 0;
-        flex-grow: 1;
-    }
-    .cl-2{
-        flex: 0 0 20.66666%;
-        max-width: 20.666666%;
-    }
-    .cl-3{
-        flex: 0 0 32.66666%;
-        max-width: 32.666666%;
-    }
-    .cl-4{
-        flex: 0 0 42.66666%;
-        max-width: 42.666666%;
-    }
-    .cl-5{
-        flex: 0 0  59.7%;
-        max-width: 60.666666%;
-    }
-     .cl-6{
-        flex: 0 0 66.0000%;
-        max-width: 66.666666%;
-    }
+
 </style>

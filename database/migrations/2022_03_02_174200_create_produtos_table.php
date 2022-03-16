@@ -16,9 +16,14 @@ class CreateProdutosTable extends Migration
         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('codbarras');
-            $table->decimal('valor', 10, 2);
-            $table->decimal('qtde', 10, 2);
+            $table->string('codbarras', 100);
+            $table->string('referencia', 100);
+            $table->integer('id_aplicacao');
+            $table->integer('id_un');
+            $table->decimal('precocusto', 16,2);
+            $table->decimal('precovenda', 16,2);
+            $table->decimal('porclucro', 16,2);
+            $table->decimal('qtde', 16,2);
             $table->timestamps();
         });
     }
