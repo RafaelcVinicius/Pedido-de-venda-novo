@@ -1,22 +1,22 @@
 <template>
     <div class="form">
         <div class="div-flex">  
-            <fieldset class="input  cl-3">
+            <fieldset class="input  cl">
                 <legend><label for="cnpjcpf">CNPJ/CPF</label></legend>  
                 <input type="text" v-model="cnpjcpf"  v-mask="maskcnpjcpf" name="cnpjcpf" id="cnpjcpf">
             </fieldset>
 
-            <fieldset class="input cl-5">
+            <fieldset class="input cl-6">
                 <legend><label for="nome">Nome</label></legend>  
                 <input type="text" name="nome" id="nome">
             </fieldset>                                            
         </div>
         <div class="div-flex">  
-            <fieldset class="input cl-3">
+            <fieldset class="input cl">
                 <legend><label for="telefone">Telefone</label></legend>
                 <input type="text" v-model="telefone" v-mask="'(##) #-####-#####'" name="telefone" id="telefone">
             </fieldset>
-            <fieldset class="input cl-5">
+            <fieldset class="input cl-6">
                 <legend><label for="telefone">E-mail</label></legend>
                 <input type="email" name="email" id="email">
             </fieldset>
@@ -45,7 +45,7 @@
             </div>
 
 
-            <div class="cidade-relativ cl-dis">
+            <div class="cidade-relativ cl">
                 <span v-show="erroCidade" class="erro" >* Por favor informe sua UF</span>
                 <fieldset  @click.prevent="displayCidade = !displayCidade" :class="{displayCidadeclass: displayCidade}" class="input cl">
                     <legend><label for="municipio">Município</label></legend>
@@ -161,13 +161,25 @@ export default {
             }
         },
         cnpjcpf(){
-            if(this.cnpjcpf.length < 15){
-                this.maskcnpjcpf = '###.###.###-##'
+            let t = this.cnpjcpf.replace(/[^0-9]/g,'');
+
+            const arr = `${t}`.split('')
+            // console.log(this.cnpjcpf)
+            if(t.length <= 11){
+                // this.maskcnpjcpf = '###.###.###-##'
+                arr.splice(3, 0, '.')
+                arr.splice(7, 0, '.')
+                arr.splice(11, 0, '-')
+                arr.join('')
+                this.cnpjcpf = arr
+                console.log(this.cnpjcpf)
+                
             }else{
                 this.maskcnpjcpf = '##.###.###/####-##'
             }
         }
-    }   
+    },
+      
 }
 </script>
 
@@ -193,7 +205,7 @@ export default {
         font-size: 14px;
         top:70px;
         left: 40px;
-        z-index: 11;
+        z-index: 8;
     }
     .displayCidadeclass{
          border-bottom-right-radius: 0px !important;

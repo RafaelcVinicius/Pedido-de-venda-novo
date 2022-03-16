@@ -52,13 +52,19 @@ Vue.component('BotaoSalvarPedido', require('./components/botao/BotaoSalvarPedido
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+window.addEventListener('load', function(){
+    if(document.getElementById('component')){
+        const app = new Vue({
+        store,
+            el: '#component',
+        }); 
+    }
+    if(document.getElementById('component2')){
+        const app2 = new Vue({
+            store,
+            el: '#component2',
+        });
+    }
+})
 
-const app = new Vue({
-    store,
-    el: '#component',
-});
-const app2 = new Vue({
-    store,
-    el: '#component2',
-});
 

@@ -1,20 +1,20 @@
 <template>
-    <div class="form">
+    <div class="form-com">
         <div class="identificadores div-flex">
             <h4 class="cl-10">Informações</h4>
-            <fieldset class=" div-relativ-fild cl-10">
+            <fieldset class=" div-relativ-fild cl-6">
                 <legend><label for="nome">Nome</label></legend>  
-                <input  class="div-absolut" type="text" name="nome" id="nome">
+                <input v-model="nome " class="div-absolut" type="text" name="nome" id="nome">
             </fieldset>
 
-            <fieldset class="div-relativ-fild cl-5">
+            <fieldset class="div-relativ-fild cl-4">
                 <legend><label for="codbarras">Código de baras</label></legend>  
-                <input  class="div-absolut" type="text" name="codbarras" id="codbarras">
+                <input v-model="codbarras" class="div-absolut" type="text" name="codbarras" id="codbarras">
             </fieldset>
 
-            <fieldset class="div-relativ-fild cl-5">
+            <fieldset class="div-relativ-fild cl-4">
                 <legend><label for="referencia">Referencia</label></legend>  
-                <input class="div-absolut" type="text" name="referencia" id="referencia">
+                <input v-model="referencia" class="div-absolut" type="text" name="referencia" id="referencia">
             </fieldset>
 
             <div class="div-relativ cl-3">
@@ -44,22 +44,22 @@
             <h4 class="cl-10" >Quantidades/Valores</h4>   
             <fieldset class="div-relativ-fild cl-2">
                 <legend><label for="qtde">Quantidade</label></legend>
-                <input  class="div-absolut" type="text" name="qtde" id="qtde">
+                <input v-model="qtde" class="div-absolut" type="text" name="qtde" id="qtde">
             </fieldset>
 
             <fieldset class="div-relativ-fild cl-2">
                 <legend><label for="precocusto">Preço de custo (R$)</label></legend>
-                <input class="div-absolut" type="text" name="precocusto" id="precocusto">
+                <input v-model="precocusto" @blur="calcPrecoVenda" class="div-absolut" type="text" name="precocusto" id="precocusto">
             </fieldset>
 
             <fieldset class="div-relativ-fild cl-2">
                 <legend><label for="precovenda">Preço de Venda (R$)</label></legend>
-                <input class="div-absolut" type="text" name="precovenda" id="precovenda">
+                <input v-model.lazy="precovenda" @blur="calcPorcLucro" class="div-absolut" type="text" name="precovenda" id="precovenda">
             </fieldset>
 
             <fieldset class="div-relativ-fild cl-2">
                 <legend><label for="porclucro">Lucro unitario (%)</label></legend>
-                <input class="div-absolut" type="text" name="porclucro" id="porclucro">
+                <input v-model="porclucro" @blur="calcPrecoVenda" class="div-absolut" type="text" name="porclucro" id="porclucro">
             </fieldset>
         </div>    
     </div>
@@ -74,13 +74,26 @@ export default {
             Aplicacao:"MERCADORIA PARA REVENDA",
             Uncomercial:"UN",
             listaUn:{},
-            listaAplicacao:{}
+            listaAplicacao:{},
+            nome:"",
+            codbarras:"",
+            referencia:"",
+            qtde:"",
+            precocusto:0,
+            precovenda:0,
+            porclucro:100
         }
     },
     methods:{
+        calcPorcLucro(){
+            this.porclucro = (((this.precovenda / this.precocusto) - 1) * 100)
+        },
+         calcPrecoVenda(){
+            this.precovenda =  (this.precocusto * (( this.porclucro / 100) +1))
+        },
         definirUncomercial(valor){
             this.Uncomercial = valor.nome
-            this.displayUn = false
+            this.displayUn = falseconsole.log(this.listaAplicacao) 
         },
         definirAplicacao(valor){
             this.Aplicacao = valor.nome
@@ -97,7 +110,7 @@ export default {
     },
     created(){
         this.$http.get('/api/consultaun').then(res => { this.listaUn = res.data })   
-        this.$http.get('/api/consultaaplicaca').then(res => { this.listaAplicacao = res.data, console.log(this.listaAplicacao) })    
+        this.$http.get('/api/consultaaplicaca').then(res => { this.listaAplicacao = res.data })    
     }
 }
 </script>
@@ -149,13 +162,13 @@ export default {
         border-bottom:0px solid white !important;  
         padding-bottom: 20px; 
     }
-    .form{
+    .form-com{
         display: flex;
         flex-wrap: wrap;
         max-width: 1280px;
         width: 100%;
-        gap: 5rem;
-        margin: auto;
+        gap: 2rem;
+        margin: 50px auto;
     }
     input{
         width: calc(100% - 40px);
@@ -163,6 +176,7 @@ export default {
         color: rgba(0, 0, 0, 0.75);
     }
     .identificadores{
+        justify-content: space-between;
         width: 100%;
         gap: 2rem;
     }

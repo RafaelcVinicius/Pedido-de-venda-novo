@@ -80,7 +80,7 @@ a{
     width: 100%;
     margin-left: 20px;
     margin-right: 20px;
-    margin-top: 130px;
+    margin-top: 80px;
 }
 .container{
     margin-top: 100px;
@@ -107,16 +107,16 @@ div.dataTables_filter input{
     max-width: 32.666666%;
 }
 .cl-4{
-    flex: 0 0 42.66666%;
-    max-width: 42.666666%;
+    flex: 0 0 40.0000%;
+    max-width: 40.000%;
 }
 .cl-5{
     flex: 0 0  59.7%;
     max-width: 60.666666%;
 }
  .cl-6{
-    flex: 0 0 66.0000%;
-    max-width: 66.666666%;
+    flex: 0 0 60.0000%;
+    max-width: 60.000%;
 }
 .div-flex {
     position: relative;
