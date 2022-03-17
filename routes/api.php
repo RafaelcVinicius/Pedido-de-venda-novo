@@ -25,3 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('consultauf', [ApiController::class, 'consultaUF'])->name('Consultauf');
 
 Route::post('consultacidadesuf', [ApiController::class, 'consultacidadesuf'])->name('consultacidadesuf');
+
+Route::get('consultaaplicaca', [ApiController::class, 'consultaAplicaca'])->name('consultaaplicaca');
+
+Route::get('consultaun', [ApiController::class, 'consultaUn'])->name('consultaun');
