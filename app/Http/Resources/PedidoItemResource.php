@@ -17,7 +17,7 @@ class PedidoItemResource extends JsonResource
         return [
             'id_item' => $this->id,
             'id' => $this->id_produto,
-            'valor'=> intval($this->valor),
+            'valor'=> intval($this->precovenda),
             'nome'=> $this->produto->nome,
             'qtde'=> intval($this->qtde),
             'codbarras'=> intval($this->produto->codbarras),

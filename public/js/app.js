@@ -5509,7 +5509,22 @@ __webpack_require__.r(__webpack_exports__);
     definirCidade: function definirCidade(cidade) {
       this.apiCep.localidade = cidade.nome;
       this.displayCidade = false;
-    }
+    } // formatarCep(){
+    //     let t = this.consultaCep;
+    //     t = t.replace(/[^0-9]/g,'')
+    //     // console.log(this.consultaCep.length)
+    //     if(this.consultaCep.length == 1 ){
+    //         t = '0000000'+t
+    //         this.consultaCep = t;
+    //     } else {
+    //         // console.log(t)
+    //         t.substring(0, 1)
+    //         this.consultaCep = t;
+    //         // console.log(q)    
+    //     }
+    // console.log(this.consultaCep)
+    // }
+
   },
   created: function created() {
     var _this3 = this;
@@ -5540,17 +5555,11 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     cnpjcpf: function cnpjcpf() {
-      var t = this.cnpjcpf.replace(/[^0-9]/g, '');
-      var arr = "".concat(t).split(''); // console.log(this.cnpjcpf)
+      var t = this.cnpjcpf;
+      t = t.replace(/[^0-9]/g, '');
 
       if (t.length <= 11) {
-        // this.maskcnpjcpf = '###.###.###-##'
-        arr.splice(3, 0, '.');
-        arr.splice(7, 0, '.');
-        arr.splice(11, 0, '-');
-        arr.join('');
-        this.cnpjcpf = arr;
-        console.log(this.cnpjcpf);
+        this.maskcnpjcpf = '###.###.###-##';
       } else {
         this.maskcnpjcpf = '##.###.###/####-##';
       }
@@ -5638,7 +5647,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  // components: {Money},
   data: function data() {
     return {
       displayAplic: false,
@@ -5647,21 +5662,38 @@ __webpack_require__.r(__webpack_exports__);
       Uncomercial: "UN",
       listaUn: {},
       listaAplicacao: {},
-      nome: "",
-      codbarras: "",
-      referencia: "",
-      qtde: "",
-      precocusto: 0,
-      precovenda: 0,
-      porclucro: 100
+      nome: '',
+      codbarras: '',
+      referencia: '',
+      qtde: '',
+      precocusto: '',
+      precovenda: '',
+      porclucro: '',
+      menssageErro: '',
+      timerErro: 10000,
+      disErroPrecocusto: false,
+      disErroPrecovenda: false,
+      money: {
+        decimal: ',',
+        thousands: '.',
+        precision: 2,
+        masked: false
+        /* doesn't work with directive */
+
+      }
     };
   },
   methods: {
+    // onBlurHandler(){
+    //     // console.log('ddddddd')
+    // },
     calcPorcLucro: function calcPorcLucro() {
-      this.porclucro = (this.precovenda / this.precocusto - 1) * 100;
+      var valor = parseFloat((this.precovenda / this.precocusto - 1) * 100);
+      this.porclucro = parseFloat(valor.toFixed(2));
     },
     calcPrecoVenda: function calcPrecoVenda() {
-      this.precovenda = this.precocusto * (this.porclucro / 100 + 1);
+      var valor = parseFloat(this.precocusto * (this.porclucro / 100 + 1));
+      this.precovenda = parseFloat(valor.toFixed(2));
     },
     definirUncomercial: function definirUncomercial(valor) {
       this.Uncomercial = valor.nome;
@@ -5672,12 +5704,16 @@ __webpack_require__.r(__webpack_exports__);
       this.displayAplic = false;
     },
     ativarDisplayUn: function ativarDisplayUn() {
-      this.displayUn = !this.displayUn;
+      this.dprecovendaisplayUn = !this.displayUn;
       this.displayAplic = false;
     },
     ativarDisplayAplicacao: function ativarDisplayAplicacao() {
       this.displayAplic = !this.displayAplic;
       this.displayUn = false;
+    },
+    geradorCodigoDeBarras: function geradorCodigoDeBarras() {
+      var codigo = Math.floor(Math.random() * 999999999 + 1000000000);
+      this.codbarras = '200' + codigo;
     }
   },
   created: function created() {
@@ -6212,10 +6248,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _plugins_axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./plugins/axios */ "./resources/js/plugins/axios.js");
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/store */ "./resources/js/store/store.js");
 /* harmony import */ var v_mask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! v-mask */ "./node_modules/v-mask/dist/v-mask.esm.js");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! v-money */ "./node_modules/v-money/dist/v-money.js");
+/* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_3__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -6225,7 +6263,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(v_mask__WEBPACK_IMPORTED_MODULE_2__["default"]);
+
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].use(v_mask__WEBPACK_IMPORTED_MODULE_2__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].use((v_money__WEBPACK_IMPORTED_MODULE_3___default()));
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
@@ -6240,17 +6280,17 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoDeVenda', (__webpack_require__(/*! ./components/PedidoDeVenda.vue */ "./resources/js/components/PedidoDeVenda.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoProduto', (__webpack_require__(/*! ./components/produto/PedidoProduto.vue */ "./resources/js/components/produto/PedidoProduto.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoPesquisaProduto', (__webpack_require__(/*! ./components/produto/PedidoPesquisaProduto.vue */ "./resources/js/components/produto/PedidoPesquisaProduto.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoListaDeProduto', (__webpack_require__(/*! ./components/produto/PedidoListaDeProduto.vue */ "./resources/js/components/produto/PedidoListaDeProduto.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoEditProduto', (__webpack_require__(/*! ./components/produto/PedidoEditProduto.vue */ "./resources/js/components/produto/PedidoEditProduto.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoCliente', (__webpack_require__(/*! ./components/cliente/PedidoCliente.vue */ "./resources/js/components/cliente/PedidoCliente.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoStatus', (__webpack_require__(/*! ./components/cliente/PedidoStatus.vue */ "./resources/js/components/cliente/PedidoStatus.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('PedidoPesquisa', (__webpack_require__(/*! ./components/cliente/PedidoPesquisa.vue */ "./resources/js/components/cliente/PedidoPesquisa.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('CadastroProduto', (__webpack_require__(/*! ./components/cadastrodeproduto/CadastroProduto.vue */ "./resources/js/components/cadastrodeproduto/CadastroProduto.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('CadastroCliente', (__webpack_require__(/*! ./components/cadastrodecliente/CadastroCliente.vue */ "./resources/js/components/cadastrodecliente/CadastroCliente.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('BotaoSalvarPedido', (__webpack_require__(/*! ./components/botao/BotaoSalvarPedido.vue */ "./resources/js/components/botao/BotaoSalvarPedido.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('PedidoDeVenda', (__webpack_require__(/*! ./components/PedidoDeVenda.vue */ "./resources/js/components/PedidoDeVenda.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('PedidoProduto', (__webpack_require__(/*! ./components/produto/PedidoProduto.vue */ "./resources/js/components/produto/PedidoProduto.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('PedidoPesquisaProduto', (__webpack_require__(/*! ./components/produto/PedidoPesquisaProduto.vue */ "./resources/js/components/produto/PedidoPesquisaProduto.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('PedidoListaDeProduto', (__webpack_require__(/*! ./components/produto/PedidoListaDeProduto.vue */ "./resources/js/components/produto/PedidoListaDeProduto.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('PedidoEditProduto', (__webpack_require__(/*! ./components/produto/PedidoEditProduto.vue */ "./resources/js/components/produto/PedidoEditProduto.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('PedidoCliente', (__webpack_require__(/*! ./components/cliente/PedidoCliente.vue */ "./resources/js/components/cliente/PedidoCliente.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('PedidoStatus', (__webpack_require__(/*! ./components/cliente/PedidoStatus.vue */ "./resources/js/components/cliente/PedidoStatus.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('PedidoPesquisa', (__webpack_require__(/*! ./components/cliente/PedidoPesquisa.vue */ "./resources/js/components/cliente/PedidoPesquisa.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('CadastroProduto', (__webpack_require__(/*! ./components/cadastrodeproduto/CadastroProduto.vue */ "./resources/js/components/cadastrodeproduto/CadastroProduto.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('CadastroCliente', (__webpack_require__(/*! ./components/cadastrodecliente/CadastroCliente.vue */ "./resources/js/components/cadastrodecliente/CadastroCliente.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].component('BotaoSalvarPedido', (__webpack_require__(/*! ./components/botao/BotaoSalvarPedido.vue */ "./resources/js/components/botao/BotaoSalvarPedido.vue")["default"]));
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -6259,14 +6299,14 @@ vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('BotaoSalvarPedido', (__we
 
 window.addEventListener('load', function () {
   if (document.getElementById('component')) {
-    var app = new vue__WEBPACK_IMPORTED_MODULE_3__["default"]({
+    var app = new vue__WEBPACK_IMPORTED_MODULE_4__["default"]({
       store: _store_store__WEBPACK_IMPORTED_MODULE_1__["default"],
       el: '#component'
     });
   }
 
   if (document.getElementById('component2')) {
-    var app2 = new vue__WEBPACK_IMPORTED_MODULE_3__["default"]({
+    var app2 = new vue__WEBPACK_IMPORTED_MODULE_4__["default"]({
       store: _store_store__WEBPACK_IMPORTED_MODULE_1__["default"],
       el: '#component2'
     });
@@ -11525,7 +11565,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.cadastrar-gravar[data-v-696200e4]{\n    display: flex;\n    width: 220px;\n    height: 40px;\n    border-radius: 20px;\n    font-size: 15px;\n    color: #fff;\n    background-color: rgb(0, 132, 255);\n    justify-content: center;\n    align-items: center;\n}\n.abrirmaisopcoes[data-v-696200e4]{\n    border-radius: 20px 20px 0 0;      \n    background-color: rgb(0, 132, 255);\n}\n.button[data-v-696200e4]{\n    position: relative;\n    height: 40px;\n    width: 100%;\n    z-index: 50;\n}\n.btn-detalhes[data-v-696200e4]{\n    position: relative;\n    width: 100%;\n}\n.btn-mais-detalhes[data-v-696200e4]{\n    position: absolute;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 50px;\n    height: 40px;\n    right: 0;\n    top: 0;\n    border-radius: 25px;\n    background-color: rgb(0, 132, 255);\n}\n.btn-mais-detalhes[data-v-696200e4]:hover{\n    background-color: rgb(29, 146, 255);\n}\nsvg[data-v-696200e4]{\n    fill:white\n}\n.lista[data-v-696200e4]{\n    position: absolute;\n    top: 40;\n    width: 100%;\n    height: 100%;\n    border-radius: 0 0 20px 20px;\n}\n.lista ul[data-v-696200e4]{\n    border-top:1px solid rgba(6, 104, 216, 0.781);\n    background-color:  rgb(0, 132, 255);\n    border-radius:0 0 20px 20px ;\n    padding-bottom: 20px;\n}\nli[data-v-696200e4]{\n    margin: 0;\n    list-style: none;\n    width: 100%;\n}\nbutton[data-v-696200e4]:hover{\n    background-color: rgba(4, 112, 253, 0.781);\n}\n.abrirmaisopcoes button[data-v-696200e4]:hover{\n    background-color: rgba(2, 122, 235, 0.781);\n    border-radius:20px 20px 0 0 ;\n}\nbutton[data-v-696200e4]{\n    width: 100%;\n    height: 120%;\n    background-color: rgb(0, 132, 255);\n    color:white;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.cadastrar-gravar[data-v-696200e4]{\n    display: flex;\n    width: 220px;\n    height: 40px;\n    border-radius: 20px;\n    font-size: 15px;\n    color: #fff;\n    background-color: rgb(0, 132, 255);\n    justify-content: center;\n    align-items: center;\n}\n.abrirmaisopcoes[data-v-696200e4]{\n    border-radius: 20px 20px 0 0;      \n    background-color: rgb(0, 132, 255);\n}\n.button[data-v-696200e4]{\n    position: relative;\n    height: 40px;\n    width: 100%;\n    z-index:51;\n}\n.btn-detalhes[data-v-696200e4]{\n    position: relative;\n    width: 100%;\n}\n.btn-mais-detalhes[data-v-696200e4]{\n    position: absolute;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 50px;\n    height: 40px;\n    right: 0;\n    top: 0;\n    border-radius: 25px;\n    background-color: rgb(0, 132, 255);\n}\n.btn-mais-detalhes[data-v-696200e4]:hover{\n    background-color: rgb(29, 146, 255);\n}\nsvg[data-v-696200e4]{\n    fill:white\n}\n.lista[data-v-696200e4]{\n    position: absolute;\n    top: 40;\n    width: 100%;\n    height: 100%;\n    border-radius: 0 0 20px 20px;\n}\n.lista ul[data-v-696200e4]{\n    border-top:1px solid rgba(6, 104, 216, 0.781);\n    background-color:  rgb(0, 132, 255);\n    border-radius:0 0 20px 20px ;\n    padding-bottom: 20px;\n}\nli[data-v-696200e4]{\n    margin: 0;\n    list-style: none;\n    width: 100%;\n}\nbutton[data-v-696200e4]:hover{\n    background-color: rgba(4, 112, 253, 0.781);\n}\n.abrirmaisopcoes button[data-v-696200e4]:hover{\n    background-color: rgba(2, 122, 235, 0.781);\n    border-radius:20px 20px 0 0 ;\n}\nbutton[data-v-696200e4]{\n    width: 100%;\n    height: 120%;\n    background-color: rgb(0, 132, 255);\n    color:white;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11549,7 +11589,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n[data-v-3654f052]::-webkit-scrollbar {\n    width: 12px;\n}\n[data-v-3654f052]::-webkit-scrollbar-track {\nbackground: white;        /* color of the tracking area */\n}\n[data-v-3654f052]::-webkit-scrollbar-thumb {\n    background-color: #03202e;    /* color of the scroll thumb */\n    border-radius: 20px;       /* roundness of the scroll thumb */\n    border: 3px solid white;  /* creates padding around scroll thumb */\n}\n.erro[data-v-3654f052]{\n    color: red;\n    position: absolute;\n    font-size: 14px;\n    top:70px;\n    left: 40px;\n    z-index: 8;\n}\n.displayCidadeclass[data-v-3654f052]{\n     border-bottom-right-radius: 0px !important;\n    border-bottom-left-radius: 0px !important;\n    border-bottom:0px solid white !important;  \n    padding-bottom: 20px;\n}\n.displayUFclass[data-v-3654f052]{\n    border-bottom-right-radius: 0px !important;\n    border-bottom-left-radius: 0px !important;\n    border-bottom:0px solid white !important;  \n    padding-bottom: 20px;\n}\nfieldset[data-v-3654f052]{\n    color: rgba(0, 0, 0, 0.103);\n}\n.input[data-v-3654f052]{\n    border: 1px solid rgb(0 0 0 / 26%) !important;\n    margin: 10px !important;\n}\ninput[data-v-3654f052]{\n    font-size: 15px;\n}\n.form[data-v-3654f052]{\n    display: flex;\n    flex-wrap: wrap;\n    max-width: 1280px;\n    width: 100%;\n    padding: 40px;\n}\n.cep[data-v-3654f052]{\n    position: relative;\n    max-width: 250px;\n    width: 100%;\n}\n.cep input[data-v-3654f052]{\n   position: absolute;\n   left: 20px;\n}\n.cep i[data-v-3654f052]{\n    position: absolute;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    top:-9px;\n    right: -5px;\n    background-color: white;\n    width: 50px;\n    height: 47px;\n    border-radius: 0 25px  25px 0;\n    border-top: 1px solid rgba(0, 0, 0, 0.30) !important;        \n    border-bottom: 1px solid rgba(0, 0, 0, 0.30) !important;        \n    border-right: 1px solid rgba(0, 0, 0, 0.305) !important;\n}\n.uf[data-v-3654f052]{\n    max-width: 150px;\n    width: calc(100% - 35px);\n}\n.uf input[data-v-3654f052] {\n    max-width: 65px;\n    position: absolute;\n    left: 20px;\n}\n.input i[data-v-3654f052] {\n    position: absolute;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    width: 46px;\n    height: 47px;\n    top: -9px;\n    right: -1px;\n    background-color: rgb(255, 255, 255);\n    border-radius: 0 25px 25px 0;\n    border-top: 1px solid #0000003a;\n    border-right: 1px solid #0000003a;\n    border-bottom: 1px solid #0000003a;\n}\n.uf i svg[data-v-3654f052]{\n    fill: rgba(0, 0, 0, 0.73);\n}\n.cep i svg[data-v-3654f052]{\n    fill: rgba(0, 0, 0, 0.73);\n}\n.uf-relativ[data-v-3654f052]{\n    position: relative;\n    display: flex;\n    justify-content: center;\n}\n.listauf[data-v-3654f052]{\n    position: absolute;\n    top:65px;\n    z-index: 10;\n    width: calc(100% - 40.60px);\n    height: 250px;\n    overflow-y:scroll;\n    background-color: white;\n    border-bottom: 1px solid rgba(0, 0, 0, 0.3);\n    border-left: 1px solid rgba(0, 0, 0, 0.3);\n    border-right: 1px solid rgba(0, 0, 0, 0.3);\n}\n.listauf li[data-v-3654f052]{\n    font-size: 15px;\n    color: rgba(0, 0, 0, 0.75);\n    list-style: none;\n    padding: 6px;\n    padding-left: 20px;\n}\n.listauf li[data-v-3654f052]:hover{\n    background-color: rgb(0, 162, 255);\n}\n.cidade-relativ[data-v-3654f052]{\n    width: 100%;\n    position: relative;\n    display: flex;\n    justify-content: center;\n}\n.cl-dis[data-v-3654f052]{\n    flex: 0 0  43.7%;\n    max-width: 42.8666666%;\n}\n.listacidade[data-v-3654f052]{\n    position: absolute;\n    top:65px;\n    z-index: 10;\n    width: calc(100% - 22px);\n    height: 250px;\n    overflow:scroll;\n    background-color: white;\n    border-bottom: 1px solid rgba(0, 0, 0, 0.3);\n    border-left: 1px solid rgba(0, 0, 0, 0.3);\n    border-right: 1px solid rgba(0, 0, 0, 0.3);\n}\n.listacidade li[data-v-3654f052]{\n    font-size: 15px;\n    color: rgba(0, 0, 0, 0.75);\n    list-style: none;\n    padding: 6px;\n    padding-left: 20px;\n}\n.listacidade li[data-v-3654f052]:hover{\n    background-color: rgb(0, 162, 255);\n}\n.div-block[data-v-3654f052]{\n    max-width: 1280px;\n    width: 100%;\n    display: flex;\n    justify-content: flex-start;\n    margin-top: 30px;\n    margin-bottom: 20px ;\n}\n.input[data-v-3654f052] {\n    height: 40px;\n    border: 1px solid rgba(0, 0, 0, 0.74);\n    border-top-right-radius: 25px;\n    border-top-left-radius: 25px;\n    border-bottom-right-radius: 25px;\n    border-bottom-left-radius: 25px;\n    padding: 8px;\n    background-color: none;\n    display: flex;\n    align-items: flex-end;\n    justify-content: center;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n[data-v-3654f052]::-webkit-scrollbar {\n    width: 12px;\n}\n[data-v-3654f052]::-webkit-scrollbar-track {\nbackground: white;        /* color of the tracking area */\n}\n[data-v-3654f052]::-webkit-scrollbar-thumb {\n    background-color: #03202e;    /* color of the scroll thumb */\n    border-radius: 20px;       /* roundness of the scroll thumb */\n    border: 3px solid white;  /* creates padding around scroll thumb */\n}\n.erro[data-v-3654f052]{\n    color: red;\n    position: absolute;\n    font-size: 14px;\n    top:70px;\n    left: 40px;\n    z-index: 8;\n}\n.displayCidadeclass[data-v-3654f052]{\n     border-bottom-right-radius: 0px !important;\n    border-bottom-left-radius: 0px !important;\n    border-bottom:0px solid white !important;  \n    padding-bottom: 20px;\n}\n.displayUFclass[data-v-3654f052]{\n    border-bottom-right-radius: 0px !important;\n    border-bottom-left-radius: 0px !important;\n    border-bottom:0px solid white !important;  \n    padding-bottom: 20px;\n}\nfieldset[data-v-3654f052]{\n    color: rgba(0, 0, 0, 0.103);\n}\n.input[data-v-3654f052]{\n    border: 1px solid rgb(0 0 0 / 26%) !important;\n    margin: 10px !important;\n}\ninput[data-v-3654f052]{\n    font-size: 15px;\n}\n.form[data-v-3654f052]{\n    display: flex;\n    flex-wrap: wrap;\n    max-width: 1280px;\n    width: 100%;\n    padding: 40px;\n}\n.cep[data-v-3654f052]{\n    position: relative;\n    max-width: 250px;\n    width: 100%;\n}\n.cep input[data-v-3654f052]{\n   position: absolute;\n   left: 20px;\n}\n.cep i[data-v-3654f052]{\n    position: absolute;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    top:-9px;\n    right: -5px;\n    background-color: white;\n    width: 50px;\n    height: 47px;\n    border-radius: 0 25px  25px 0;\n    border-top: 1px solid rgba(0, 0, 0, 0.30) !important;        \n    border-bottom: 1px solid rgba(0, 0, 0, 0.30) !important;        \n    border-right: 1px solid rgba(0, 0, 0, 0.305) !important;\n}\n.uf[data-v-3654f052]{\n    max-width: 150px;\n    width: calc(100% - 35px);\n}\n.uf input[data-v-3654f052] {\n    max-width: 65px;\n    position: absolute;\n    left: 20px;\n}\n.input i[data-v-3654f052] {\n    position: absolute;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    width: 46px;\n    height: 45px;\n    top: -11px;\n    right: -1px;\n    background-color: rgb(255, 255, 255);\n    border-radius: 0 25px 25px 0;\n    border-top: 1px solid #0000003a;\n    border-right: 1px solid #0000003a;\n    border-bottom: 1px solid #0000003a;\n}\n.uf i svg[data-v-3654f052]{\n    fill: rgba(0, 0, 0, 0.73);\n}\n.cep i svg[data-v-3654f052]{\n    fill: rgba(0, 0, 0, 0.73);\n}\n.uf-relativ[data-v-3654f052]{\n    position: relative;\n    display: flex;\n    justify-content: center;\n}\n.listauf[data-v-3654f052]{\n    position: absolute;\n    top:65px;\n    z-index: 10;\n    width: calc(100% - 40.60px);\n    height: 250px;\n    overflow-y:scroll;\n    background-color: white;\n    border-bottom: 1px solid rgba(0, 0, 0, 0.3);\n    border-left: 1px solid rgba(0, 0, 0, 0.3);\n    border-right: 1px solid rgba(0, 0, 0, 0.3);\n}\n.listauf li[data-v-3654f052]{\n    font-size: 15px;\n    color: rgba(0, 0, 0, 0.75);\n    list-style: none;\n    padding: 6px;\n    padding-left: 20px;\n}\n.listauf li[data-v-3654f052]:hover{\n    background-color: rgb(0, 162, 255);\n}\n.cidade-relativ[data-v-3654f052]{\n    width: 100%;\n    position: relative;\n    display: flex;\n    justify-content: center;\n}\n.cl-dis[data-v-3654f052]{\n    flex: 0 0  43.7%;\n    max-width: 42.8666666%;\n}\n.listacidade[data-v-3654f052]{\n    position: absolute;\n    top:65px;\n    z-index: 10;\n    width: calc(100% - 22px);\n    height: 250px;\n    overflow:scroll;\n    background-color: white;\n    border-bottom: 1px solid rgba(0, 0, 0, 0.3);\n    border-left: 1px solid rgba(0, 0, 0, 0.3);\n    border-right: 1px solid rgba(0, 0, 0, 0.3);\n}\n.listacidade li[data-v-3654f052]{\n    font-size: 15px;\n    color: rgba(0, 0, 0, 0.75);\n    list-style: none;\n    padding: 6px;\n    padding-left: 20px;\n}\n.listacidade li[data-v-3654f052]:hover{\n    background-color: rgb(0, 162, 255);\n}\n.div-block[data-v-3654f052]{\n    max-width: 1280px;\n    width: 100%;\n    display: flex;\n    justify-content: flex-start;\n    margin-top: 30px;\n    margin-bottom: 20px ;\n}\n.input[data-v-3654f052] {\n    height: 40px;\n    border: 1px solid rgba(0, 0, 0, 0.74);\n    border-top-right-radius: 25px;\n    border-top-left-radius: 25px;\n    border-bottom-right-radius: 25px;\n    border-bottom-left-radius: 25px;\n    padding: 8px;\n    background-color: none;\n    display: flex;\n    align-items: flex-end;\n    justify-content: center;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11573,7 +11613,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nh4[data-v-49680cd5]{\n    font-size: 16px;\n    color: #000000b6;\n}\n.i-btn[data-v-49680cd5]{\n    position: absolute;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    width: 46px;\n    height: 42px;\n    top: -8px;\n    right: -1px;\n    background-color: rgb(255, 255, 255);\n    border-radius: 0 25px 25px 0;\n    border-top: 1px solid rgba(0, 0, 0, 0.3);\n    border-right: 1px solid rgba(0, 0, 0, 0.3);\n    border-bottom: 1px solid rgba(0, 0, 0, 0.3);\n}\n.listaselect[data-v-49680cd5]{\n    position: absolute;\n    z-index: 10;\n    width: calc(100%);\n    background-color: white;\n    border-bottom: 1px solid rgba(0, 0, 0, 0.3);\n    border-left: 1px solid rgba(0, 0, 0, 0.3);\n    border-right: 1px solid rgba(0, 0, 0, 0.3);\n    border-radius: 0 0 20px 25px;\n    padding-bottom: 30px;\n}\n.listaselect li[data-v-49680cd5]{\n    font-size: 15px;\n    color: rgba(0, 0, 0, 0.75);\n    list-style: none;\n    padding: 6px;\n    padding-left: 20px;\n}\n.listaselect li[data-v-49680cd5]:hover{\n    background-color: rgb(0, 162, 255);\n}\n.displayselect[data-v-49680cd5]{\n    border-bottom-right-radius: 0px !important;\n    border-bottom-left-radius: 0px !important;\n    border-bottom:0px solid white !important;  \n    padding-bottom: 20px;\n}\n.form-com[data-v-49680cd5]{\n    display: flex;\n    flex-wrap: wrap;\n    max-width: 1280px;\n    width: 100%;\n    gap: 2rem;\n    margin: 50px auto;\n}\ninput[data-v-49680cd5]{\n    width: calc(100% - 40px);\n    font-size: 14px;\n    color: rgba(0, 0, 0, 0.75);\n}\n.identificadores[data-v-49680cd5]{\n    justify-content: space-between;\n    width: 100%;\n    gap: 2rem;\n}\n.div-relativ[data-v-49680cd5]{\n    position: relative;\n    height: 55px;\n}\n.div-relativ-fild[data-v-49680cd5]{\n    width: 100%;\n    position: relative;\n    height: 50px;\n    border-top-left-radius: 25px;\n    border-top-right-radius: 25px;\n    border-bottom-right-radius: 25px;\n    border-bottom-left-radius: 25px;\n    border-color: rgba(0, 0, 0, 0.35);\n}\n.div-relativ-fild legend[data-v-49680cd5]{\n    margin-left: 20px;\n    color: rgba(0, 0, 0, 95);\n    font-size: 14px;\n}\n.div-absolut[data-v-49680cd5]{\n    position: absolute;\n    left: 20px;\n    height: 30px;\n}\n.valores[data-v-49680cd5]{\n    justify-content: space-between;\n    width: 100%;\n    gap: 2rem;\n}\n.cl-10[data-v-49680cd5]{\n    width: 100%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.zin[data-v-49680cd5]{\n    z-index: 5;\n    opacity: 0;\n}\n.erro[data-v-49680cd5]{\n        position: absolute;\n        top:40px;\n        font-size: 13.5px;\n        color: red;\n}\n.t-ms[data-v-49680cd5]{\n        width: 20px !important;\n        height: 20px !important;\n}\nh4[data-v-49680cd5]{\n        font-size: 20px;\n        color: #000000;\n        font-weight: bolder;\n}\n.i-btn[data-v-49680cd5]{\n        position: absolute;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        width: 46px;\n        height: 41px;\n        top: -10px;\n        right: -1px;\n        background-color: rgb(255, 255, 255);\n        border-radius: 0 25px 25px 0;\n        border-top: 1px solid rgba(0, 0, 0, 0.3);\n        border-right: 1px solid rgba(0, 0, 0, 0.3);\n        border-bottom: 1px solid rgba(0, 0, 0, 0.3);\n        cursor: pointer;\n        z-index: 11;\n}\n.inp-w[data-v-49680cd5]{\n        width: calc(100% - 65px);\n        -webkit-user-select:none;\n           -moz-user-select:none;\n            -ms-user-select:none;\n                user-select:none;\n}\n.listaselect[data-v-49680cd5]{\n        position: absolute;\n        z-index: 10;\n        width: calc(100%);\n        background-color: white;\n        border-bottom: 1px solid rgba(0, 0, 0, 0.3);\n        border-left: 1px solid rgba(0, 0, 0, 0.3);\n        border-right: 1px solid rgba(0, 0, 0, 0.3);\n        border-radius: 0 0 20px 25px;\n        padding-bottom: 30px;\n}\n.listaselect li[data-v-49680cd5]{\n        font-size: 15px;\n        color: rgba(0, 0, 0, 0.75);\n        list-style: none;\n        padding: 6px;\n        padding-left: 20px;\n}\n.listaselect li[data-v-49680cd5]:hover{\n        background-color: rgb(0, 162, 255);\n}\n.displayselect[data-v-49680cd5]{\n        border-bottom-right-radius: 0px !important;\n        border-bottom-left-radius: 0px !important;\n        border-bottom:0px solid white !important;  \n        padding-bottom: 20px;\n}\n.form-com[data-v-49680cd5]{\n        display: flex;\n        flex-wrap: wrap;\n        max-width: 1280px;\n        width: 100%;\n        gap: 2rem;\n        margin: 50px auto;\n}\ninput[data-v-49680cd5]{\n        width: calc(100% - 40px);\n        font-size: 14px;\n        color: rgba(0, 0, 0, 0.75);\n}\n.identificadores[data-v-49680cd5]{\n        justify-content: space-between;\n        width: 100%;\n        gap: 2rem;\n}\n.div-relativ[data-v-49680cd5]{\n        position: relative;\n        height: 55px;\n}\n.div-relativ-fild[data-v-49680cd5]{\n        width: 100%;\n        position: relative;\n        height: 50px;\n        border-top-left-radius: 25px;\n        border-top-right-radius: 25px;\n        border-bottom-right-radius: 25px;\n        border-bottom-left-radius: 25px;\n        border-color: rgba(0, 0, 0, 0.35);\n        cursor: pointer;\n}\n.div-relativ-fild legend[data-v-49680cd5]{\n        margin-left: 20px;\n        color: rgba(0, 0, 0, 1);\n        font-size: 14px;\n}\n.div-absolut[data-v-49680cd5]{\n        position: absolute;\n        left: 20px;\n        height: 30px;\n}\n.valores[data-v-49680cd5]{\n        justify-content: space-between;\n        width: 100%;\n        gap: 2rem;\n}\n.cl-10[data-v-49680cd5]{\n        width: 100%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -34438,6 +34478,16 @@ var plugin = (function (Vue) {
 
 /***/ }),
 
+/***/ "./node_modules/v-money/dist/v-money.js":
+/*!**********************************************!*\
+  !*** ./node_modules/v-money/dist/v-money.js ***!
+  \**********************************************/
+/***/ (function(module) {
+
+(function(e,t){ true?module.exports=t():0})(this,function(){return function(e){function t(r){if(n[r])return n[r].exports;var i=n[r]={i:r,l:!1,exports:{}};return e[r].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var n={};return t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p=".",t(t.s=9)}([function(e,t,n){"use strict";t.a={prefix:"",suffix:"",thousands:",",decimal:".",precision:2}},function(e,t,n){"use strict";var r=n(2),i=n(5),u=n(0);t.a=function(e,t){if(t.value){var o=n.i(i.a)(u.a,t.value);if("INPUT"!==e.tagName.toLocaleUpperCase()){var a=e.getElementsByTagName("input");1!==a.length||(e=a[0])}e.oninput=function(){var t=e.value.length-e.selectionEnd;e.value=n.i(r.a)(e.value,o),t=Math.max(t,o.suffix.length),t=e.value.length-t,t=Math.max(t,o.prefix.length+1),n.i(r.b)(e,t),e.dispatchEvent(n.i(r.c)("change"))},e.onfocus=function(){n.i(r.b)(e,e.value.length-o.suffix.length)},e.oninput(),e.dispatchEvent(n.i(r.c)("input"))}}},function(e,t,n){"use strict";function r(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:m.a;"number"==typeof e&&(e=e.toFixed(o(t.precision)));var n=e.indexOf("-")>=0?"-":"",r=u(e),i=c(r,t.precision),a=d(i).split("."),p=a[0],l=a[1];return p=f(p,t.thousands),t.prefix+n+s(p,l,t.decimal)+t.suffix}function i(e,t){var n=e.indexOf("-")>=0?-1:1,r=u(e),i=c(r,t);return parseFloat(i)*n}function u(e){return d(e).replace(/\D+/g,"")||"0"}function o(e){return a(0,e,20)}function a(e,t,n){return Math.max(e,Math.min(t,n))}function c(e,t){var n=Math.pow(10,t);return(parseFloat(e)/n).toFixed(o(t))}function f(e,t){return e.replace(/(\d)(?=(?:\d{3})+\b)/gm,"$1"+t)}function s(e,t,n){return t?e+n+t:e}function d(e){return e?e.toString():""}function p(e,t){var n=function(){e.setSelectionRange(t,t)};e===document.activeElement&&(n(),setTimeout(n,1))}function l(e){var t=document.createEvent("Event");return t.initEvent(e,!0,!0),t}var m=n(0);n.d(t,"a",function(){return r}),n.d(t,"d",function(){return i}),n.d(t,"b",function(){return p}),n.d(t,"c",function(){return l})},function(e,t,n){"use strict";function r(e,t){t&&Object.keys(t).map(function(e){a.a[e]=t[e]}),e.directive("money",o.a),e.component("money",u.a)}Object.defineProperty(t,"__esModule",{value:!0});var i=n(6),u=n.n(i),o=n(1),a=n(0);n.d(t,"Money",function(){return u.a}),n.d(t,"VMoney",function(){return o.a}),n.d(t,"options",function(){return a.a}),n.d(t,"VERSION",function(){return c});var c="0.8.1";t.default=r,"undefined"!=typeof window&&window.Vue&&window.Vue.use(r)},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(1),i=n(0),u=n(2);t.default={name:"Money",props:{value:{required:!0,type:[Number,String],default:0},masked:{type:Boolean,default:!1},precision:{type:Number,default:function(){return i.a.precision}},decimal:{type:String,default:function(){return i.a.decimal}},thousands:{type:String,default:function(){return i.a.thousands}},prefix:{type:String,default:function(){return i.a.prefix}},suffix:{type:String,default:function(){return i.a.suffix}}},directives:{money:r.a},data:function(){return{formattedValue:""}},watch:{value:{immediate:!0,handler:function(e,t){var r=n.i(u.a)(e,this.$props);r!==this.formattedValue&&(this.formattedValue=r)}}},methods:{change:function(e){this.$emit("input",this.masked?e.target.value:n.i(u.d)(e.target.value,this.precision))}}}},function(e,t,n){"use strict";t.a=function(e,t){return e=e||{},t=t||{},Object.keys(e).concat(Object.keys(t)).reduce(function(n,r){return n[r]=void 0===t[r]?e[r]:t[r],n},{})}},function(e,t,n){var r=n(7)(n(4),n(8),null,null);e.exports=r.exports},function(e,t){e.exports=function(e,t,n,r){var i,u=e=e||{},o=typeof e.default;"object"!==o&&"function"!==o||(i=e,u=e.default);var a="function"==typeof u?u.options:u;if(t&&(a.render=t.render,a.staticRenderFns=t.staticRenderFns),n&&(a._scopeId=n),r){var c=a.computed||(a.computed={});Object.keys(r).forEach(function(e){var t=r[e];c[e]=function(){return t}})}return{esModule:i,exports:u,options:a}}},function(e,t){e.exports={render:function(){var e=this,t=e.$createElement;return(e._self._c||t)("input",{directives:[{name:"money",rawName:"v-money",value:{precision:e.precision,decimal:e.decimal,thousands:e.thousands,prefix:e.prefix,suffix:e.suffix},expression:"{precision, decimal, thousands, prefix, suffix}"}],staticClass:"v-money",attrs:{type:"tel"},domProps:{value:e.formattedValue},on:{change:e.change}})},staticRenderFns:[]}},function(e,t,n){e.exports=n(3)}])});
+
+/***/ }),
+
 /***/ "./resources/js/components/PedidoDeVenda.vue":
 /*!***************************************************!*\
   !*** ./resources/js/components/PedidoDeVenda.vue ***!
@@ -36196,8 +36246,13 @@ var render = function () {
               expression: "codbarras",
             },
           ],
-          staticClass: "div-absolut",
-          attrs: { type: "text", name: "codbarras", id: "codbarras" },
+          staticClass: "div-absolut inp-w",
+          attrs: {
+            autocomplete: "off",
+            type: "text",
+            name: "codbarras",
+            id: "codbarras",
+          },
           domProps: { value: _vm.codbarras },
           on: {
             input: function ($event) {
@@ -36208,6 +36263,43 @@ var render = function () {
             },
           },
         }),
+        _vm._v(" "),
+        _c(
+          "i",
+          {
+            staticClass: "i-btn",
+            on: {
+              click: function ($event) {
+                $event.preventDefault()
+                return _vm.geradorCodigoDeBarras.apply(null, arguments)
+              },
+            },
+          },
+          [
+            _c(
+              "svg",
+              {
+                staticClass: "t-ms",
+                attrs: {
+                  "xml:space": "preserve",
+                  width: "25px",
+                  height: "25px",
+                  viewBox: "0 0 4233 2954",
+                },
+              },
+              [
+                _c("g", { attrs: { id: "Camada_x0020_1" } }, [
+                  _c("path", {
+                    staticClass: "fillbutton",
+                    attrs: {
+                      d: "M109 0l0 0 981 0c60,0 109,49 109,109l0 0c0,60 -49,109 -109,109l-872 0 0 872c0,60 -49,109 -109,109l0 0c-60,0 -109,-49 -109,-109l0 -981 0 -3 0 -3 0 -2 0 0 1 -3 0 0 0 -3 0 -3 1 -2 0 -3 1 -3 0 -2 1 -3 0 0 1 -2 1 -3 0 0 1 -2 1 -3 0 0 1 -2 0 0 1 -3 1 -2 1 -3 0 0 1 -2 0 0 1 -2 1 0 1 -2 1 -3 2 -2 0 0 1 -2 2 -2 0 0 1 -2 0 0 2 -2 2 -2 0 0 1 -2 2 -2 2 -2 0 0 2 -2 2 -2 2 -1 0 0 2 -2 2 -2 0 0 2 -1 0 0 2 -2 2 -1 0 0 2 -2 3 -1 2 -1 0 -1 2 -1 0 0 2 -1 0 0 3 -1 2 -1 3 -1 0 0 2 -1 0 0 3 -1 2 -1 0 0 3 -1 2 -1 0 0 3 -1 2 0 3 -1 3 0 2 -1 3 0 3 0 0 0 3 -1 0 0 2 0 3 0 3 0zm3906 2736l-871 0c-60,0 -109,49 -109,109l0 0c0,60 49,109 109,109l980 0 0 0 3 0 3 0 3 0 0 0 2 -1 0 0 3 0 3 0 3 -1 2 0 3 -1 2 0 3 -1 0 0 3 -1 2 -1 0 0 3 -1 2 -1 0 0 3 -1 0 0 2 -1 2 -1 3 -1 0 0 2 -1 0 0 2 -1 0 0 3 -2 2 -1 2 -2 0 0 2 -1 2 -2 0 0 3 -1 0 0 2 -2 2 -2 0 0 2 -1 1 -2 2 -2 0 0 2 -2 2 -2 2 -2 0 0 1 -2 2 -2 0 0 2 -2 0 0 1 -2 2 -2 0 0 1 -2 1 -3 2 -2 0 0 1 -2 0 0 1 -2 0 0 2 -3 1 -2 1 -3 0 0 1 -2 0 0 1 -3 1 -2 0 0 0 -3 1 -2 0 0 1 -3 1 -2 0 -3 1 -3 0 -2 0 -3 1 -3 0 0 0 -3 0 0 0 -2 0 -3 0 -3 0 -981c0,-59 -49,-109 -109,-109l0 0c-60,0 -109,50 -109,109l0 872zm-3797 0l872 0c60,0 109,49 109,109l0 0c0,60 -49,109 -109,109l-981 0 0 0 -3 0 -3 0 -2 0 0 0 -3 -1 0 0 -3 0 -3 0 -2 -1 -3 0 -3 -1 -2 0 -3 -1 0 0 -2 -1 -3 -1 0 0 -2 -1 -3 -1 0 0 -2 -1 0 0 -3 -1 -2 -1 -3 -1 0 0 -2 -1 0 0 -2 -1 0 0 -2 -2 -3 -1 -2 -2 0 0 -2 -1 -2 -2 0 0 -2 -1 0 0 -2 -2 -2 -2 0 0 -2 -1 -2 -2 -2 -2 0 0 -2 -2 -2 -2 -1 -2 0 0 -2 -2 -2 -2 0 0 -1 -2 0 0 -2 -2 -1 -2 0 0 -2 -2 -1 -3 -1 -2 -1 0 -1 -2 0 0 -1 -2 0 0 -1 -3 -1 -2 -1 -3 0 0 -1 -2 0 0 -1 -3 -1 -2 0 0 -1 -3 -1 -2 0 0 -1 -3 0 -2 -1 -3 0 -3 -1 -2 0 -3 0 -3 0 0 -1 -3 0 0 0 -2 0 -3 0 -3 0 -981c0,-59 49,-109 109,-109l0 0c60,0 109,50 109,109l0 872zm46 -1036l0 0c0,-23 18,-41 41,-41l3624 0c22,0 41,18 41,41l0 0c0,22 -19,41 -41,41l-3624 0c-23,0 -41,-19 -41,-41zm3548 -1259l45 0 0 1087 -45 0 0 -1087zm-356 0l210 0 0 1087 -210 0 0 -1087zm-286 0l141 0 0 1087 -141 0 0 -1087zm-227 0l81 0 0 1087 -81 0 0 -1087zm-237 0l92 0 0 1087 -92 0 0 -1087zm-193 0l47 0 0 1087 -47 0 0 -1087zm-287 5l142 0 0 1087 -142 0 0 -1087zm-228 -5l83 0 0 1087 -83 0 0 -1087zm-283 0l137 0 0 1087 -137 0 0 -1087zm-188 0l42 0 0 1087 -42 0 0 -1087zm-230 0l84 0 0 1087 -84 0 0 -1087zm-226 0l80 0 0 1087 -80 0 -4 0 -136 0 0 -1087 136 0 4 0zm-502 0l216 0 0 1087 -216 0 0 -1087zm-192 0l46 0 0 1087 -46 0 0 -1087zm3435 1431l45 0 0 638 -45 0 0 -638zm-356 0l210 0 0 638 -210 0 0 -638zm-286 0l141 0 0 638 -141 0 0 -638zm-227 0l81 0 0 638 -81 0 0 -638zm-237 0l92 0 0 638 -92 0 0 -638zm-193 0l47 0 0 638 -47 0 0 -638zm-287 3l142 0 0 638 -142 0 0 -638zm-228 -3l83 0 0 638 -83 0 0 -638zm-283 0l137 0 0 638 -137 0 0 -638zm-188 0l42 0 0 638 -42 0 0 -638zm-230 0l84 0 0 638 -84 0 0 -638zm-226 0l80 0 0 638 -80 0 -4 0 -136 0 0 -638 136 0 4 0zm-502 0l216 0 0 638 -216 0 0 -638zm-192 0l46 0 0 638 -46 0 0 -638zm3638 -1654l-871 0c-60,0 -109,-49 -109,-109l0 0c0,-60 49,-109 109,-109l980 0 0 0 3 0 3 0 3 0 0 0 2 1 0 0 3 0 3 0 3 1 2 0 3 1 2 0 3 1 0 0 3 1 2 1 0 0 3 1 2 1 0 0 3 1 0 0 2 1 2 1 3 1 0 0 2 1 0 0 2 1 0 1 3 1 2 1 2 2 0 0 2 1 2 2 0 0 3 1 0 0 2 2 2 2 0 0 2 1 1 2 2 2 0 0 2 2 2 2 2 2 0 0 1 2 2 2 0 0 2 2 0 0 1 2 2 2 0 0 1 2 1 3 2 2 0 0 1 2 0 0 1 2 0 0 2 3 1 2 1 3 0 0 1 2 0 0 1 3 1 2 0 0 0 3 1 2 0 0 1 3 1 2 0 3 1 3 0 2 0 3 1 3 0 0 0 3 0 0 0 2 0 3 0 3 0 981c0,60 -49,109 -109,109l0 0c-60,0 -109,-49 -109,-109l0 -872z",
+                    },
+                  }),
+                ]),
+              ]
+            ),
+          ]
+        ),
       ]),
       _vm._v(" "),
       _c("fieldset", { staticClass: "div-relativ-fild cl-4" }, [
@@ -36223,7 +36315,12 @@ var render = function () {
             },
           ],
           staticClass: "div-absolut",
-          attrs: { type: "text", name: "referencia", id: "referencia" },
+          attrs: {
+            autocomplete: "off",
+            type: "text",
+            name: "referencia",
+            id: "referencia",
+          },
           domProps: { value: _vm.referencia },
           on: {
             input: function ($event) {
@@ -36261,7 +36358,7 @@ var render = function () {
                   expression: "Aplicacao",
                 },
               ],
-              staticClass: "div-absolut",
+              staticClass: "div-absolut inp-w",
               attrs: {
                 readonly: "readonly",
                 type: "text",
@@ -36366,7 +36463,7 @@ var render = function () {
                   expression: "Uncomercial",
                 },
               ],
-              staticClass: "div-absolut",
+              staticClass: "div-absolut inp-w",
               attrs: {
                 readonly: "readonly",
                 type: "text",
@@ -36460,7 +36557,12 @@ var render = function () {
             },
           ],
           staticClass: "div-absolut",
-          attrs: { type: "text", name: "qtde", id: "qtde" },
+          attrs: {
+            autocomplete: "off",
+            type: "text",
+            name: "qtde",
+            id: "qtde",
+          },
           domProps: { value: _vm.qtde },
           on: {
             input: function ($event) {
@@ -36473,84 +36575,206 @@ var render = function () {
         }),
       ]),
       _vm._v(" "),
-      _c("fieldset", { staticClass: "div-relativ-fild cl-2" }, [
-        _vm._m(6),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
+      _c(
+        "fieldset",
+        { staticClass: "div-relativ-fild cl-2" },
+        [
+          _c(
+            "span",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.precocusto,
-              expression: "precocusto",
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.disErroPrecocusto,
+                  expression: "disErroPrecocusto",
+                },
+              ],
+              staticClass: "erro",
             },
-          ],
-          staticClass: "div-absolut",
-          attrs: { type: "text", name: "precocusto", id: "precocusto" },
-          domProps: { value: _vm.precocusto },
-          on: {
-            blur: _vm.calcPrecoVenda,
-            input: function ($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.precocusto = $event.target.value
+            [_vm._v(_vm._s(_vm.menssageErro))]
+          ),
+          _vm._v(" "),
+          _vm._m(6),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.precocusto,
+                expression: "precocusto",
+              },
+            ],
+            staticClass: "div-absolut zin",
+            attrs: { name: "precocusto", id: "precocusto" },
+            domProps: { value: _vm.precocusto },
+            on: {
+              blur: _vm.calcPrecoVenda,
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.precocusto = $event.target.value
+              },
             },
-          },
-        }),
-      ]),
+          }),
+          _vm._v(" "),
+          _c(
+            "money",
+            _vm._b(
+              {
+                staticClass: "div-absolut",
+                attrs: { type: "text", name: "precocusto" },
+                model: {
+                  value: _vm.precocusto,
+                  callback: function ($$v) {
+                    _vm.precocusto = $$v
+                  },
+                  expression: "precocusto",
+                },
+              },
+              "money",
+              _vm.money,
+              false
+            ),
+            [_vm._v(_vm._s(_vm.precocusto))]
+          ),
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("fieldset", { staticClass: "div-relativ-fild cl-2" }, [
-        _vm._m(7),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
+      _c(
+        "fieldset",
+        { staticClass: "div-relativ-fild cl-2" },
+        [
+          _c(
+            "span",
             {
-              name: "model",
-              rawName: "v-model.lazy",
-              value: _vm.precovenda,
-              expression: "precovenda",
-              modifiers: { lazy: true },
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.disErroPrecovenda,
+                  expression: "disErroPrecovenda",
+                },
+              ],
+              staticClass: "erro",
             },
-          ],
-          staticClass: "div-absolut",
-          attrs: { type: "text", name: "precovenda", id: "precovenda" },
-          domProps: { value: _vm.precovenda },
-          on: {
-            blur: _vm.calcPorcLucro,
-            change: function ($event) {
-              _vm.precovenda = $event.target.value
+            [_vm._v(_vm._s(_vm.menssageErro))]
+          ),
+          _vm._v(" "),
+          _vm._m(7),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.precovenda,
+                expression: "precovenda",
+              },
+            ],
+            staticClass: "div-absolut zin",
+            attrs: {
+              placeholder: "0,00",
+              type: "text",
+              name: "precovenda",
+              id: "precovenda",
             },
-          },
-        }),
-      ]),
+            domProps: { value: _vm.precovenda },
+            on: {
+              blur: _vm.calcPorcLucro,
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.precovenda = $event.target.value
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "money",
+            _vm._b(
+              {
+                staticClass: "div-absolut",
+                attrs: { type: "text", name: "precovenda" },
+                model: {
+                  value: _vm.precovenda,
+                  callback: function ($$v) {
+                    _vm.precovenda = $$v
+                  },
+                  expression: "precovenda",
+                },
+              },
+              "money",
+              _vm.money,
+              false
+            ),
+            [_vm._v(_vm._s(_vm.precocusto))]
+          ),
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("fieldset", { staticClass: "div-relativ-fild cl-2" }, [
-        _vm._m(8),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.porclucro,
-              expression: "porclucro",
+      _c(
+        "fieldset",
+        { staticClass: "div-relativ-fild cl-2" },
+        [
+          _vm._m(8),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.porclucro,
+                expression: "porclucro",
+              },
+            ],
+            staticClass: "div-absolut zin",
+            attrs: {
+              placeholder: "0,00",
+              type: "text",
+              name: "porclucro",
+              id: "porclucro",
             },
-          ],
-          staticClass: "div-absolut",
-          attrs: { type: "text", name: "porclucro", id: "porclucro" },
-          domProps: { value: _vm.porclucro },
-          on: {
-            blur: _vm.calcPrecoVenda,
-            input: function ($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.porclucro = $event.target.value
+            domProps: { value: _vm.porclucro },
+            on: {
+              blur: _vm.calcPrecoVenda,
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.porclucro = $event.target.value
+              },
             },
-          },
-        }),
-      ]),
+          }),
+          _vm._v(" "),
+          _c(
+            "money",
+            _vm._b(
+              {
+                staticClass: "div-absolut",
+                attrs: { type: "text", name: "porclucro" },
+                model: {
+                  value: _vm.porclucro,
+                  callback: function ($$v) {
+                    _vm.porclucro = $$v
+                  },
+                  expression: "porclucro",
+                },
+              },
+              "money",
+              _vm.money,
+              false
+            ),
+            [_vm._v(_vm._s(_vm.precocusto))]
+          ),
+        ],
+        1
+      ),
     ]),
   ])
 }

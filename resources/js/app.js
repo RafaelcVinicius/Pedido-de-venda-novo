@@ -4,11 +4,14 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
  import Vue from 'vue';
- import './plugins/axios'
- import store from './store/store'
+ import './plugins/axios';
+ import store from './store/store';
  import VMask from 'v-mask';
+ import Money from 'v-money';
 
 Vue.use(VMask);
+Vue.use(Money);
+
 require('./bootstrap');
 
 window.Vue = require('vue').default;

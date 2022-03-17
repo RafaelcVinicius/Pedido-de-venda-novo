@@ -136,7 +136,22 @@ export default {
             this.apiCep.localidade = cidade.nome
 
             this.displayCidade = false
-        }
+        },
+        // formatarCep(){
+        //     let t = this.consultaCep;
+        //     t = t.replace(/[^0-9]/g,'')
+        //     // console.log(this.consultaCep.length)
+        //     if(this.consultaCep.length == 1 ){
+        //         t = '0000000'+t
+        //         this.consultaCep = t;
+        //     } else {
+        //         // console.log(t)
+        //         t.substring(0, 1)
+        //         this.consultaCep = t;
+        //         // console.log(q)    
+        //     }
+        // console.log(this.consultaCep)
+        // }
     },
     created(){
          this.$http.get('/api/consultauf').then(res => { this.ufs = res.data })    
@@ -161,23 +176,15 @@ export default {
             }
         },
         cnpjcpf(){
-            let t = this.cnpjcpf.replace(/[^0-9]/g,'');
-
-            const arr = `${t}`.split('')
-            // console.log(this.cnpjcpf)
+            let  t = this.cnpjcpf
+            t = t.replace(/[^0-9]/g,'');
             if(t.length <= 11){
-                // this.maskcnpjcpf = '###.###.###-##'
-                arr.splice(3, 0, '.')
-                arr.splice(7, 0, '.')
-                arr.splice(11, 0, '-')
-                arr.join('')
-                this.cnpjcpf = arr
-                console.log(this.cnpjcpf)
-                
+                this.maskcnpjcpf = '###.###.###-##'
             }else{
                 this.maskcnpjcpf = '##.###.###/####-##'
             }
-        }
+        },
+        
     },
       
 }
@@ -277,8 +284,8 @@ export default {
         justify-content: center;
         align-items: center;
         width: 46px;
-        height: 47px;
-        top: -9px;
+        height: 45px;
+        top: -11px;
         right: -1px;
         background-color: rgb(255, 255, 255);
         border-radius: 0 25px 25px 0;

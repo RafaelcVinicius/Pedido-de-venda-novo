@@ -74,7 +74,7 @@ fieldset .input{
 }
 
 .input input{
-    width: calc(100% - 30px);
+    width: calc(100% - 45px);
     height: 33px;
     display: flex;
     align-items: center;

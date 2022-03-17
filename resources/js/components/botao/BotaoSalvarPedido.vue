@@ -48,7 +48,7 @@ export default {
         position: relative;
         height: 40px;
         width: 100%;
-        z-index: 50;
+        z-index:51;
     }
     .btn-detalhes{
         position: relative;

@@ -37,11 +37,17 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
+
        $dados = new Produtos();
-       $dados->nome = $request->nome;
-       $dados->codbarras = $request->codbarras;
-       $dados->valor = $request->valor;
-       $dados->qtde = $request->qtde;
+       $dados->nome         = $request->nome;
+       $dados->codbarras    = $request->codbarras;
+       $dados->qtde         = $request->qtde;
+       $dados->id_aplicacao = $request->aplicacao;
+       $dados->id_un        = $request->unidade;
+       $dados->referencia   = $request->referencia;
+       $dados->precocusto   = str_replace(',' , '.', str_replace('.' ,'' , $request->precocusto));
+       $dados->precovenda   = str_replace(',' , '.', str_replace('.' ,'' , $request->precovenda));
+       $dados->porclucro    = str_replace(',' , '.', str_replace('.' ,'' , $request->porclucro));
        $dados->save();
        
        return redirect()->route('produtos.index');
