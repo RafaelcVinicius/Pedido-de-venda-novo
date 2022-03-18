@@ -30,7 +30,7 @@
                                 <td class="td-table">{{$cliente->nome}}</td>
                                 <td class="td-table">{{$cliente->cnpjcpf}}</td>
                                 <td class="td-table">{{$cliente->cep}}</td>
-                                <td class="td-table">Ação</td>
+                                <td class="td-table border-left">Ação</td>
                             </tr>
                             @endforeach                    
                     </tbody>

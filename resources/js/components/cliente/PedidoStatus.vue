@@ -35,6 +35,9 @@ export default {
 </script>
 
 <style  scoped>
+    #situacao{
+        top:17px;
+    }
     .status{
         position: relative;
         margin-top: 10px;
@@ -59,7 +62,7 @@ export default {
         align-items: center;
         justify-content: center;
         width: calc(100% - 45px);
-        font-size: 16px;
+        font-size: 15px;
         height: 35px;
         outline: 0;
         cursor: pointer;
@@ -85,6 +88,8 @@ export default {
         list-style: none;
         height: 15px;
         padding: 10px;  
+        font-size: 15px;
+        color: rgba(0, 0, 0, 0.74);
     }
      li:hover{
         background-color: rgb(25, 87, 255);

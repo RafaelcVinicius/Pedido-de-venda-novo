@@ -67,7 +67,7 @@ export default new Vuex.Store({
                 dados.nome = payload.nome
                 dados.desconto = Number(0)
                 dados.codbarras = Number(payload.codbarras)
-                dados.valor = Number(payload.valor)
+                dados.valor = Number(payload.precovenda)
                 dados.qtde = Number(1)
                 dados.acrescimo = Number(0)
                 state.produtos.push(dados);                            
@@ -85,16 +85,17 @@ export default new Vuex.Store({
         editProdisplay(state, payload){
             state.editPro = payload
         },
+        formatarvalores(variavel, valor){
+            variavel = valor.replace('.','').replace(',','.');
+        },
         alterarproduto(state, payload){
-                console.log(payload)
             const indexProduto = state.produtos.findIndex((produto) => produto.id === payload.id)
 
-            state.produtos[indexProduto].valor = payload.valor
-            state.produtos[indexProduto].qtde = payload.qtde
-            state.produtos[indexProduto].acrescimo = payload.acrescimo
-            state.produtos[indexProduto].desconto = payload.desconto
-            console.log(state.produtos)
-        }
-
+            state.produtos[indexProduto].valor       = Number(payload.valor.replace('.','').replace(',','.')).toFixed(2)
+            state.produtos[indexProduto].qtde        = Number(payload.qtde.replace('.','').replace(',','.')).toFixed(2)
+            state.produtos[indexProduto].acrescimo   = Number(payload.acrescimo.replace('.','').replace(',','.')).toFixed(2)
+            state.produtos[indexProduto].desconto    = Number(payload.desconto.replace('.','').replace(',','.')).toFixed(2)
+            console.log(state.produtos[indexProduto]);
+        },
     }  
 })

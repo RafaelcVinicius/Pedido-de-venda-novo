@@ -51,12 +51,12 @@ class PedidoController extends Controller
             $dado->qtde =  $dado->qtde + 1;            
         }else{
             $dado = new Itempedido();
-            $dado->id_venda = $request->idvenda;
-            $dado->id_produto = $request->idproduto;
-            $dado->qtde = $request->qtde;
-            $dado->valor = $request->valor;
+            $dado->id_venda      = $request->idvenda;
+            $dado->id_produto    = $request->idproduto;
+            $dado->qtde          = $request->qtde;
+            $dado->valor         = $request->valor;
             $dado->percacrescimo = 0;
-            $dado->percdesconto = 0;
+            $dado->percdesconto  = 0;
         }
         $dado->save();
     }
@@ -68,10 +68,10 @@ class PedidoController extends Controller
 
     public function editarproduto(Request $request){
         $dados = Itempedido::where('id_venda', $request->idpedido)->where('id_produto', $request->idproduto)->first();
-        $dados->valor = $request->valor;
-        $dados->qtde = $request->qtde;
-        $dados->percacrescimo = $request->acrescimo;
-        $dados->percdesconto = $request->desconto;
+        $dados->valor         = str_replace(',' , '.', str_replace('.' ,'' , $request->valor));
+        $dados->qtde          = str_replace(',' , '.', str_replace('.' ,'' , $request->qtde));
+        $dados->percacrescimo = str_replace(',' , '.', str_replace('.' ,'' , $request->acrescimo));
+        $dados->percdesconto  = str_replace(',' , '.', str_replace('.' ,'' , $request->desconto));
         $dados->save();
     }
     
@@ -85,9 +85,9 @@ class PedidoController extends Controller
     public function gravarpedidocliente(Request $request){
     
         $dados = new Pedido();
-        $dados->id_cliente = $request->idcliente;
+        $dados->id_cliente  = $request->idcliente;
         $dados->id_vendedor = $request->idvendedor;
-        $dados->situacao = "Aberto";
+        $dados->situacao    = "Aberto";
         $dados->save();
 
         return json_encode($dados->id);
@@ -98,18 +98,8 @@ class PedidoController extends Controller
         $dados = Pedido::findOrFail($id);
         $dados = new PedidoResource($dados);
 
-    //     return json_encode($dados);
-
        return view('pedido.editar')->with('dados', $dados);
     }
-
-    // public function teste(){
-    //     $dados = Pedido::where('id', '=', 1)->first();
-
-    //     dd($dados->TotalDesconto);
-    // }
-
-
     public function cancelarpedido($id) {
 
         $dados = Pedido::find($id);

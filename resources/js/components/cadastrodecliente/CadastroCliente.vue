@@ -1,5 +1,8 @@
 <template>
     <div class="form">
+        <div class="div-block">
+            <h5>Dados do cliente</h5>
+        </div>
         <div class="div-flex">  
             <fieldset class="input  cl">
                 <legend><label for="cnpjcpf">CNPJ/CPF</label></legend>  
@@ -11,7 +14,7 @@
                 <input type="text" name="nome" id="nome">
             </fieldset>                                            
         </div>
-        <div class="div-flex">  
+        <div class="div-flex mr-3">  
             <fieldset class="input cl">
                 <legend><label for="telefone">Telefone</label></legend>
                 <input type="text" v-model="telefone" v-mask="'(##) #-####-#####'" name="telefone" id="telefone">
@@ -22,7 +25,7 @@
             </fieldset>
         </div>
         <div class="div-block">
-            <h5>Endereço</h5>
+            <h5>Dados do endereço</h5>
         </div>
         <div class="endereco div-flex">
              <span v-show="erroApi" class="erro" >* CEP Não encontrado</span>
@@ -56,9 +59,6 @@
                     <li @click.prevent="definirCidade(cidade)" v-for="(cidade, i) in cidades" :key="i">{{cidade.nome}}</li>
                 </ul>
             </div>
-
-
-
         </div>
         <div class="div-flex">  
               <fieldset class="input cl-6">
@@ -237,13 +237,15 @@ export default {
     }
     input{
         font-size: 15px;
+        height: 23px !important;
     }
     .form{
         display: flex;
         flex-wrap: wrap;
         max-width: 1280px;
         width: 100%;
-        padding: 40px;
+
+        margin: 40px auto;
     }
     .cep{
         position: relative;
@@ -284,7 +286,7 @@ export default {
         justify-content: center;
         align-items: center;
         width: 46px;
-        height: 45px;
+        height: 41px;
         top: -11px;
         right: -1px;
         background-color: rgb(255, 255, 255);
@@ -306,7 +308,7 @@ export default {
     }
     .listauf{
         position: absolute;
-        top:65px;
+        top:60px;
         z-index: 10;
         width: calc(100% - 40.60px);
         height: 250px;
@@ -338,7 +340,7 @@ export default {
     }
     .listacidade{
         position: absolute;
-        top:65px;
+        top:60px;
         z-index: 10;
         width: calc(100% - 22px);
         height: 250px;
@@ -363,11 +365,19 @@ export default {
         width: 100%;
         display: flex;
         justify-content: flex-start;
-        margin-top: 30px;
-        margin-bottom: 20px ;
+
+        margin-top:10px ;
+    }
+    .mr-3{
+        margin-bottom: 10px;
+    }
+    legend{
+        margin-left: 20px;
+        color: rgba(0, 0, 0, 1);
+        font-size: 14px;
     }
     .input {
-        height: 40px;
+        height: 35px;
         border: 1px solid rgba(0, 0, 0, 0.74);
         border-top-right-radius: 25px;
         border-top-left-radius: 25px;
@@ -378,6 +388,11 @@ export default {
         display: flex;
         align-items: flex-end;
         justify-content: center;
+    }
+    .div-block h5{
+        font-size: 21px;
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 500;
     }
 
 </style>

@@ -31,8 +31,8 @@
                                 <td class="td-table">{{$produto->nome}}</td>
                                 <td class="td-table">{{$produto->codbarras}}</td>
                                 <td class="td-table">{{$produto->qtde}}</td>
-                                <td class="td-table">{{$produto->valor}}</td>
-                                <td class="td-table">Ação</td>
+                                <td class="td-table">{{$produto->precovenda}}</td>
+                                <td class="td-table border-left">Ação</td>
                             </tr>
                             @endforeach                    
                     </tbody>

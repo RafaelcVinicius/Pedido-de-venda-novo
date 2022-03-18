@@ -5,6 +5,7 @@
             <input readonly="readonly" :value="vendedor" type="text">
         </pedido-cliente>
         <pedido-produto v-show="cliselecionado" />
+        <forma-de-pagamento  v-show="cliselecionado" />
     </div>
 </template>
 
@@ -41,7 +42,6 @@ export default {
     },
     methods:{
         fechar(event){
-            console.log(event.target);
 
             //  if (event.target.className.includes('fechar') || event.target.className.includes('div-pri')) {
             //     this.$emit('modal', false)
@@ -67,7 +67,7 @@ export default {
         padding: 35px;
         border-radius: 12px;
         box-shadow: 0 0 10px #ccc;
-        margin-bottom: 50px;
+        margin-bottom: 1rem
     }
     .comp-produto{
         display: flex;
@@ -79,6 +79,6 @@ export default {
         padding: 35px;
         border-radius: 12px;
         box-shadow: 0 0 10px #ccc;
-        margin-bottom: 50px;
+        margin-bottom: 1rem !important;
     }
 </style>

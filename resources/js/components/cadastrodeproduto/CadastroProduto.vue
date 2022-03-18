@@ -21,7 +21,8 @@
             <div class="div-relativ cl-3">
                 <fieldset @click.prevent="ativarDisplayAplicacao" class="div-relativ-fild" :class="{displayselect: displayAplic}">
                     <legend><label for="aplicacao">Aplicação</label></legend>  
-                    <input  readonly="readonly" v-model="Aplicacao" class="div-absolut inp-w" type="text" name="aplicacao" id="aplicacao">
+                    <input  readonly="readonly" v-model="Aplicacao.nome" class="div-absolut inp-w" type="text" name="aplicacao" id="aplicacao">
+                    <input v-model="Aplicacao.id" type="hidden" name="id_aplicacao">
                     <i class="i-btn" :class="{displayselect: displayAplic}" ><svg width="18px" height="18px" viewBox="0 0 900 300"><path d="M312 251l222 -236c10,-9 23,-15 37,-15l1 0c29,0 53,24 53,53 0,14 -6,27 -17,38l-258 274c-8,7 -17,12 -27,14 -4,1 -7,1 -11,1 -3,0 -7,0 -10,-1 -11,-2 -20,-7 -26,-13l-261 -276c-10,-10 -15,-23 -15,-37 0,-29 24,-53 53,-53l1 0c14,0 27,6 35,15l223 236z" class="fillButton"></path></svg></i>
                 </fieldset>
                 <ul v-show="displayAplic" class="listaselect">
@@ -32,7 +33,8 @@
             <div class="div-relativ cl-2">
                 <fieldset @click.prevent="ativarDisplayUn" class="div-relativ-fild" :class="{displayselect: displayUn}">
                     <legend><label for="unidade">Unidade comercial</label></legend>  
-                    <input  readonly="readonly" v-model="Uncomercial" class="div-absolut inp-w" type="text" name="unidade" id="unidade">
+                    <input  readonly="readonly" v-model="Uncomercial.nome" class="div-absolut inp-w" type="text" name="unidade" id="unidade">
+                    <input v-model="Uncomercial.id"  type="hidden" name="id_unidade">
                     <i class="i-btn" :class="{displayselect: displayUn}" ><svg width="18px" height="18px" viewBox="0 0 900 300"><path d="M312 251l222 -236c10,-9 23,-15 37,-15l1 0c29,0 53,24 53,53 0,14 -6,27 -17,38l-258 274c-8,7 -17,12 -27,14 -4,1 -7,1 -11,1 -3,0 -7,0 -10,-1 -11,-2 -20,-7 -26,-13l-261 -276c-10,-10 -15,-23 -15,-37 0,-29 24,-53 53,-53l1 0c14,0 27,6 35,15l223 236z" class="fillButton"></path></svg></i>
                 </fieldset>
                 <ul v-show="displayUn" class="listaselect">
@@ -47,24 +49,24 @@
                 <input autocomplete="off" v-model="qtde" class="div-absolut" type="text" name="qtde" id="qtde">
             </fieldset>
 
-            <fieldset class="div-relativ-fild cl-2">
+            <fieldset class="div-relativ-fild cl-2" >
                 <span v-show="disErroPrecocusto" class="erro">{{menssageErro}}</span>
                 <legend><label for="precocusto">Preço de custo (R$)</label></legend>
-                <input  v-model="precocusto" @blur="calcPrecoVenda" class="div-absolut zin" name="precocusto" id="precocusto">
-                <money class="div-absolut" type="text" v-model="precocusto" name="precocusto"  v-bind="money">{{precocusto}}</money>
+                <!-- <input  v-model="precocusto" @blur="calcPrecoVenda" class="div-absolut " name="precocusto" id="precocusto"> -->
+                <money class="div-absolut" type="text" id="precocusto"  @blur.native="calcPrecoVenda" v-model="precocusto" name="precocusto"  v-bind="money">{{precocusto}}</money>
             </fieldset>
 
             <fieldset class="div-relativ-fild cl-2">                
                 <span v-show="disErroPrecovenda" class="erro">{{menssageErro}}</span>
                 <legend><label for="precovenda">Preço de Venda (R$)</label></legend>
-                <input placeholder="0,00"   v-model="precovenda" @blur="calcPorcLucro" class="div-absolut zin" type="text" name="precovenda" id="precovenda">
-                <money class="div-absolut" type="text" v-model="precovenda" name="precovenda"  v-bind="money">{{precocusto}}</money>
+                <!-- <input placeholder="0,00"   v-model="precovenda" @blur="calcPorcLucro" class="div-absolut zin" type="text" name="precovenda" id="precovenda"> -->
+                <money class="div-absolut" type="text" v-model="precovenda" @blur.native="calcPorcLucro" name="precovenda"  v-bind="money">{{precocusto}}</money>
             </fieldset>
 
             <fieldset class="div-relativ-fild cl-2">
                 <legend><label for="porclucro">Lucro unitario (%)</label></legend>
-                <input placeholder="0,00" v-model="porclucro" @blur="calcPrecoVenda" class="div-absolut zin" type="text" name="porclucro" id="porclucro">
-                <money class="div-absolut" type="text" v-model="porclucro" name="porclucro"  v-bind="money">{{precocusto}}</money>
+                <!-- <input placeholder="0,00" v-model="porclucro" @blur="calcPrecoVenda" class="div-absolut zin" type="text" name="porclucro" id="porclucro"> -->
+                <money class="div-absolut" type="text" v-model="porclucro" @blur.native="calcPrecoVenda" name="porclucro"  v-bind="money">{{precocusto}}</money>
             </fieldset>
         </div>    
     </div>
@@ -72,13 +74,18 @@
 
 <script>
 export default {
-        // components: {Money},
     data(){
         return{
             displayAplic:false,
             displayUn:false,
-            Aplicacao:"MERCADORIA PARA REVENDA",
-            Uncomercial:"UN",
+            Aplicacao:{
+                nome: "MERCADORIA PARA REVENDA",
+                id:1
+                },
+            Uncomercial:{
+                nome:"UN",
+                id:1
+                },
             listaUn:{},
             listaAplicacao:{},
             nome:'',
@@ -100,10 +107,12 @@ export default {
             }
         }
     },
+   watch:{
+      money(){
+
+      } 
+   },
     methods:{
-        // onBlurHandler(){
-        //     // console.log('ddddddd')
-        // },
         calcPorcLucro(){
             var valor = parseFloat(((this.precovenda / this.precocusto) - 1) * 100)
             this.porclucro =  parseFloat(valor.toFixed(2))
@@ -113,15 +122,18 @@ export default {
             this.precovenda =  parseFloat(valor.toFixed(2))
         },
         definirUncomercial(valor){
-            this.Uncomercial = valor.nome
-            this.displayUn = falseconsole.log(this.listaAplicacao) 
+            this.Uncomercial.nome = valor.nome
+            this.Uncomercial.id = valor.id
+            this.displayUn = false
         },
         definirAplicacao(valor){
-            this.Aplicacao = valor.nome
+            this.Aplicacao.nome = valor.nome
+            this.Aplicacao.id = valor.id
             this.displayAplic = false
         },
         ativarDisplayUn(){
-            this.dprecovendaisplayUn = !this.displayUn
+            console.log('f')
+            this.displayUn = !this.displayUn
              this.displayAplic = false
         },
         ativarDisplayAplicacao(){
@@ -138,13 +150,16 @@ export default {
         this.$http.get('/api/consultaaplicaca').then(res => { this.listaAplicacao = res.data })    
     }
 }
+
+
+
 </script>
 
 <style scoped>
-.zin{
-    z-index: 5;
-    opacity: 0;
-}
+    .zin{
+        z-index: 5;
+        opacity: 1;
+    }
     .erro{
         position: absolute;
         top:40px;
@@ -156,9 +171,9 @@ export default {
         height: 20px !important;
     }
     h4{
-        font-size: 20px;
-        color: #000000;
-        font-weight: bolder;
+        font-size: 21px;
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 500;
     }
     .i-btn{
         position: absolute;
@@ -166,14 +181,14 @@ export default {
         justify-content: center;
         align-items: center;
         width: 46px;
-        height: 41px;
-        top: -10px;
+        height: 40px;
+        top: -11px;
         right: -1px;
         background-color: rgb(255, 255, 255);
         border-radius: 0 25px 25px 0;
-        border-top: 1px solid rgba(0, 0, 0, 0.3);
-        border-right: 1px solid rgba(0, 0, 0, 0.3);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        border-top: 1px solid rgb(0 0 0 / 24%);
+        border-right: 1px solid rgb(0 0 0 / 24%);
+        border-bottom: 1px solid rgb(0 0 0 / 24%);
         cursor: pointer;
         z-index: 11;
     }
@@ -186,9 +201,9 @@ export default {
         z-index: 10;
         width: calc(100%);
         background-color: white;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-        border-left: 1px solid rgba(0, 0, 0, 0.3);
-        border-right: 1px solid rgba(0, 0, 0, 0.3);
+        border-bottom: 1px solid rgb(0 0 0 / 24%);
+        border-left: 1px solid rgb(0 0 0 / 24%);
+        border-right: 1px solid rgb(0 0 0 / 24%);
         border-radius: 0 0 20px 25px;
         padding-bottom: 30px;
     }
@@ -224,7 +239,7 @@ export default {
     .identificadores{
         justify-content: space-between;
         width: 100%;
-        gap: 2rem;
+        gap: 1rem;
     }
     .div-relativ{
         position: relative;
@@ -238,7 +253,7 @@ export default {
         border-top-right-radius: 25px;
         border-bottom-right-radius: 25px;
         border-bottom-left-radius: 25px;
-        border-color: rgba(0, 0, 0, 0.35);
+        border-color: rgb(0 0 0 / 24%);
         cursor: pointer;
     }
     .div-relativ-fild legend{
@@ -249,12 +264,12 @@ export default {
     .div-absolut{
         position: absolute;
         left: 20px;
-        height: 30px;
+        height: 23px;
     }
     .valores{
         justify-content: space-between;
         width: 100%;
-        gap: 2rem;
+        gap: 1rem;
     }
     .cl-10{
         width: 100%;

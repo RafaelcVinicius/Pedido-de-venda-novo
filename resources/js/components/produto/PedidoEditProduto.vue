@@ -14,19 +14,19 @@
             <div class="div-input">
                 <div>
                     <label for="">Quantidade</label>
-                    <input type="text" v-model="pro.qtde">      
+                    <input type="text" v-model="pro.qtde" v-money="money" >      
                 </div>
                 <div>
                     <label for="">Valor un.(R$)</label>
-                    <input type="text" v-model="pro.valor">           
+                    <input type="text" v-model="pro.valor" v-money="money" >           
                 </div>
                 <div>
                     <label for="">Desconto(%)</label> 
-                    <input type="text" v-model="pro.desconto">   
+                    <input type="text" v-model="pro.desconto" v-money="money" >   
                 </div>
                 <div>
                     <label for="">Acréscimo(%)</label>
-                    <input type="text" v-model="pro.acrescimo">    
+                    <input type="text" v-model="pro.acrescimo" v-money="money" >    
                 </div>
             </div>
             <div class="div-btn">
@@ -41,11 +41,17 @@ export default {
     data(){
         return{
             pro:{
-                qtde: Number(this.$store.state.produtonovo.qtde),
-                id: Number(this.$store.state.produtonovo.id),
-                valor: Number(this.$store.state.produtonovo.valor),
-                desconto: Number(this.$store.state.produtonovo.desconto),
-                acrescimo: Number(this.$store.state.produtonovo.acrescimo),
+                qtde: this.$store.state.produtonovo.qtde.toFixed(2),
+                id: this.$store.state.produtonovo.id,
+                valor: this.$store.state.produtonovo.valor.toFixed(2),
+                desconto: this.$store.state.produtonovo.desconto.toFixed(2),
+                acrescimo: this.$store.state.produtonovo.acrescimo.toFixed(2),
+            },
+            money: {
+                decimal: ',',
+                thousands: '.',
+                precision: 2,
+                masked: false /* doesn't work with directive */
             }
         }
     },
@@ -54,11 +60,6 @@ export default {
             this.$store.commit('editProdisplay', false)
         },
         editProduto(){
-
-            //this.$store.state.produtonovo = this.pro
-
-
-
             this.$store.commit('alterarproduto', this.pro)
             
             this.$http.post('/home/pedido/editarproduto', {
@@ -69,9 +70,6 @@ export default {
             desconto: this.pro.desconto,
             acrescimo: this.pro.acrescimo
             }).then(res => { this.dados = res.data }) 
-
-
-
             this.$store.commit('editProdisplay', false)
         }
     },

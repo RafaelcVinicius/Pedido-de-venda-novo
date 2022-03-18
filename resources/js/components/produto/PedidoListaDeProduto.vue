@@ -44,12 +44,17 @@ export default {
     },
     data(){
         return{
+             money: {
+                decimal: ',',
+                thousands: '.',
+                precision: 2,
+                masked: false /* doesn't work with directive */
+            },
             produtonovo:{}
         }
     },
     computed: {
         produtos(){  
-            console.log(this.$store.state.produtos);          
             return  this.$store.state.produtos
         },
         valorTotal() {
@@ -61,7 +66,7 @@ export default {
     },
     methods: {                   
         delProduto(e, id){
-            console.log(this.$store.state.idpedido)
+
             this.$http.post('/home/pedido/deleteproduto', {
             idpedido: this.$store.state.idpedido,
             idproduto: id
@@ -75,7 +80,6 @@ export default {
             this.$store.commit('editProduto', this.produtonovo)
         },
         sortUsers(chave){
-            console.log(this.$store.state.produtos)
           this.$store.state.produtos.sort( function( a, b){
                 return a[chave].localeCompare(b[chave])
           })

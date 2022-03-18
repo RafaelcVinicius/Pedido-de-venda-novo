@@ -1,5 +1,6 @@
 <template>
     <div class="comp-cliente">
+        <h5>Cliente</h5>
         <section class="section z-50">
             <div class="desativado cl-5 sect">
                 <fieldset class="fieldset"><legend>Vendedor</legend>
@@ -22,7 +23,7 @@
             </div>
             <div class=" cl-4 cnpj sect">
                 <fieldset class="fieldset desativado"><legend>CNPJ/CPF</legend>
-                    <input :value="cliente.cnpjcpf | cpfcnpj" name="cnpjcpf" readonly="readonly" type="text">
+                    <input :value="cliente.cnpjcpf" v-mask="maskcnpjcpf" name="cnpjcpf" readonly="readonly" type="text">
                 </fieldset>
             </div>
         </section>
@@ -41,7 +42,8 @@ export default {
     props:{idvendedor:Number},
     data(){
         return{
-            email:''
+            email:'',
+            maskcnpjcpf:''
         }
     },
     methods:{
@@ -51,8 +53,20 @@ export default {
         cliente(){
             return this.$store.state.cliente
         }
+    },
+    watch:{
+     cnpjcpf(){
+            let  t = this.cnpjcpf
+            t = t.replace(/[^0-9]/g,'');
+            if(t.length <= 11){
+                this.maskcnpjcpf = '###.###.###-##'
+            }else{
+                this.maskcnpjcpf = '##.###.###/####-##'
+            }
+        },
     }
 }
+
 </script>
 
 <style>

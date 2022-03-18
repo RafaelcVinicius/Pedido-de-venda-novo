@@ -15,14 +15,14 @@ class PedidoItemResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id_item' => $this->id,
-            'id' => $this->id_produto,
-            'valor'=> intval($this->precovenda),
+            'id_item' => intval($this->id),
+            'id' => intval($this->id_produto),
+            'valor'=> (float)$this->produto->precovenda,
             'nome'=> $this->produto->nome,
-            'qtde'=> intval($this->qtde),
-            'codbarras'=> intval($this->produto->codbarras),
-            'acrescimo'=>intval($this->percacrescimo),
-            'desconto'=> intval($this->percdesconto),
+            'qtde'=> (float)$this->qtde,
+            'codbarras'=> (float)$this->produto->codbarras,
+            'acrescimo'=>(float)$this->percacrescimo,
+            'desconto'=> (float)$this->percdesconto,
         ];
     }
 }

@@ -49,6 +49,8 @@ Vue.component('CadastroCliente', require('./components/cadastrodecliente/Cadastr
 
 Vue.component('BotaoSalvarPedido', require('./components/botao/BotaoSalvarPedido.vue').default);
 
+Vue.component('FormaDePagamento', require('./components/outros/FormaDePagamento.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

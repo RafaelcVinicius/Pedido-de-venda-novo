@@ -8,15 +8,6 @@
                 <li @click="defiProduto(dado)" v-for="(dado, i) in dados" :key="i">{{dado.nome}}</li>
             </ul>
         </div>
-         <draggable :list="list1" class="list-group" group="people">
-          <div
-            class="list-group-item cursor-pointer"
-            v-for="element in list1"
-            :key="element.name"
-          >
-            {{ element.name }}
-          </div>
-        </draggable>
     </div>
 </template>
 
@@ -48,14 +39,14 @@ export default {
                 }).then(res => { this.dados = res.data })
             }else{
                 this.displayproduto = false
-            }
-          
+            }          
         },
         defiProduto(dado) {
+
             this.$http.post('/home/pedido/gravarproduto', {
                 idvenda: this.$store.state.idpedido,
                 idproduto: dado.id,
-                valor: Number(dado.valor),
+                valor: Number(dado.precovenda),
                 qtde: Number(1),
                 percacrescimo: Number(0),
                 percdesconto: Number(0),
@@ -92,6 +83,7 @@ export default {
         background-color: white;
         border-radius: 0 0 25px 25px;
         color: rgba(0, 0, 0, 0.70);
+        padding-bottom:25px;
     }
     li:hover{
         background-color: rgb(29, 98, 247);

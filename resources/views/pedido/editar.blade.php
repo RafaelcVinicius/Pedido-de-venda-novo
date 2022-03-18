@@ -7,7 +7,7 @@
                 <h5>Pedidos - Cadastro</h5>
             </div>
             <div class="novo">
-                <button class="cadastrar"><a href="{{route('pedido.index')}}" > Cancelar </a></button>
+                <button class="cadastrar"><a class="cancelar" href="{{route('pedido.index')}}" > Cancelar </a></button>
                 <div id="component2">
                     <botao-salvar-pedido>
                         <button slot="p" class="cadastrar-gravar" onclick="document.getElementById('form-pedido').submit()" >Gravar</button>

@@ -29,7 +29,9 @@ export default {
             nome: this.nomecliente 
             }).then(res => { this.dados = res.data })
         }else{
-            this.displaycliente = false
+            this.displaycliente =                false
+            this.$store.state.cliente.cnpjcpf  = ''
+            this.$store.state.cliselecionado   = false
         }
         },
         defiCliente(dado) {
