@@ -39,7 +39,8 @@ export default new Vuex.Store({
        cliselecionado:false,
        editPro:false,
        produtonovo:[],
-       idpedido:0,      
+       idpedido:0,
+       idvendedor:0      
     },
     getters: {
         valorTotal(state){
@@ -52,7 +53,7 @@ export default new Vuex.Store({
     },
     mutations: {
         addIdPedido(state, payload){
-            state.idpedido = payload
+            state.idpedido = payload.id
         },
         addCliente(state, payload) {
             state.cliente = payload           
@@ -74,7 +75,13 @@ export default new Vuex.Store({
             }
         },
         editProduto(state, payload){     
-            state.produtonovo = payload
+          
+            state.produtonovo.valor       = Number(payload.valor).toFixed(2)
+            state.produtonovo.qtde        = Number(payload.qtde).toFixed(2)
+            state.produtonovo.acrescimo   = Number(payload.acrescimo).toFixed(2)
+            state.produtonovo.desconto    = Number(payload.desconto).toFixed(2)
+            state.produtonovo.id          = payload.id
+            console.log(state.produtonovo)
         },
         cliselecionado(state, payload){
             state.cliselecionado = payload

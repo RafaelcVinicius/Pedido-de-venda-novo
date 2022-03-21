@@ -8,6 +8,7 @@
  import store from './store/store';
  import VMask from 'v-mask';
  import Money from 'v-money';
+ import router from "vue-router";
 
 Vue.use(VMask);
 Vue.use(Money);
@@ -60,12 +61,14 @@ Vue.component('FormaDePagamento', require('./components/outros/FormaDePagamento.
 window.addEventListener('load', function(){
     if(document.getElementById('component')){
         const app = new Vue({
+        router,
         store,
             el: '#component',
         }); 
     }
     if(document.getElementById('component2')){
         const app2 = new Vue({
+            router,
             store,
             el: '#component2',
         });

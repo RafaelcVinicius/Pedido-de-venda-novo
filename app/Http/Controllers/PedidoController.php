@@ -90,7 +90,19 @@ class PedidoController extends Controller
         $dados->situacao    = "Aberto";
         $dados->save();
 
-        return json_encode($dados->id);
+        $dado = new Itempedido();
+        $dado->id_venda      = $dados->id;
+        $dado->id_produto    = $request->idproduto;
+        $dado->qtde          = $request->qtde;
+        $dado->valor         = $request->valor;
+        $dado->percacrescimo = 0;
+        $dado->percdesconto  = 0;
+        $dado->save();
+
+        $resource = Pedido::findOrFail($dados->id);
+        $resource = new PedidoResource($resource);
+
+        return json_encode($resource);
     }
 
     public function editarpedido($id){

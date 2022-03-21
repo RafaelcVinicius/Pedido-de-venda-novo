@@ -6,6 +6,7 @@
         </pedido-cliente>
         <pedido-produto v-show="cliselecionado" />
         <forma-de-pagamento  v-show="cliselecionado" />
+        <router-link to="/http://localhost:8000/home/pedido/cadastro/42"> teste </router-link>
     </div>
 </template>
 
@@ -31,14 +32,16 @@ export default {
     },
     created(){
         if(this.dados != null){
-        this.$store.state.idpedido = this.dados.id
-        this.$store.state.produtos = this.dados.produtos
-        this.$store.state.cliente = this.dados.cliente
-        this.$store.state.cliente.email = this.dados.email
-        this.$store.state.cliente.data = this.dados.data
-        this.$store.state.cliente.status = this.dados.situacao
-        this.$store.state.cliselecionado = true
+            this.$store.state.idpedido = this.dados.id
+            this.$store.state.produtos = this.dados.produtos
+            this.$store.state.cliente = this.dados.cliente
+            this.$store.state.cliente.email = this.dados.email
+            this.$store.state.cliente.data = this.dados.data
+            this.$store.state.cliente.status = this.dados.situacao
+            this.$store.state.cliselecionado = true
         }
+        this.$store.state.idvendedor = this.idvendedor
+
     },
     methods:{
         fechar(event){

@@ -41,11 +41,11 @@ export default {
     data(){
         return{
             pro:{
-                qtde: this.$store.state.produtonovo.qtde.toFixed(2),
+                qtde: this.$store.state.produtonovo.qtde,
                 id: this.$store.state.produtonovo.id,
-                valor: this.$store.state.produtonovo.valor.toFixed(2),
-                desconto: this.$store.state.produtonovo.desconto.toFixed(2),
-                acrescimo: this.$store.state.produtonovo.acrescimo.toFixed(2),
+                valor: this.$store.state.produtonovo.valor,
+                desconto: this.$store.state.produtonovo.desconto,
+                acrescimo: this.$store.state.produtonovo.acrescimo,
             },
             money: {
                 decimal: ',',
@@ -84,7 +84,7 @@ export default {
         height: 100vh;
         top: 0;
         left: 0;
-        z-index: 51;
+        z-index: 1000;
     }
     .nada{
         width: 100%;

@@ -42,19 +42,29 @@ export default {
             }          
         },
         defiProduto(dado) {
-
-            this.$http.post('/home/pedido/gravarproduto', {
+            if(this.$store.state.idpedido === 0){
+               this.$http.post('/home/pedido/gravarcliente', {
+                    idvendedor: this.$store.state.idvendedor,
+                    idcliente: this.$store.state.cliente.id,
+                    idproduto: dado.id,
+                    valor: Number(dado.precovenda),
+                    qtde: Number(1),
+                    percacrescimo: Number(0),
+                    percdesconto: Number(0),
+                }).then(res => {this.$store.commit('addIdPedido', res.data)})
+            }else{
+                this.$http.post('/home/pedido/gravarproduto', {
                 idvenda: this.$store.state.idpedido,
                 idproduto: dado.id,
                 valor: Number(dado.precovenda),
                 qtde: Number(1),
                 percacrescimo: Number(0),
                 percdesconto: Number(0),
-            }).then(res => res)
-            
+                }).then(res => res)
+            }
             this.displayproduto = false
             this.nomeproduto = ''
-            this.$store.commit('addProduto', dado)           
+            this.$store.commit('addProduto', dado) 
         }
     }
 }

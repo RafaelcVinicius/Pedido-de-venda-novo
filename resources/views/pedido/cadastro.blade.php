@@ -22,7 +22,7 @@
     <div id="component">
         <form action="{{route('pedido.gravar')}}" method="post" id="form-pedido">
                 @csrf        
-                <pedido-de-venda :vendedor="{{json_encode(Auth::user()->name)}}" :idvendedor="{{Auth::user()->id}}" />            
+                <pedido-de-venda :vendedor="{{json_encode(Auth::user()->name)}}" :idvendedor="{{json_encode(Auth::user()->id)}}" />            
         </form>
     </div>
 @endsection

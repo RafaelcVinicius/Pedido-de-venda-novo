@@ -37,10 +37,6 @@ export default {
         defiCliente(dado) {
 
             if(this.$store.state.idpedido === 0){
-                this.$http.post('/home/pedido/gravarcliente', {
-                    idvendedor: this.idvendedor,
-                    idcliente: dado.id
-                }).then(res => {this.$store.commit('addIdPedido', res.data) })
             }else{
                 this.$http.post('/home/pedido/gravarclientealterar', {
                     idpedido: this.$store.state.idpedido,
